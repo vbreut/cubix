@@ -51,7 +51,7 @@ body {
 .scene {
     width: 56px;
     height: 56px;
-    perspective: 1000px;
+    perspective: none;
     position: absolute;
     margin: 0 auto 40px;
     transform: translate(17px, 17px);
