@@ -1,0 +1,128 @@
+:root{
+    --cubesize:60px;
+    --translate:calc(var(--cubesize)/2);
+    --shapesize:42px;
+    --bor:calc(var(--shapesize) - 3px);
+}
+
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 20px;
+    width: auto;
+    padding: 0;
+}
+
+#game-board {
+    display: grid;
+    grid-template-columns: repeat(6, 90px);
+    grid-template-rows: repeat(6, 90px);
+    gap: 5px;
+    margin: 20px auto;
+}
+
+.grid {
+    background-color: lightgray;
+    width: 90px;
+    height: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    border: 1px solid black;
+}
+
+#cube1 {
+    background-color: red;
+    transform: translate(11px, 11px);
+}
+
+#cube2 {
+    background-color: blue;
+    transform: translate(106px, 11px);
+}
+
+.scene {
+    width: var(--cubesize);
+    height: var(--cubesize);
+    perspective: none;
+    position: absolute;
+    margin: 0 auto 40px;
+    transform-style: preserve-3d;
+
+    transform:  rotateY(20deg) rotateX(20deg) rotateZ(0deg) translate(17px, 14px);
+    transition: transform 0.5s;
+}
+
+
+.cube {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    transform-style: preserve-3d;
+    transform:  rotateY(0deg) rotateX(0deg) rotateZ(0deg);
+    transition: transform 0.5s;
+}
+
+.face {
+    position: absolute;
+    width: var(--cubesize);
+    height: var(--cubesize);
+    background-color: black;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.front  { transform: translateZ(var(--translate)); }
+.back   { transform: rotateY(180deg) translateZ(var(--translate)); }
+.right  { transform: rotateY(90deg) translateZ(var(--translate));  }
+.left   { transform: rotateY(-90deg) translateZ(var(--translate)); }
+.top    { transform: rotateX(90deg) translateZ(var(--translate)); }
+.bottom { transform: rotateX(-90deg) translateZ(var(--translate)); }
+
+
+
+.shape1 {
+    width : var(--shapesize);
+    height : var(--shapesize);
+    background-color: red;
+}
+
+.shape2 {
+    width : var(--shapesize);
+    height : var(--shapesize);
+    background-color: red;
+    border-radius:50%;
+}
+
+.shape3 {
+    width : var(--shapesize);
+    height : var(--shapesize);
+    background-color: white;
+    border-radius:50%;
+}
+
+.shape4 {
+    width : var(--shapesize);
+    height : var(--shapesize);
+    background-color: white;
+
+}
+
+.shape5 {
+    width : var(--bor);
+    height : var(--bor);
+    background-color: black;
+    border: 3px solid white;
+}
+
+.shape6 {
+    width : var(--bor);
+    height : var(--bor);
+    background-color: black;
+    border-radius:50%;
+    border: 3px solid white;
+    
+}
