@@ -1,0 +1,298 @@
+:root{
+    --cubesize:60px;
+    --translate:calc(var(--cubesize)/2 - 0.5px);
+    --shapesize:40px;
+    --marginborder:5px;
+    --cellsize:90px;
+    --bor:calc(var(--shapesize) - 3px);
+    --movx1:calc(var(--cubesize)/4 + var(--marginborder));
+    --movy1:calc(var(--cubesize)/4 + var(--marginborder));
+    --movx2:calc(var(--cubesize)/4 + var(--marginborder) + var(--cellsize) + var(--marginborder));
+    --movy2:calc(var(--cubesize)/4 + var(--marginborder));
+    --movx3:calc(var(--cubesize)/4 + var(--marginborder) + 2*(var(--cellsize) + var(--marginborder)));
+    --movy3:calc(var(--cubesize)/4 + var(--marginborder));
+    --movx4:calc(var(--cubesize)/4 + var(--marginborder) + 3*(var(--cellsize) + var(--marginborder)));
+    --movy4:calc(var(--cubesize)/4 + var(--marginborder));
+    --movx5:calc(var(--cubesize)/4 + var(--marginborder) + 4*(var(--cellsize) + var(--marginborder)));
+    --movy5:calc(var(--cubesize)/4 + var(--marginborder));
+    --movx6:calc(var(--cubesize)/4 + var(--marginborder) + 5*(var(--cellsize) + var(--marginborder)));
+    --movy6:calc(var(--cubesize)/4 + var(--marginborder));
+    --movx7:calc(var(--cubesize)/4 + var(--marginborder));
+    --movy7:calc(var(--cubesize)/4 + var(--marginborder) + 5*(var(--cellsize) + var(--marginborder)));
+    --movx8:calc(var(--cubesize)/4 + var(--marginborder) + var(--cellsize) + var(--marginborder));
+    --movy8:calc(var(--cubesize)/4 + var(--marginborder) + 5*(var(--cellsize) + var(--marginborder)));
+    --movx9:calc(var(--cubesize)/4 + var(--marginborder) + 2*(var(--cellsize) + var(--marginborder)));
+    --movy9:calc(var(--cubesize)/4 + var(--marginborder) + 5*(var(--cellsize) + var(--marginborder)));
+    --movx10:calc(var(--cubesize)/4 + var(--marginborder) + 3*(var(--cellsize) + var(--marginborder)));
+    --movy10:calc(var(--cubesize)/4 + var(--marginborder) + 5*(var(--cellsize) + var(--marginborder)));
+    --movx11:calc(var(--cubesize)/4 + var(--marginborder) + 4*(var(--cellsize) + var(--marginborder)));
+    --movy11:calc(var(--cubesize)/4 + var(--marginborder) + 5*(var(--cellsize) + var(--marginborder)));
+    --movx12:calc(var(--cubesize)/4 + var(--marginborder) + 5*(var(--cellsize) + var(--marginborder)));
+    --movy12:calc(var(--cubesize)/4 + var(--marginborder) + 5*(var(--cellsize) + var(--marginborder)));
+    --brd:3px;
+}
+
+
+@media only screen and (max-width: 600px) {
+    :root{
+        --cubesize:10vw;
+        --translate:calc(var(--cubesize)/2 - 0.4px);
+        --shapesize:7vw;
+        --marginborder:5px;
+        --cellsize:14.8vw;
+        --bor:calc(var(--shapesize) - 3px);
+        --movx1:calc(var(--cubesize)/4 + var(--marginborder));
+        --movy1:calc(var(--cubesize)/4 + var(--marginborder));
+        --movx2:calc(var(--cubesize)/4 + var(--marginborder) + var(--cellsize) + var(--marginborder));
+        --movy2:calc(var(--cubesize)/4 + var(--marginborder));
+        --movx3:calc(var(--cubesize)/4 + var(--marginborder) + 2*(var(--cellsize) + var(--marginborder)));
+        --movy3:calc(var(--cubesize)/4 + var(--marginborder));
+        --movx4:calc(var(--cubesize)/4 + var(--marginborder) + 3*(var(--cellsize) + var(--marginborder)));
+        --movy4:calc(var(--cubesize)/4 + var(--marginborder));
+        --movx5:calc(var(--cubesize)/4 + var(--marginborder) + 4*(var(--cellsize) + var(--marginborder)));
+        --movy5:calc(var(--cubesize)/4 + var(--marginborder));
+        --movx6:calc(var(--cubesize)/4 + var(--marginborder) + 5*(var(--cellsize) + var(--marginborder)));
+        --movy6:calc(var(--cubesize)/4 + var(--marginborder));
+        --movx7:calc(var(--cubesize)/4 + var(--marginborder));
+        --movy7:calc(var(--cubesize)/4 + var(--marginborder) + 5*(var(--cellsize) + var(--marginborder)));
+        --movx8:calc(var(--cubesize)/4 + var(--marginborder) + var(--cellsize) + var(--marginborder));
+        --movy8:calc(var(--cubesize)/4 + var(--marginborder) + 5*(var(--cellsize) + var(--marginborder)));
+        --movx9:calc(var(--cubesize)/4 + var(--marginborder) + 2*(var(--cellsize) + var(--marginborder)));
+        --movy9:calc(var(--cubesize)/4 + var(--marginborder) + 5*(var(--cellsize) + var(--marginborder)));
+        --movx10:calc(var(--cubesize)/4 + var(--marginborder) + 3*(var(--cellsize) + var(--marginborder)));
+        --movy10:calc(var(--cubesize)/4 + var(--marginborder) + 5*(var(--cellsize) + var(--marginborder)));
+        --movx11:calc(var(--cubesize)/4 + var(--marginborder) + 4*(var(--cellsize) + var(--marginborder)));
+        --movy11:calc(var(--cubesize)/4 + var(--marginborder) + 5*(var(--cellsize) + var(--marginborder)));
+        --movx12:calc(var(--cubesize)/4 + var(--marginborder) + 5*(var(--cellsize) + var(--marginborder)));
+        --movy12:calc(var(--cubesize)/4 + var(--marginborder) + 5*(var(--cellsize) + var(--marginborder)));
+        --brd:2px;
+    }
+}
+
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: var(--marginborder);
+    /*width: auto;*/
+}
+
+#game-container {
+    display: flex;
+    width:auto;
+    flex-direction: row; /* Disposition en ligne : damier à gauche, bouton à droite */
+    align-items: center; /* Aligner le haut du bouton avec le haut du damier */
+}
+
+#frame {
+    width: auto;
+}
+
+#game-board {
+    background-color: rgb(169, 185, 205);
+    width: calc(7*var(--marginborder) + 6*var(--cellsize));
+    height: calc(7*var(--marginborder) + 6*var(--cellsize));
+    display: grid;
+    grid-template-columns: repeat(6, var(--cellsize));
+    grid-template-rows: repeat(6, var(--cellsize));
+    gap: var(--marginborder);
+}
+
+#rules {
+    width: 500px;
+    margin-left: 150px;
+    margin-top: 0px;
+    text-align: justify;
+}
+
+#control-panel {
+    margin-left: 20px;
+    margin-top: 0px;
+}
+
+button {
+    font-size: 16px;
+    padding: 20px 30px;
+}
+
+@media only screen and (max-width: 600px) {
+    #game-container {
+        flex-direction: column; /* Disposition en colonne : damier au-dessus, bouton en dessous */
+        align-items: center;    /* Centrer les éléments horizontalement */
+    }
+
+    #control-panel {
+        margin-left: 0;  /* Plus d'espacement à gauche */
+        margin-top: 10px; /* Ajouter de l'espace au-dessus du bouton */
+    }
+
+    button {
+        font-size: 12px;
+        padding: 10px 20px; /* Ajuster la taille du bouton pour les petits écrans */
+    }
+
+    #rules {
+        width: 95vw;
+        margin-left: 0px;
+        margin-top: 5px;
+        text-align: justify;
+        font-size: 10px;
+    }
+}
+
+.grid {
+    background-color: rgb(141, 165, 197);
+    width: var(--cellsize);
+    height: var(--cellsize);
+    display: flex;
+    margin: var(--marginborder);
+}
+
+
+.scene {
+    width: var(--cubesize);
+    height: var(--cubesize);
+    perspective: none;
+    position: absolute;
+    margin: 0 auto 40px;
+    transform-style: preserve-3d;
+}
+
+#scene-1{
+    transform: translate(var(--movx1), var(--movy1)) rotateY(20deg) rotateX(20deg) rotateZ(0deg);
+    transition: transform 0.5s;
+}
+
+#scene-2{
+    transform: translate(var(--movx2), var(--movy2)) rotateY(20deg) rotateX(20deg) rotateZ(0deg);
+    transition: transform 0.5s;
+}
+
+#scene-3{
+    transform: translate(var(--movx3), var(--movy3)) rotateY(20deg) rotateX(20deg) rotateZ(0deg);
+    transition: transform 0.5s;
+}
+
+#scene-4{
+    transform: translate(var(--movx4), var(--movy4)) rotateY(20deg) rotateX(20deg) rotateZ(0deg);
+    transition: transform 0.5s;
+}
+
+#scene-5{
+    transform: translate(var(--movx5), var(--movy5)) rotateY(20deg) rotateX(20deg) rotateZ(0deg);
+    transition: transform 0.5s;
+}
+
+#scene-6{
+    transform: translate(var(--movx6), var(--movy6)) rotateY(20deg) rotateX(20deg) rotateZ(0deg);
+    transition: transform 0.5s;
+}
+
+#scene-7{
+    transform:  translate(var(--movx7), var(--movy7)) rotateY(20deg) rotateX(20deg) rotateZ(0deg);
+    transition: transform 0.5s;
+}
+
+#scene-8{
+    transform: translate(var(--movx8), var(--movy8)) rotateY(20deg) rotateX(20deg) rotateZ(0deg);
+    transition: transform 0.5s;
+}
+
+#scene-9{
+    transform: translate(var(--movx9), var(--movy9)) rotateY(20deg) rotateX(20deg) rotateZ(0deg);
+    transition: transform 0.5s;
+}
+
+#scene-10{
+    transform: translate(var(--movx10), var(--movy10)) rotateY(20deg) rotateX(20deg) rotateZ(0deg);
+    transition: transform 0.5s;
+}
+
+#scene-11{
+    transform: translate(var(--movx11), var(--movy11)) rotateY(20deg) rotateX(20deg) rotateZ(0deg);
+    transition: transform 0.5s;
+}
+
+#scene-12{
+    transform: translate(var(--movx12), var(--movy12)) rotateY(20deg) rotateX(20deg) rotateZ(0deg);
+    transition: transform 0.5s;
+}
+
+.cube {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    transform-style: preserve-3d;
+    transform:  rotateY(0deg) rotateX(0deg) rotateZ(0deg);
+    transition: transform 0.5s;
+}
+
+
+.face {
+    position: absolute;
+    width: var(--cubesize);
+    height: var(--cubesize);
+    background-color: rgb(50, 50, 50);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.front  { transform: translateZ(var(--translate)); }
+.back   { transform: rotateY(180deg) translateZ(var(--translate)); }
+.right  { transform: rotateY(90deg) translateZ(var(--translate));  }
+.left   { transform: rotateY(-90deg) translateZ(var(--translate)); }
+.top    { transform: rotateX(90deg) translateZ(var(--translate)); }
+.bottom { transform: rotateX(-90deg) translateZ(var(--translate)); }
+
+.facew {
+    position: absolute;
+    width: var(--cubesize);
+    height: var(--cubesize);
+    background-color: rgb(243, 220, 193);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.shape1 {
+    width : var(--shapesize);
+    height : var(--shapesize);
+    background-color: rgb(230, 36, 36);
+}
+
+.shape2 {
+    width : var(--shapesize);
+    height : var(--shapesize);
+    background-color: rgb(230, 36, 36);
+    border-radius:50%;
+}
+
+.shape3 {
+    width : var(--shapesize);
+    height : var(--shapesize);
+    background-color: white;
+    border-radius:50%;
+}
+
+.shape4 {
+    width : var(--shapesize);
+    height : var(--shapesize);
+    background-color: white;
+}
+
+.shape5 {
+    width : var(--bor);
+    height : var(--bor);
+    background-color: rgb(50, 50, 50);
+    border: var(--brd) solid white;
+}
+
+.shape6 {
+    width : var(--bor);
+    height : var(--bor);
+    background-color: rgb(50, 50, 50);
+    border-radius:50%;
+    border: var(--brd) solid white;
+}
+
+
