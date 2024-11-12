@@ -109,7 +109,7 @@ body {
     margin-top: 0px;
 }
 
-button {
+#valider {
     font-size: 16px;
     padding: 20px 30px;
 }
@@ -155,66 +155,55 @@ button {
     position: absolute;
     margin: 0 auto 40px;
     transform-style: preserve-3d;
+    transition: transform 0.5s;
 }
 
 #scene-1{
-    transform: translate(var(--movx1), var(--movy1)) rotateY(20deg) rotateX(20deg) rotateZ(0deg);
-    transition: transform 0.5s;
+    transform: translate(var(--movx1), var(--movy1)) rotateY(18deg) rotateX(18deg) rotateZ(0deg);
 }
 
 #scene-2{
-    transform: translate(var(--movx2), var(--movy2)) rotateY(20deg) rotateX(20deg) rotateZ(0deg);
-    transition: transform 0.5s;
+    transform: translate(var(--movx2), var(--movy2)) rotateY(18deg) rotateX(18deg) rotateZ(0deg);
 }
 
 #scene-3{
-    transform: translate(var(--movx3), var(--movy3)) rotateY(20deg) rotateX(20deg) rotateZ(0deg);
-    transition: transform 0.5s;
+    transform: translate(var(--movx3), var(--movy3)) rotateY(18deg) rotateX(18deg) rotateZ(0deg);
 }
 
 #scene-4{
-    transform: translate(var(--movx4), var(--movy4)) rotateY(20deg) rotateX(20deg) rotateZ(0deg);
-    transition: transform 0.5s;
+    transform: translate(var(--movx4), var(--movy4)) rotateY(18deg) rotateX(18deg) rotateZ(0deg);
 }
 
 #scene-5{
-    transform: translate(var(--movx5), var(--movy5)) rotateY(20deg) rotateX(20deg) rotateZ(0deg);
-    transition: transform 0.5s;
+    transform: translate(var(--movx5), var(--movy5)) rotateY(18deg) rotateX(18deg) rotateZ(0deg);
 }
 
 #scene-6{
-    transform: translate(var(--movx6), var(--movy6)) rotateY(20deg) rotateX(20deg) rotateZ(0deg);
-    transition: transform 0.5s;
+    transform: translate(var(--movx6), var(--movy6)) rotateY(18deg) rotateX(18deg) rotateZ(0deg);
 }
 
 #scene-7{
-    transform:  translate(var(--movx7), var(--movy7)) rotateY(20deg) rotateX(20deg) rotateZ(0deg);
-    transition: transform 0.5s;
+    transform:  translate(var(--movx7), var(--movy7)) rotateY(18deg) rotateX(18deg) rotateZ(0deg);
 }
 
 #scene-8{
-    transform: translate(var(--movx8), var(--movy8)) rotateY(20deg) rotateX(20deg) rotateZ(0deg);
-    transition: transform 0.5s;
+    transform: translate(var(--movx8), var(--movy8)) rotateY(18deg) rotateX(18deg) rotateZ(0deg);
 }
 
 #scene-9{
-    transform: translate(var(--movx9), var(--movy9)) rotateY(20deg) rotateX(20deg) rotateZ(0deg);
-    transition: transform 0.5s;
+    transform: translate(var(--movx9), var(--movy9)) rotateY(18deg) rotateX(18deg) rotateZ(0deg);
 }
 
 #scene-10{
-    transform: translate(var(--movx10), var(--movy10)) rotateY(20deg) rotateX(20deg) rotateZ(0deg);
-    transition: transform 0.5s;
+    transform: translate(var(--movx10), var(--movy10)) rotateY(18deg) rotateX(18deg) rotateZ(0deg);
 }
 
 #scene-11{
-    transform: translate(var(--movx11), var(--movy11)) rotateY(20deg) rotateX(20deg) rotateZ(0deg);
-    transition: transform 0.5s;
+    transform: translate(var(--movx11), var(--movy11)) rotateY(18deg) rotateX(18deg) rotateZ(0deg);
 }
 
 #scene-12{
-    transform: translate(var(--movx12), var(--movy12)) rotateY(20deg) rotateX(20deg) rotateZ(0deg);
-    transition: transform 0.5s;
+    transform: translate(var(--movx12), var(--movy12)) rotateY(18deg) rotateX(18deg) rotateZ(0deg);
 }
 
 .cube {
@@ -248,7 +237,8 @@ button {
     position: absolute;
     width: var(--cubesize);
     height: var(--cubesize);
-    background-color: rgb(243, 220, 193);
+    /*background-color: rgb(243, 227, 193);*/
+    background-color: rgb(230, 215, 183);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -295,4 +285,34 @@ button {
     border: var(--brd) solid white;
 }
 
+/* Style pour masquer la modale par défaut */
+.modal {
+    display: none;               /* Masquée par défaut */
+    position: fixed;             /* Fixée par rapport à la fenêtre */
+    z-index: 1000;               /* Au-dessus du contenu principal */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fond semi-transparent */
+}
+
+/* Contenu de la modale */
+.modal-content {
+    background-color: white;
+    margin: 10% auto;            /* Centrée verticalement */
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 500px;
+    text-align: left;
+}
+
+/* Bouton de fermeture */
+.close {
+    float: right;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
 

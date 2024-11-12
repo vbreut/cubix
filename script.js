@@ -62,16 +62,16 @@ board.forEach(cell => {
      
         if (selectedScene != null && occupied == false && numberofmoves < 2 && cell.style.backgroundColor == "rgb(141, 165, 197)"){
 
-            if (!isClickable) return; // Si le flag est faux, ignore le clic
+            //if (!isClickable) return; // Si le flag est faux, ignore le clic
 
             moveCubeTo3(cell);
 
-            isClickable = false; // Désactive les clics supplémentaires
+            //isClickable = false; // Désactive les clics supplémentaires
             
             // Réactive le listener
-            setTimeout(() => {
-                isClickable = true;
-            }, 500);
+            //setTimeout(() => {
+            //    isClickable = true;
+            //}, 500);
            
         }
     });
@@ -173,7 +173,7 @@ function moveCubeTo3(targetCell) {
         x3d = x + movx - boardrect.left - 5 - 0.5;
         y3d = y + movy - boardrect.top - 5 - 0.5;
 
-        selectedScene.style.transform = `translate(${x3d}px, ${y3d}px) rotateY(20deg) rotateX(20deg)`;
+        selectedScene.style.transform = `translate(${x3d}px, ${y3d}px) rotateY(18deg) rotateX(18deg)`;
         numberofmoves += 1;
         targetCell.style.backgroundColor = "rgb(123, 144, 171)";
     }
@@ -187,7 +187,7 @@ validButton.addEventListener('click', () => {
         prise();
         numberofmoves = 0;
         selectedScene = null;
-        if (turn=="white") {turn="black"} else {turn="white"};
+        if (turn=="white") {turn="black"} else {turn="white"}; //sauf s'il n'y a plus de cube blancs ou noirs...
     }
 
 });
