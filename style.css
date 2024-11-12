@@ -97,14 +97,12 @@ body {
     gap: var(--marginborder);
 }
 
-#rules {
-    width: 500px;
-    margin-left: 150px;
+#control-panel {
+    margin-left: 20px;
     margin-top: 0px;
-    text-align: justify;
 }
 
-#control-panel {
+#control-panel2 {
     margin-left: 20px;
     margin-top: 0px;
 }
@@ -122,7 +120,12 @@ body {
 
     #control-panel {
         margin-left: 0;  /* Plus d'espacement à gauche */
-        margin-top: 10px; /* Ajouter de l'espace au-dessus du bouton */
+        margin-top: 30px; /* Ajouter de l'espace au-dessus du bouton */
+    }
+
+    #control-panel2 {
+        margin-left: 0px;
+        margin-top: 10px;
     }
 
     button {
@@ -238,7 +241,7 @@ body {
     width: var(--cubesize);
     height: var(--cubesize);
     /*background-color: rgb(243, 227, 193);*/
-    background-color: rgb(230, 215, 183);
+    background-color: rgb(235, 218, 183);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -305,7 +308,7 @@ body {
     border-radius: 8px;
     width: 80%;
     max-width: 500px;
-    text-align: left;
+    text-align: justify;
 }
 
 /* Bouton de fermeture */
