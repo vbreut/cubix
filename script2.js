@@ -79,24 +79,24 @@ function prise() {
             if (cellwidth>80){
                 movtakenwy=-60;
                 movtakenby=575;
-                movtakenb=nbtakenb*30;
-                movtakenw=nbtakenw*30;
+                movtakenb=nbtakenb*35;
+                movtakenw=nbtakenw*35;
             }
             else
             {
                 movtakenwy=-cellwidth/2-5;
                 movtakenby=6*cellwidth+5;
-                movtakenb=nbtakenb*cellwidth/3;
-                movtakenw=nbtakenw*cellwidth/3;
+                movtakenb=nbtakenb*cellwidth/2.5;
+                movtakenw=nbtakenw*cellwidth/2.5;
             }
 
             takenscene=document.getElementById("scene-" + takencubes[i]);
 
             if (takencubes[i] < 7) {
-                takenscene.style.transform = `translate(${movtakenb}px, ${movtakenby}px) rotateY(18deg) rotateX(18deg) scale3d(0.3, 0.3, 0.3)`;
+                takenscene.style.transform = `translate(${movtakenb}px, ${movtakenby}px) rotateY(18deg) rotateX(18deg) scale3d(0.4, 0.4, 0.4)`;
             }
             else {
-                takenscene.style.transform = `translate(${movtakenw}px, ${movtakenwy}px) rotateY(18deg) rotateX(18deg) scale3d(0.3, 0.3, 0.3)`;
+                takenscene.style.transform = `translate(${movtakenw}px, ${movtakenwy}px) rotateY(18deg) rotateX(18deg) scale3d(0.4, 0.4, 0.4)`;
             }
 
             cubestatus[0][takencubes[i]-1]=0;
