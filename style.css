@@ -109,8 +109,19 @@ body {
 
 #valider {
     /*font-size: 16px;*/
+    display: flex;
+    flex-direction: row;
     width: 100px;
     height: 50px;
+    align-items: center;
+}
+
+#tour {
+    width: 20px;
+    height: 20px;
+    background-color: rgb(255, 255, 255);
+    margin: 5px;
+    border: 1px solid rgb(0, 0, 0);
 }
 
 #openModal {

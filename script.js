@@ -10,6 +10,7 @@ const scenes = document.querySelectorAll('.scene');
 const firstscene = document.querySelector('.scene');
 const gameboard = document.getElementById('game-board')
 const validButton = document.getElementById('valider');
+const tour = document.getElementById('tour');
 
 let cellrect = firstcell.getBoundingClientRect();
 let boardrect= gameboard.getBoundingClientRect();
@@ -208,10 +209,10 @@ validButton.addEventListener('click', () => {
         selectedScene = null;
         if (turn=="white") {
             turn="black";
-            validButton.innerText= "⬛ Valider"
+            tour.style.backgroundColor = "rgb(0, 0, 0)";
         } else {
             turn="white";
-            validButton.innerText= "⬜ Valider"
+            tour.style.backgroundColor = "rgb(255, 255, 255)";
         } //sauf s'il n'y a plus de cube blancs ou noirs...
 
     }
