@@ -241,7 +241,8 @@ body {
     width: var(--cubesize);
     height: var(--cubesize);
     /*background-color: rgb(243, 227, 193);*/
-    background-color: rgb(235, 218, 183);
+    /*background-color: rgb(235, 218, 183);*/
+    background-color: rgb(240, 222, 185);
     display: flex;
     justify-content: center;
     align-items: center;
