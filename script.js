@@ -208,8 +208,10 @@ validButton.addEventListener('click', () => {
         selectedScene = null;
         if (turn=="white") {
             turn="black";
+            validButton.innerText= "⬛ Valider"
         } else {
             turn="white";
+            validButton.innerText= "⬜ Valider"
         } //sauf s'il n'y a plus de cube blancs ou noirs...
 
     }

@@ -108,8 +108,15 @@ body {
 }
 
 #valider {
-    font-size: 16px;
-    padding: 20px 30px;
+    /*font-size: 16px;*/
+    width: 100px;
+    height: 50px;
+}
+
+#openModal {
+    /*font-size: 16px;*/
+    width: 100px;
+    height: 50px;
 }
 
 @media only screen and (max-width: 600px) {
@@ -120,25 +127,12 @@ body {
 
     #control-panel {
         margin-left: 0;  /* Plus d'espacement à gauche */
-        margin-top: 30px; /* Ajouter de l'espace au-dessus du bouton */
+        margin-top: 35px; /* Ajouter de l'espace au-dessus du bouton */
     }
 
     #control-panel2 {
         margin-left: 0px;
-        margin-top: 10px;
-    }
-
-    button {
-        font-size: 12px;
-        padding: 10px 20px; /* Ajuster la taille du bouton pour les petits écrans */
-    }
-
-    #rules {
-        width: 95vw;
-        margin-left: 0px;
-        margin-top: 5px;
-        text-align: justify;
-        font-size: 10px;
+        margin-top: 15px;
     }
 }
 
