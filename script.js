@@ -9,6 +9,7 @@ const firstcell = document.querySelector('.grid');
 const scenes = document.querySelectorAll('.scene');
 const firstscene = document.querySelector('.scene');
 const gameboard = document.getElementById('game-board')
+const validButton = document.getElementById('valider');
 
 let cellrect = firstcell.getBoundingClientRect();
 let boardrect= gameboard.getBoundingClientRect();
@@ -16,6 +17,8 @@ let cellwidth = cellrect.width + 5;
 let scenerect = firstscene.getBoundingClientRect();
 let movx = scenerect.width/4 + 5;
 let movy = scenerect.width/4 + 5;
+let dark="rgb(111, 135, 167)";
+let light="rgb(141, 165, 197)";
 
 //0 cell nb
 //1 face up, par défaut red square
@@ -44,10 +47,10 @@ scenes.forEach(scen => {
         let cellid="cell-" + cellnumber;
         let currentcell= document.getElementById(cellid);
 
-        if ((selectedScene == null || numberofmoves == 0) && (cubenumber<7 && turn=="black" || cubenumber>6 && turn=="white") ){
+        if ((selectedScene == null || numberofmoves == 0) && (cubenumber<7 && turn=="black" || cubenumber>6 && turn=="white") && currentcell!=null){
             selectedScene=scen;
-            board.forEach(cell => {cell.style.backgroundColor = "rgb(141, 165, 197)"})
-            currentcell.style.backgroundColor = "rgb(123, 144, 171)"
+            board.forEach(cell => {cell.style.backgroundColor = light;})
+            currentcell.style.backgroundColor = dark;
             //reset des couleurs et coloration de la case
         }
     })
@@ -60,11 +63,18 @@ board.forEach(cell => {
         let cellnumber=parseInt(cell.id.match(/\d+/)[0]);
         let occupied = cubestatus[0].includes(cellnumber)
      
-        if (selectedScene != null && occupied == false && numberofmoves < 2 && cell.style.backgroundColor == "rgb(141, 165, 197)"){
+        if (selectedScene != null && occupied == false /* && numberofmoves < 2 && cell.style.backgroundColor == "rgb(141, 165, 197)"*/){
 
             //if (!isClickable) return; // Si le flag est faux, ignore le clic
 
-            moveCubeTo3(cell);
+
+            if (cell.style.backgroundColor == dark) {
+                moveCubeTo3(cell, cell.style.backgroundColor);
+            }
+
+            if (cell.style.backgroundColor == light && numberofmoves < 2) {
+                moveCubeTo3(cell, cell.style.backgroundColor);
+            }
 
             //isClickable = false; // Désactive les clics supplémentaires
             
@@ -78,7 +88,7 @@ board.forEach(cell => {
 });
 
 
-function moveCubeTo3(targetCell) {
+function moveCubeTo3(targetCell, cellcolor) {
 
     let rotx=0;
     let roty=0;
@@ -99,13 +109,17 @@ function moveCubeTo3(targetCell) {
     let deltay = y-yc+10;
 
     let cube=selectedScene.firstElementChild;
-    let cubenumber=cube.id.match(/\d+/)[0] - 1;
+    let cubenumber=parseInt(cube.id.match(/\d+/)[0]) - 1;
     let faceup=cubestatus[1][cubenumber];
     let facedown=cubestatus[2][cubenumber];
     let facefront=cubestatus[3][cubenumber];
     let faceback=cubestatus[4][cubenumber];
     let faceleft=cubestatus[5][cubenumber];
     let faceright=cubestatus[6][cubenumber];
+
+    let currentcellnumber=cubestatus[0][cubenumber];
+    let cellid="cell-" + currentcellnumber;
+    let currentcell= document.getElementById(cellid);
 
 
     if (Math.abs(deltax) + Math.abs(deltay) < cellwidth + 20 && Math.abs(deltax) + Math.abs(deltay) > 20) {
@@ -174,21 +188,29 @@ function moveCubeTo3(targetCell) {
         y3d = y + movy - boardrect.top - 5 - 0.5;
 
         selectedScene.style.transform = `translate(${x3d}px, ${y3d}px) rotateY(18deg) rotateX(18deg)`;
-        numberofmoves += 1;
-        targetCell.style.backgroundColor = "rgb(123, 144, 171)";
+
+        if (cellcolor==dark){
+            currentcell.style.backgroundColor = light;
+            numberofmoves -=1;
+        }
+        if (cellcolor==light){
+            targetCell.style.backgroundColor = dark;
+            numberofmoves +=1;
+        }
     }
 }
 
-
-const validButton = document.getElementById('valider');
 
 validButton.addEventListener('click', () => {
     if (numberofmoves > 0){
         prise();
         numberofmoves = 0;
         selectedScene = null;
-        if (turn=="white") {turn="black"} else {turn="white"}; //sauf s'il n'y a plus de cube blancs ou noirs...
-    }
+        if (turn=="white") {
+            turn="black";
+        } else {
+            turn="white";
+        } //sauf s'il n'y a plus de cube blancs ou noirs...
 
+    }
 });
-//document.body.appendChild(validButton);
