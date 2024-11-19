@@ -4,6 +4,7 @@ let selectedScene = null;
 let isClickable = true;
 let numberofmoves = 0;
 let turn = "white";
+let forcedcube =0;
 const board = document.querySelectorAll('.grid');
 const firstcell = document.querySelector('.grid');
 const scenes = document.querySelectorAll('.scene');
@@ -202,11 +203,24 @@ function moveCubeTo3(targetCell, cellcolor) {
 }
 
 
+
 validButton.addEventListener('click', () => {
+
     if (numberofmoves > 0){
         prise();
+
+        if (forcedcube!=0){
+            return;
+        }
+        else{document.getElementById("info").textContent="";}
+
+        victoire();
+
         numberofmoves = 0;
         selectedScene = null;
+
+        if (turn=="end") {return;}
+
         if (turn=="white") {
             turn="black";
             tour.style.backgroundColor = "rgb(0, 0, 0)";
@@ -217,3 +231,41 @@ validButton.addEventListener('click', () => {
 
     }
 });
+
+
+// Récupérer les éléments HTML
+const modal = document.getElementById("modal");
+const openModalButton = document.getElementById("openModal");
+const closeModalButton = document.getElementById("closeModal");
+
+const modalvic = document.getElementById("modalvic");
+const closeModalvicButton = document.getElementById("closeModalvic");
+
+// Ouvrir la modale
+openModalButton.addEventListener("click", () => {
+    modal.style.display = "block";
+    //test();
+});
+
+// Fermer la modale
+closeModalButton.addEventListener("click", () => {
+    modal.style.display = "none";
+});
+
+// Fermer la modale
+closeModalvicButton.addEventListener("click", () => {
+    modalvic.style.display = "none";
+});
+
+// Fermer la modale en cliquant en dehors de la fenêtre
+window.addEventListener("click", (event) => {
+    if (event.target === modal || event.target === modalvic) {
+        modal.style.display = "none";
+        modalvic.style.display = "none";
+    }
+});
+
+function affichervic(message){
+    document.getElementById("message").textContent=message;
+    document.getElementById("modalvic").style.display="flex";
+}

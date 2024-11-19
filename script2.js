@@ -4,11 +4,11 @@ function prise() {
 
     let cube=selectedScene.firstElementChild;
     let cubenumber=parseInt(cube.id.match(/\d+/)[0]);
-    let cellnumber=cubestatus[0][cubenumber-1];
-    let cubeleft=cubestatus[0].indexOf(cellnumber-1)+1;
-    let cuberight=cubestatus[0].indexOf(cellnumber+1)+1;
-    let cubefront=cubestatus[0].indexOf(cellnumber-6)+1;
-    let cubeback=cubestatus[0].indexOf(cellnumber+6)+1;
+    let cellnumber=cubestatus[0][cubenumber - 1];
+    let cubeleft=cubestatus[0].indexOf(cellnumber - 1) + 1;
+    let cuberight=cubestatus[0].indexOf(cellnumber + 1) + 1;
+    let cubefront=cubestatus[0].indexOf(cellnumber - 6) + 1;
+    let cubeback=cubestatus[0].indexOf(cellnumber + 6) + 1;
     let takenscene=null;
     let nbtakenw=0;
     let nbtakenb=0;
@@ -21,8 +21,8 @@ function prise() {
     let j=0;
     let k=0;
 
-    if (cellnumber%6==0){cuberight= -1;}
-    if (cellnumber%6==1){cubeleft= -1;}
+    if (cellnumber%6==0){cuberight= 0;}
+    if (cellnumber%6==1){cubeleft= 0;}
 
     if (cellwidth>80){
         movtakenwy=-60;
@@ -38,32 +38,41 @@ function prise() {
         movtakenw=nbtakenw*cellwidth/3;
     }
 
-    if (cubeleft != -1 && ((cubenumber < 7 && cubeleft > 6) || (cubenumber > 6 && cubeleft < 7))){
-        if (cubestatus[1][cubenumber-1] == cubestatus[1][cubeleft-1]){
+    if (cubeleft != 0 && ((cubenumber < 7 && cubeleft > 6) || (cubenumber > 6 && cubeleft < 7))){
+        if (cubestatus[1][cubenumber - 1] == cubestatus[1][cubeleft - 1]){
             takencubes[j]=cubeleft;
             j ++;
         }
     }
 
-    if (cuberight != -1 && ((cubenumber < 7 && cuberight > 6) || (cubenumber > 6 && cuberight < 7))){
-        if (cubestatus[1][cubenumber-1] == cubestatus[1][cuberight-1]){
+    if (cuberight != 0 && ((cubenumber < 7 && cuberight > 6) || (cubenumber > 6 && cuberight < 7))){
+        if (cubestatus[1][cubenumber - 1] == cubestatus[1][cuberight - 1]){
             takencubes[j]=cuberight;
             j ++;
         }
     }
 
-    if (cubefront != -1 && ((cubenumber < 7 && cubefront > 6) || (cubenumber > 6 && cubefront< 7))){
-        if (cubestatus[1][cubenumber-1] == cubestatus[1][cubefront-1]){
+    if (cubefront != 0 && ((cubenumber < 7 && cubefront > 6) || (cubenumber > 6 && cubefront< 7))){
+        if (cubestatus[1][cubenumber - 1] == cubestatus[1][cubefront - 1]){
             takencubes[j]=cubefront;
             j ++;
         }
     }
 
-    if (cubeback != -1 && ((cubenumber < 7 && cubeback > 6) || (cubenumber > 6 && cubeback < 7))){
-        if (cubestatus[1][cubenumber-1] == cubestatus[1][cubeback-1]){
+    if (cubeback != 0 && ((cubenumber < 7 && cubeback > 6) || (cubenumber > 6 && cubeback < 7))){
+        if (cubestatus[1][cubenumber - 1] == cubestatus[1][cubeback - 1]){
             takencubes[j]=cubeback;
             j ++;
         }
+    }
+
+    //check si le cube forcé est bien pris
+    if(forcedcube!=0){
+        let forcedcubetaken=takencubes.indexOf(forcedcube + 1);
+        if (forcedcubetaken==-1){
+            return;
+        }
+        else{forcedcube=0;}
     }
 
     for (i = 0; i <3; i++)
@@ -84,8 +93,8 @@ function prise() {
             }
             else
             {
-                movtakenwy=-cellwidth/2-5;
-                movtakenby=6*cellwidth+5;
+                movtakenwy=-cellwidth/2 - 5;
+                movtakenby=6*cellwidth + 5;
                 movtakenb=nbtakenb*cellwidth/2.5;
                 movtakenw=nbtakenw*cellwidth/2.5;
             }
@@ -102,26 +111,110 @@ function prise() {
             cubestatus[0][takencubes[i]-1]=0;
         }
     }
+
+    //check s'il reste des cubes
+    j=0;
+    for (i = 0; i <6; i++){
+        if(cubestatus[0][i]!=0){j++}
+    }
+    if(j==0){affichervic("Victoire des blancs !");turn="end";}
+
+    j=0;
+    for (i = 6; i <12; i++){
+        if(cubestatus[0][i]!=0){j++}
+    }
+    if(j==0){affichervic("Victoire des noirs!");turn="end";}
+
 }
 
-// Récupérer les éléments HTML
-const modal = document.getElementById("modal");
-const openModalButton = document.getElementById("openModal");
-const closeModalButton = document.getElementById("closeModal");
+function victoireold(){
 
-// Ouvrir la modale
-openModalButton.addEventListener("click", () => {
-    modal.style.display = "block";
-});
+    let cubenumber=0;
+    let c=[0,0];
+    let potential=0;
 
-// Fermer la modale
-closeModalButton.addEventListener("click", () => {
-    modal.style.display = "none";
-});
+    for(cubenumber=0; cubenumber<12; cubenumber++){
 
-// Fermer la modale en cliquant en dehors de la fenêtre
-window.addEventListener("click", (event) => {
-    if (event.target === modal) {
-        modal.style.display = "none";
+        if (cubestatus[1][cubenumber]=="rs" && cubestatus[0][cubenumber]<7 && cubestatus[0][cubenumber]!=0 && cubenumber>5){
+            c=capture(cubenumber+1);
+            if (c[0]==0 && turn=="white"){
+                affichervic("Victoire des blancs !");
+                turn="end";
+                return c;
+            }
+            if (c[0]!=0 && turn=="white"){
+                document.getElementById("info").textContent="Coup forcé"
+                return c;
+            }
+            else {//les noirs n'ont pas joué le coup forcé
+                potential=0;
+                document.getElementById("info").textContent="Coup forcé";
+                c[0]=-1;
+                return c;
+            }
+        }
+
+        if (cubestatus[1][cubenumber]=="rs" && cubestatus[0][cubenumber]>30 && cubenumber<6){
+            c=capture(cubenumber+1);
+            if (c[0]==0 && turn=="black"){
+                potential=1;
+            }
+            if (c[0]!=0 && turn=="black"){
+                document.getElementById("info").textContent="Coup forcé"
+                return c;
+            }
+            
+            else {//les blancs n'ont pas joué le coup forcé
+                document.getElementById("info").textContent="Coup forcé"
+                c[0]=-1;
+                return c;
+            }
+        }
+
+        if (potential==1){
+            affichervic("Victoire des noirs !");
+            turn="end";
+            return c;
+        }
     }
-});
+
+return c;
+
+}
+
+function victoire(){
+
+    let cubenumber=0;
+    let c=[0,0];
+
+    for(cubenumber=0; cubenumber<12; cubenumber++){
+
+        if (cubestatus[1][cubenumber]=="rs" && cubestatus[0][cubenumber]<7 && cubestatus[0][cubenumber]!=0 && cubenumber>5){
+            c=capture(cubenumber+1);
+            if (c[0]==0 && turn=="white"){
+                affichervic("Victoire des blancs !");
+                turn="end";
+                return;
+            }
+            if (c[0]!=0 && turn=="white"){
+                document.getElementById("info").textContent="Coup forcé"
+                forcedcube=cubenumber;
+                return;
+            }
+        }
+
+        if (cubestatus[1][cubenumber]=="rs" && cubestatus[0][cubenumber]>30 && cubenumber<6){
+            c=capture(cubenumber+1);
+            if (c[0]==0 && turn=="black"){
+                affichervic("Victoire des noirs !");
+                turn="end";
+                return;
+            }
+            if (c[0]!=0 && turn=="black"){
+                document.getElementById("info").textContent="Coup forcé"
+                forcedcube=cubenumber;
+                return;
+            }
+        }
+    }
+}

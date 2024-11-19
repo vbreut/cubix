@@ -174,8 +174,10 @@
 
         <div id="control-panel">
             <button id="valider">
-            <div id="tour"></div> Valider
-        </button>
+                <div id="tour"></div> Valider
+            </button>
+
+            <div id="info"></div>
         </div>
 
         <div id="control-panel2"></div>
@@ -187,21 +189,28 @@
         <div id="modal" class="modal">
             <div class="modal-content">
                 <span id="closeModal" class="close">&times;</span>
-                        <h3>Règles du jeu</h3>
+                <h3>Règles du jeu</h3>
 
-                        <p>Sur chaque cube, la face "carré rouge" est opposée à a face "rond rouge", la face "carré blanc" à la face "rond blanc", 
-                        et la face "carré noir" à la face "rond noir".</p>
+                <p>Sur chaque cube, la face "carré rouge" est opposée à la face "rond rouge", la face "carré blanc" à la face "rond blanc", et la face "carré noir" à la face "rond noir".</p>
                         
-                        <p>Les blancs jouent en premier. Dans cette démo il est possible de reprendre son coup tant qu'il n'est pas validé.</p>
+                <p>Les blancs jouent en premier. Dans cette démo il est possible de reprendre son coup tant qu'il n'est pas validé.</p>
                         
-                        <p><b>Déplacement:</b> Il est possible de déplacer un cube d'une ou deux cases dans n'importe quelle direction.</p>
+                <p><b>Déplacement:</b> Il est possible de déplacer un cube d'une ou deux cases dans n'importe quelle direction.</p>
                         
-                        <p><b>Prise:</b> Un cube est éliminé du plateau si un cube adverse est placé sur une case adjacente avec la même face supérieure.</p>
+                <p><b>Prise:</b> Un cube est éliminé du plateau si un cube adverse est placé sur une case adjacente avec la même face supérieure.</p>
                         
-                        <p><b>Victoire:</b> La partie est gagnée si un cube arrive sur la dernière rangée, 
-                        avec la face "carré rouge" vers le haut, et si l’adversaire ne peut pas capturer ce cube.</p>
+                <p><b>Victoire:</b> La partie est gagnée si un cube arrive sur la dernière rangée, avec la face "carré rouge" vers le haut, et si l’adversaire ne peut pas capturer ce cube.</p>
 
-                        <p>Contact: vincent.breut@gmail.com</p>
+                <p>Contact: vincent.breut@gmail.com</p>
+            </div>
+        </div>
+
+        <div id="modalvic" class="modal">
+            <div class="modal-contentvic">
+                <span id="closeModalvic" class="close">&times;</span>
+
+                <p id="message">Contenu par défaut</p>
+                        
             </div>
         </div>
 
