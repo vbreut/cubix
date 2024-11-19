@@ -4,7 +4,7 @@ let selectedScene = null;
 let isClickable = true;
 let numberofmoves = 0;
 let turn = "white";
-let forcedcube =0;
+let forcedcube = -1;
 const board = document.querySelectorAll('.grid');
 const firstcell = document.querySelector('.grid');
 const scenes = document.querySelectorAll('.scene');
@@ -209,7 +209,7 @@ validButton.addEventListener('click', () => {
     if (numberofmoves > 0){
         prise();
 
-        if (forcedcube!=0){
+        if (forcedcube!=-1){
             return;
         }
         else{document.getElementById("info").textContent="";}

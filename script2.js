@@ -67,12 +67,12 @@ function prise() {
     }
 
     //check si le cube forcé est bien pris
-    if(forcedcube!=0){
+    if(forcedcube!=-1){
         let forcedcubetaken=takencubes.indexOf(forcedcube + 1);
         if (forcedcubetaken==-1){
             return;
         }
-        else{forcedcube=0;}
+        else{forcedcube=-1;}
     }
 
     for (i = 0; i <3; i++)
