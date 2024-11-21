@@ -4,7 +4,7 @@ let selectedScene = null;
 let isClickable = true;
 let numberofmoves = 0;
 let turn = "white";
-let forcedcube = -1;
+let forcedcube =[0,0,0,-1];
 const board = document.querySelectorAll('.grid');
 const firstcell = document.querySelector('.grid');
 const scenes = document.querySelectorAll('.scene');
@@ -21,6 +21,13 @@ let movx = scenerect.width/4 + 5;
 let movy = scenerect.width/4 + 5;
 let dark="rgb(111, 135, 167)";
 let light="rgb(141, 165, 197)";
+let changepossible=1;
+let playingmode=0;
+let choice=null;
+const choice0 = document.getElementById("choice0");
+const choice1 = document.getElementById("choice1");
+const choice2 = document.getElementById("choice2");
+const choice3 = document.getElementById("choice3");
 
 //0 cell nb
 //1 face up, par défaut red square
@@ -49,14 +56,20 @@ scenes.forEach(scen => {
         let cellid="cell-" + cellnumber;
         let currentcell= document.getElementById(cellid);
 
-        if ((selectedScene == null || numberofmoves == 0) && (cubenumber<7 && turn=="black" || cubenumber>6 && turn=="white") && currentcell!=null){
+        if ((selectedScene == null || numberofmoves == 0) && (cubenumber<7 && turn=="black" && playingmode==0 || cubenumber>6 && turn=="white") && currentcell!=null){
             selectedScene=scen;
-            board.forEach(cell => {cell.style.backgroundColor = light;})
-            currentcell.style.backgroundColor = dark;
-            //reset des couleurs et coloration de la case
+            selectcurrentcell(currentcell);
         }
-    })
+
+    });
 });
+
+function selectcurrentcell(currentcell){
+        board.forEach(cell => {cell.style.backgroundColor = light;})
+        currentcell.style.backgroundColor = dark;
+        //reset des couleurs et coloration de la case
+}
+
 
 
 // Écouter les clics sur chaque case du plateau
@@ -65,10 +78,7 @@ board.forEach(cell => {
         let cellnumber=parseInt(cell.id.match(/\d+/)[0]);
         let occupied = cubestatus[0].includes(cellnumber)
      
-        if (selectedScene != null && occupied == false /* && numberofmoves < 2 && cell.style.backgroundColor == "rgb(141, 165, 197)"*/){
-
-            //if (!isClickable) return; // Si le flag est faux, ignore le clic
-
+        if (selectedScene != null && occupied == false && (playingmode==0 || turn=="white")){
 
             if (cell.style.backgroundColor == dark) {
                 moveCubeTo3(cell, cell.style.backgroundColor);
@@ -76,15 +86,7 @@ board.forEach(cell => {
 
             if (cell.style.backgroundColor == light && numberofmoves < 2) {
                 moveCubeTo3(cell, cell.style.backgroundColor);
-            }
-
-            //isClickable = false; // Désactive les clics supplémentaires
-            
-            // Réactive le listener
-            //setTimeout(() => {
-            //    isClickable = true;
-            //}, 500);
-           
+            }           
         }
     });
 });
@@ -203,34 +205,71 @@ function moveCubeTo3(targetCell, cellcolor) {
 }
 
 
-
 validButton.addEventListener('click', () => {
-
     if (numberofmoves > 0){
-        prise();
-
-        if (forcedcube!=-1){
-            return;
-        }
-        else{document.getElementById("info").textContent="";}
-
-        victoire();
-
-        numberofmoves = 0;
-        selectedScene = null;
-
+        changes();
+        valider();
         if (turn=="end") {return;}
-
-        if (turn=="white") {
-            turn="black";
-            tour.style.backgroundColor = "rgb(0, 0, 0)";
-        } else {
-            turn="white";
-            tour.style.backgroundColor = "rgb(255, 255, 255)";
-        } //sauf s'il n'y a plus de cube blancs ou noirs...
-
+        if (playingmode==1){
+            setTimeout(() => {
+                botlevel1();
+                setTimeout(() => {
+                    valider();
+                }, 1500);
+            }, 500);
+        }
     }
 });
+
+function changes(){
+    changepossible=0;
+    if(playingmode==0){
+        choice1.style.color = "lightgrey";
+        choice2.style.color = "lightgrey";
+        choice3.style.color = "lightgrey";
+    }
+    if(playingmode==1){
+        choice0.style.color = "lightgrey";
+        choice2.style.color = "lightgrey";
+        choice3.style.color = "lightgrey";
+    }
+    if(playingmode==2){
+        choice0.style.color = "lightgrey";
+        choice1.style.color = "lightgrey";
+        choice3.style.color = "lightgrey";
+    }
+    if(playingmode==3){
+        choice1.style.color = "lightgrey";
+        choice2.style.color = "lightgrey";
+        choice0.style.color = "lightgrey";
+    }
+
+}
+
+function valider(){
+    prise();
+
+    if (forcedcube[3]!=-1){
+        return;
+    }
+    else{document.getElementById("info").textContent="";}
+
+    victoire();
+
+    numberofmoves = 0;
+    selectedScene = null;
+
+    if (turn=="end") {return;}
+
+    if (turn=="white") {
+        turn="black";
+        tour.style.backgroundColor = "rgb(0, 0, 0)";
+    } else {
+        turn="white";
+        tour.style.backgroundColor = "rgb(255, 255, 255)";
+    }
+
+}
 
 
 // Récupérer les éléments HTML
@@ -244,7 +283,7 @@ const closeModalvicButton = document.getElementById("closeModalvic");
 // Ouvrir la modale
 openModalButton.addEventListener("click", () => {
     modal.style.display = "block";
-    //test();
+    //botlevel1();
 });
 
 // Fermer la modale
@@ -269,3 +308,19 @@ function affichervic(message){
     document.getElementById("message").textContent=message;
     document.getElementById("modalvic").style.display="flex";
 }
+
+
+const boutonsRadio = document.querySelectorAll('input[name="niveau"]');
+
+
+
+// Ajouter un écouteur d'événement pour chaque bouton radio
+boutonsRadio.forEach(bouton => {
+    bouton.addEventListener("click", (event) => {
+        if (!changepossible) {
+            event.preventDefault(); // Empêche le changement de sélection
+        } else {
+            playingmode=event.target.value;
+        }
+    });
+});

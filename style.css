@@ -97,13 +97,21 @@ body {
     gap: var(--marginborder);
 }
 
+#panels {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+}
+
 #control-panel {
     margin-left: 20px;
-    margin-top: 0px;
+    margin-top: 30px;
+    margin-right: 20px;
 }
 
 #control-panel2 {
     margin-left: 20px;
+    margin-right: 20px;
     margin-top: 0px;
 }
 
@@ -132,6 +140,12 @@ body {
     font-size: 13px;
 }
 
+#playing {
+    /*font-size: 16px;*/
+    font-size: 13px;
+    text-align: left;
+}
+
 #openModal {
     /*font-size: 16px;*/
     width: 100px;
@@ -145,9 +159,16 @@ body {
         align-items: center;    /* Centrer les éléments horizontalement */
     }
 
+    #panels {
+        display: flex;
+        flex-direction: row;
+        align-items: center; 
+    }
+
     #control-panel {
-        margin-left: 0;  /* Plus d'espacement à gauche */
-        margin-top: 35px; /* Ajouter de l'espace au-dessus du bouton */
+        margin-left: 40px;
+        margin-right: 0px;
+        margin-top: 35px;
     }
 
     #control-panel2 {
@@ -170,7 +191,7 @@ body {
     height: var(--cubesize);
     perspective: none;
     position: absolute;
-    margin: 0 auto 40px;
+    margin: 0/*auto 40px*/;
     transform-style: preserve-3d;
     transition: transform 0.5s;
 }

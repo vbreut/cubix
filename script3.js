@@ -205,7 +205,7 @@ function capture(cubetotest){
         [cellleft,faceup],
         [cellright,faceup],
     ];
-    let c=[0,0];
+    let c=[0,0,0,0];
 
     if (cubetotest<7){start=7;end=13;}
     if (cubetotest>6){start=1;end=7;}
@@ -228,8 +228,9 @@ function capture(cubetotest){
                     deep=0;
                     path(deep, deepmax, cubetomove, obj[j], solutions, found, cubeid);
                     if(found[0]>0){
-                        c[0]=cubeid;
-                        c[1]=obj[j][0]
+                        //c[0]=cubeid;
+                        //c[1]=obj[j][0];
+                        c=solutions[0];
                         return c; //on en trouve 1 ça suffit
                     }
                 }

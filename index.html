@@ -172,17 +172,41 @@
             </div>
         </div>
 
-        <div id="control-panel">
-            <button id="valider">
-                <div id="tour"></div> Valider
-            </button>
+        <div id="panels">
 
-            <div id="info"></div>
+            <div id="control-panel2">
+                <!-- Bouton pour ouvrir la fenêtre modale -->
+                <button id="openModal">Règles du jeu</button>
+            </div>
+
+            <div id="control-panel">
+                <button id="valider">
+                    <div id="tour"></div> Valider
+                </button>
+
+                <div id="info"></div>
+            </div>
+
         </div>
 
-        <div id="control-panel2"></div>
-            <!-- Bouton pour ouvrir la fenêtre modale -->
-            <button id="openModal">Règles du jeu</button>
+        <div id="playing" class="list">
+
+            <h3>Joueur noir :</h3>
+            <label id="choice0">
+                <input type="radio" name="niveau" value=0 checked> Manuel
+            </label><br>
+            
+            <label id="choice1">
+                <input type="radio" name="niveau" value=1> Niveau 1
+            </label><br>
+            
+            <label id="choice2">
+                <input type="radio" name="niveau" value=1> Niveau 2
+            </label><br>
+            
+            <label id="choice3">
+                <input type="radio" name="niveau" value=1> Niveau 3
+            </label><br>
         </div>
 
         <!-- Fenêtre modale -->
@@ -214,9 +238,12 @@
             </div>
         </div>
 
+
+
     </div>
     <script src="script.js"></script>
     <script src="script2.js"></script>
     <script src="script3.js"></script>
+    <script src="script4.js"></script>
 </body>
 </html>

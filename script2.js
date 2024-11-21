@@ -67,12 +67,17 @@ function prise() {
     }
 
     //check si le cube forcé est bien pris
-    if(forcedcube!=-1){
-        let forcedcubetaken=takencubes.indexOf(forcedcube + 1);
+    if(forcedcube[3]!=-1){
+        let forcedcubetaken=takencubes.indexOf(forcedcube[3] + 1);
         if (forcedcubetaken==-1){
             return;
         }
-        else{forcedcube=-1;}
+        else{
+            forcedcube[0]=0;
+            forcedcube[1]=0;
+            forcedcube[2]=0;
+            forcedcube[3]=-1;
+        }
     }
 
     for (i = 0; i <3; i++)
@@ -127,65 +132,10 @@ function prise() {
 
 }
 
-function victoireold(){
-
-    let cubenumber=0;
-    let c=[0,0];
-    let potential=0;
-
-    for(cubenumber=0; cubenumber<12; cubenumber++){
-
-        if (cubestatus[1][cubenumber]=="rs" && cubestatus[0][cubenumber]<7 && cubestatus[0][cubenumber]!=0 && cubenumber>5){
-            c=capture(cubenumber+1);
-            if (c[0]==0 && turn=="white"){
-                affichervic("Victoire des blancs !");
-                turn="end";
-                return c;
-            }
-            if (c[0]!=0 && turn=="white"){
-                document.getElementById("info").textContent="Coup forcé"
-                return c;
-            }
-            else {//les noirs n'ont pas joué le coup forcé
-                potential=0;
-                document.getElementById("info").textContent="Coup forcé";
-                c[0]=-1;
-                return c;
-            }
-        }
-
-        if (cubestatus[1][cubenumber]=="rs" && cubestatus[0][cubenumber]>30 && cubenumber<6){
-            c=capture(cubenumber+1);
-            if (c[0]==0 && turn=="black"){
-                potential=1;
-            }
-            if (c[0]!=0 && turn=="black"){
-                document.getElementById("info").textContent="Coup forcé"
-                return c;
-            }
-            
-            else {//les blancs n'ont pas joué le coup forcé
-                document.getElementById("info").textContent="Coup forcé"
-                c[0]=-1;
-                return c;
-            }
-        }
-
-        if (potential==1){
-            affichervic("Victoire des noirs !");
-            turn="end";
-            return c;
-        }
-    }
-
-return c;
-
-}
-
 function victoire(){
 
     let cubenumber=0;
-    let c=[0,0];
+    let c=[0,0,0,0];
 
     for(cubenumber=0; cubenumber<12; cubenumber++){
 
@@ -198,7 +148,10 @@ function victoire(){
             }
             if (c[0]!=0 && turn=="white"){
                 document.getElementById("info").textContent="Coup forcé"
-                forcedcube=cubenumber;
+                forcedcube[0]=c[0];
+                forcedcube[1]=c[1];
+                forcedcube[2]=c[2];
+                forcedcube[3]=cubenumber;
                 return;
             }
         }
@@ -212,7 +165,10 @@ function victoire(){
             }
             if (c[0]!=0 && turn=="black"){
                 document.getElementById("info").textContent="Coup forcé"
-                forcedcube=cubenumber;
+                forcedcube[0]=c[0];
+                forcedcube[1]=c[1];
+                forcedcube[2]=c[2];
+                forcedcube[3]=cubenumber;
                 return;
             }
         }
