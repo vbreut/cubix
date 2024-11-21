@@ -105,7 +105,7 @@ body {
 
 #control-panel {
     margin-left: 20px;
-    margin-top: 30px;
+    margin-top: 40px;
     margin-right: 20px;
 }
 
@@ -138,6 +138,7 @@ body {
     margin: 5px;
     position: absolute;
     font-size: 13px;
+    transform: translate(0px, -25px);
 }
 
 #playing {
