@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Jeu Cubix</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h2>Cubix</h2>
+
+    <div id="game-container">
+        <div id="frame">
+            <div id="game-board">
+                <!-- Plateau de 6x6 pour Cubix -->
+                <div class="grid" id="cell-1"></div> 
+                <div class="grid" id="cell-2"></div>
+                <div class="grid" id="cell-3"></div>
+                <div class="grid" id="cell-4"></div>
+                <div class="grid" id="cell-5"></div>
+                <div class="grid" id="cell-6"></div>
+                <div class="grid" id="cell-7"></div>
+                <div class="grid" id="cell-8"></div>
+                <div class="grid" id="cell-9"></div>
+                <div class="grid" id="cell-10"></div>
+                <div class="grid" id="cell-11"></div>
+                <div class="grid" id="cell-12"></div>
+                <div class="grid" id="cell-13"></div>
+                <div class="grid" id="cell-14"></div>
+                <div class="grid" id="cell-15"></div>
+                <div class="grid" id="cell-16"></div>
+                <div class="grid" id="cell-17"></div>
+                <div class="grid" id="cell-18"></div>
+                <div class="grid" id="cell-19"></div>
+                <div class="grid" id="cell-20"></div>
+                <div class="grid" id="cell-21"></div>
+                <div class="grid" id="cell-22"></div>
+                <div class="grid" id="cell-23"></div>
+                <div class="grid" id="cell-24"></div>
+                <div class="grid" id="cell-25"></div>
+                <div class="grid" id="cell-26"></div>
+                <div class="grid" id="cell-27"></div>
+                <div class="grid" id="cell-28"></div>
+                <div class="grid" id="cell-29"></div>
+                <div class="grid" id="cell-30"></div>
+                <div class="grid" id="cell-31"></div>
+                <div class="grid" id="cell-32"></div>
+                <div class="grid" id="cell-33"></div>
+                <div class="grid" id="cell-34"></div>
+                <div class="grid" id="cell-35"></div>
+                <div class="grid" id="cell-36"></div>
+                <div class="scene" id="scene-1">
+                    <div class="cube" id="cube-1">
+                        <div class="face front"><div class="shape1"></div></div>
+                        <div class="face back"><div class="shape2"></div></div>
+                        <div class="face right"><div class="shape3"></div></div>
+                        <div class="face left"><div class="shape4"></div></div>
+                        <div class="face top"><div class="shape5"></div></div>
+                        <div class="face bottom"><div class="shape6"></div></div>
+                    </div>
+                </div>
+                <div class="scene" id="scene-2">
+                    <div class="cube" id="cube-2">
+                        <div class="face front"><div class="shape1"></div></div>
+                        <div class="face back"><div class="shape2"></div></div>
+                        <div class="face right"><div class="shape3"></div></div>
+                        <div class="face left"><div class="shape4"></div></div>
+                        <div class="face top"><div class="shape5"></div></div>
+                        <div class="face bottom"><div class="shape6"></div></div>
+                    </div>
+                </div>
+                <div class="scene" id="scene-3">
+                    <div class="cube" id="cube-3">
+                        <div class="face front"><div class="shape1"></div></div>
+                        <div class="face back"><div class="shape2"></div></div>
+                        <div class="face right"><div class="shape3"></div></div>
+                        <div class="face left"><div class="shape4"></div></div>
+                        <div class="face top"><div class="shape5"></div></div>
+                        <div class="face bottom"><div class="shape6"></div></div>
+                    </div>
+                </div>
+                <div class="scene" id="scene-4">
+                    <div class="cube" id="cube-4">
+                        <div class="face front"><div class="shape1"></div></div>
+                        <div class="face back"><div class="shape2"></div></div>
+                        <div class="face right"><div class="shape3"></div></div>
+                        <div class="face left"><div class="shape4"></div></div>
+                        <div class="face top"><div class="shape5"></div></div>
+                        <div class="face bottom"><div class="shape6"></div></div>
+                    </div>
+                </div>
+                <div class="scene" id="scene-5">
+                    <div class="cube" id="cube-5">
+                        <div class="face front"><div class="shape1"></div></div>
+                        <div class="face back"><div class="shape2"></div></div>
+                        <div class="face right"><div class="shape3"></div></div>
+                        <div class="face left"><div class="shape4"></div></div>
+                        <div class="face top"><div class="shape5"></div></div>
+                        <div class="face bottom"><div class="shape6"></div></div>
+                    </div>
+                </div>
+                <div class="scene" id="scene-6">
+                    <div class="cube" id="cube-6">
+                        <div class="face front"><div class="shape1"></div></div>
+                        <div class="face back"><div class="shape2"></div></div>
+                        <div class="face right"><div class="shape3"></div></div>
+                        <div class="face left"><div class="shape4"></div></div>
+                        <div class="face top"><div class="shape5"></div></div>
+                        <div class="face bottom"><div class="shape6"></div></div>
+                    </div>
+                </div>
+                <div class="scene" id="scene-7">
+                    <div class="cube" id="cube-7">
+                        <div class="facew front"><div class="shape1"></div></div>
+                        <div class="facew back"><div class="shape2"></div></div>
+                        <div class="facew right"><div class="shape3"></div></div>
+                        <div class="facew left"><div class="shape4"></div></div>
+                        <div class="facew top"><div class="shape5"></div></div>
+                        <div class="facew bottom"><div class="shape6"></div></div>
+                    </div>
+                </div>
+                <div class="scene" id="scene-8">
+                    <div class="cube" id="cube-8">
+                        <div class="facew front"><div class="shape1"></div></div>
+                        <div class="facew back"><div class="shape2"></div></div>
+                        <div class="facew right"><div class="shape3"></div></div>
+                        <div class="facew left"><div class="shape4"></div></div>
+                        <div class="facew top"><div class="shape5"></div></div>
+                        <div class="facew bottom"><div class="shape6"></div></div>
+                    </div>
+                </div>
+                <div class="scene" id="scene-9">
+                    <div class="cube" id="cube-9">
+                        <div class="facew front"><div class="shape1"></div></div>
+                        <div class="facew back"><div class="shape2"></div></div>
+                        <div class="facew right"><div class="shape3"></div></div>
+                        <div class="facew left"><div class="shape4"></div></div>
+                        <div class="facew top"><div class="shape5"></div></div>
+                        <div class="facew bottom"><div class="shape6"></div></div>
+                    </div>
+                </div>
+                <div class="scene" id="scene-10">
+                    <div class="cube" id="cube-10">
+                        <div class="facew front"><div class="shape1"></div></div>
+                        <div class="facew back"><div class="shape2"></div></div>
+                        <div class="facew right"><div class="shape3"></div></div>
+                        <div class="facew left"><div class="shape4"></div></div>
+                        <div class="facew top"><div class="shape5"></div></div>
+                        <div class="facew bottom"><div class="shape6"></div></div>
+                    </div>
+                </div>
+                <div class="scene" id="scene-11">
+                    <div class="cube" id="cube-11">
+                        <div class="facew front"><div class="shape1"></div></div>
+                        <div class="facew back"><div class="shape2"></div></div>
+                        <div class="facew right"><div class="shape3"></div></div>
+                        <div class="facew left"><div class="shape4"></div></div>
+                        <div class="facew top"><div class="shape5"></div></div>
+                        <div class="facew bottom"><div class="shape6"></div></div>
+                    </div>
+                </div>
+                <div class="scene" id="scene-12">
+                    <div class="cube" id="cube-12">
+                        <div class="facew front"><div class="shape1"></div></div>
+                        <div class="facew back"><div class="shape2"></div></div>
+                        <div class="facew right"><div class="shape3"></div></div>
+                        <div class="facew left"><div class="shape4"></div></div>
+                        <div class="facew top"><div class="shape5"></div></div>
+                        <div class="facew bottom"><div class="shape6"></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="panels">
+
+            <div id="control-panel2">
+                <!-- Bouton pour ouvrir la fenêtre modale -->
+                <button id="openModal">Règles du jeu</button>
+            </div>
+
+            <div id="control-panel">
+                <div id="info"></div>
+                <button id="valider">
+                    <div id="tour"></div> Valider
+                </button>
+
+            </div>
+
+        </div>
+
+        <div id="playing" class="list">
+
+            <div id="titlemenu"><b>Joueur noir :</b></div>
+
+
+            <label id="choice0">
+                <input type="radio" name="niveau" value=0 checked> Manuel
+            </label><br>
+            
+            <label id="choice1">
+                <input type="radio" name="niveau" value=1> Niveau 1
+            </label><br>
+            
+            <label id="choice2">
+                <input type="radio" name="niveau" value=1> Niveau 2
+            </label><br>
+            
+            <label id="choice3">
+                <input type="radio" name="niveau" value=1> Niveau 3
+            </label><br>
+        </div>
+
+        <!-- Fenêtre modale -->
+        <div id="modal" class="modal">
+            <div class="modal-content">
+                <span id="closeModal" class="close">&times;</span>
+                <h3>Règles du jeu</h3>
+
+                <p>Sur chaque cube, la face "carré rouge" est opposée à la face "rond rouge", la face "carré blanc" à la face "rond blanc", et la face "carré noir" à la face "rond noir".</p>
+                        
+                <p>Les blancs jouent en premier. Dans cette démo il est possible de reprendre son coup tant qu'il n'est pas validé.</p>
+                        
+                <p><b>Déplacement :</b> Il est possible de déplacer un cube d'une ou deux cases dans n'importe quelle direction.</p>
+                        
+                <p><b>Prise :</b> Un cube est éliminé du plateau si un cube adverse est placé sur une case adjacente avec la même face supérieure.</p>
+                        
+                <p><b>Victoire :</b> La partie est gagnée si un cube arrive sur la dernière rangée, avec la face "carré rouge" vers le haut, et si l’adversaire ne peut pas capturer ce cube.</p>
+
+                <p>Contact : vincent.breut@gmail.com</p>
+            </div>
+        </div>
+
+        <div id="modalvic" class="modal">
+            <div class="modal-contentvic">
+                <span id="closeModalvic" class="close">&times;</span>
+
+                <p id="message">Contenu par défaut</p>
+                        
+            </div>
+        </div>
+
+
+
+    </div>
+    <script src="buttons.js"></script>
+    <script src="prise_vic.js"></script>
+    <script src="path_cap.js"></script>
+    <script src="bot.js"></script>
+</body>
+</html>

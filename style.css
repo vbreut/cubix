@@ -147,6 +147,13 @@ body {
     text-align: left;
 }
 
+#titlemenu {
+    /*font-size: 16px;*/
+    font-size: 16px;
+    margin-bottom: 5px;
+    margin-top: 15px;
+}
+
 #openModal {
     /*font-size: 16px;*/
     width: 100px;
