@@ -1,5 +1,3 @@
-// script2.js
-
 function prise() {
 
     let cube=selectedScene.firstElementChild;
@@ -21,8 +19,10 @@ function prise() {
     let j=0;
     let k=0;
 
-    if (cellnumber%6==0){cuberight= 0;}
-    if (cellnumber%6==1){cubeleft= 0;}
+    if (cellnumber%6==0){cuberight= -2;}
+    if (cellnumber%6==1){cubeleft= -2;}
+    if (cellnumber>30){cubeback= -2;}
+    if (cellnumber<7){cubefront= -2;}
 
     if (cellwidth>80){
         movtakenwy=-60;
@@ -38,28 +38,28 @@ function prise() {
         movtakenw=nbtakenw*cellwidth/3;
     }
 
-    if (cubeleft != 0 && ((cubenumber < 7 && cubeleft > 6) || (cubenumber > 6 && cubeleft < 7))){
+    if (cubeleft != -2 && ((cubenumber < 7 && cubeleft > 6) || (cubenumber > 6 && cubeleft < 7))){
         if (cubestatus[1][cubenumber - 1] == cubestatus[1][cubeleft - 1]){
             takencubes[j]=cubeleft;
             j ++;
         }
     }
 
-    if (cuberight != 0 && ((cubenumber < 7 && cuberight > 6) || (cubenumber > 6 && cuberight < 7))){
+    if (cuberight != -2 && ((cubenumber < 7 && cuberight > 6) || (cubenumber > 6 && cuberight < 7))){
         if (cubestatus[1][cubenumber - 1] == cubestatus[1][cuberight - 1]){
             takencubes[j]=cuberight;
             j ++;
         }
     }
 
-    if (cubefront != 0 && ((cubenumber < 7 && cubefront > 6) || (cubenumber > 6 && cubefront< 7))){
+    if (cubefront != -2 && ((cubenumber < 7 && cubefront > 6) || (cubenumber > 6 && cubefront< 7))){
         if (cubestatus[1][cubenumber - 1] == cubestatus[1][cubefront - 1]){
             takencubes[j]=cubefront;
             j ++;
         }
     }
 
-    if (cubeback != 0 && ((cubenumber < 7 && cubeback > 6) || (cubenumber > 6 && cubeback < 7))){
+    if (cubeback != -2 && ((cubenumber < 7 && cubeback > 6) || (cubenumber > 6 && cubeback < 7))){
         if (cubestatus[1][cubenumber - 1] == cubestatus[1][cubeback - 1]){
             takencubes[j]=cubeback;
             j ++;

@@ -1,5 +1,3 @@
-// script.js
-
 let selectedScene = null;
 let isClickable = true;
 let numberofmoves = 0;
@@ -205,15 +203,17 @@ function moveCubeTo3(targetCell, cellcolor) {
 }
 
 validButton.addEventListener('click', () => {
-    if (numberofmoves > 0){
+    if (numberofmoves > 0 && (playingmode==0||turn=="white")){
         let doublemove=0;
         let delay=0;
         changes();
         valider();
         if (turn=="end") {return;}
-        if (playingmode==1){
+        if (playingmode!=0){
             setTimeout(() => {
-                doublemove=botlevel1();
+                if (playingmode==1){
+                    doublemove=botlevel1();
+                }
                 if (doublemove==1){
                     delay=500;
                 }
