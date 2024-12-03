@@ -173,18 +173,21 @@
         </div>
 
         <div id="panels">
-
-            <div id="control-panel2">
-                <!-- Bouton pour ouvrir la fenêtre modale -->
-                <button id="openModal">Règles du jeu</button>
+            <div id="reset">
+                <button id="res" onclick="location.reload()">Nouvelle partie</button>
             </div>
 
             <div id="control-panel">
                 <div id="info"></div>
                 <button id="valider">
-                    <div id="tour"></div> Valider
+                    <div id="tour"></div>Valider
                 </button>
 
+            </div>
+
+            <div id="control-panel2">
+                <!-- Bouton pour ouvrir la fenêtre modale -->
+                <button id="openModal">Règles du jeu</button>
             </div>
 
         </div>
@@ -203,11 +206,11 @@
             </label><br>
             
             <label id="choice2">
-                <input type="radio" name="niveau" value=1> Niveau 2
+                <input type="radio" name="niveau" value=2> Niveau 2
             </label><br>
             
             <label id="choice3">
-                <input type="radio" name="niveau" value=1> Niveau 3
+                <input type="radio" name="niveau" value=2> Niveau 3
             </label><br>
         </div>
 
@@ -246,6 +249,7 @@
     <script src="buttons.js"></script>
     <script src="prise_vic.js"></script>
     <script src="path_cap.js"></script>
-    <script src="bot.js"></script>
+    <script src="bot1.js"></script>
+    <script src="bot2.js"></script>
 </body>
 </html>

@@ -1,4 +1,3 @@
-// script3.js
 function test(){
 /*let deepmax=4;
 let i=0;
@@ -33,10 +32,10 @@ function path(deep, deepmax, cubetomove, obj, solutions, found, cubeid) {
     let cubefront=cubestatus[0].indexOf(cubetomove[0] - 6);
     let cubeleft=cubestatus[0].indexOf(cubetomove[0] - 1);
     let cuberight=cubestatus[0].indexOf(cubetomove[0] + 1);
-    if (cubestatus[0].indexOf(cubetomove[0] + 6)==cubeid - 1){cubeback= -1;}
-    if (cubestatus[0].indexOf(cubetomove[0] - 6)==cubeid - 1){cubefront= -1;}
-    if (cubestatus[0].indexOf(cubetomove[0] - 1)==cubeid - 1){cubeleft= -1;}
-    if (cubestatus[0].indexOf(cubetomove[0] + 1)==cubeid - 1){cuberight= -1;}
+    if (cubeback==cubeid - 1){cubeback= -1;}//si on bute sur notre propre cube on en tient pas compte (dans cubestatus il est toujours dans sa position initiale)
+    if (cubefront==cubeid - 1){cubefront= -1;}
+    if (cubeleft==cubeid - 1){cubeleft= -1;}
+    if (cuberight==cubeid - 1){cuberight= -1;}
     if (cubetomove[0]%6==0){cuberight= -2;}
     if (cubetomove[0]%6==1){cubeleft= -2;}
     if (cubetomove[0]>30){cubeback= -2;}
@@ -187,7 +186,6 @@ function capture(cubetotest){
     let cubeid=0;
     let i=0;
     let j=0;
-    let k=0;
     let start=0;
     let end=0;
     let deep=0;
@@ -210,6 +208,8 @@ function capture(cubetotest){
     if (cubetotest<7){start=7;end=13;}
     if (cubetotest>6){start=1;end=7;}
 
+    if(cellnumber==0){console.log("warning");}
+
     for(cubeid=start; cubeid<end; cubeid++){
         cubetomove=[];
         if (cubestatus[0][cubeid-1]!=0){
@@ -228,8 +228,6 @@ function capture(cubetotest){
                     deep=0;
                     path(deep, deepmax, cubetomove, obj[j], solutions, found, cubeid);
                     if(found[0]>0){
-                        //c[0]=cubeid;
-                        //c[1]=obj[j][0];
                         c=solutions[0];
                         return c; //on en trouve 1 ça suffit
                     }
