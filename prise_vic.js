@@ -135,7 +135,7 @@ function prise() {
 function victoire(){
 
     let cubenumber=0;
-    let c=[0,0,0,0];
+    let c=[0,0,0,0,0];
 
     for(cubenumber=0; cubenumber<12; cubenumber++){
 
@@ -148,9 +148,9 @@ function victoire(){
             }
             if (c[0]!=0 && turn=="white"){
                 document.getElementById("info").textContent="Coup forcé"
-                forcedcube[0]=parseInt(c[0]);
-                forcedcube[1]=parseInt(c[1]);
-                forcedcube[2]=parseInt(c[2]);
+                forcedcube[0]=c[0];
+                forcedcube[1]=c[1];
+                forcedcube[2]=c[2];
                 forcedcube[3]=cubenumber;
                 return;
             }
@@ -165,9 +165,9 @@ function victoire(){
             }
             if (c[0]!=0 && turn=="black"){
                 document.getElementById("info").textContent="Coup forcé"
-                forcedcube[0]=parseInt(c[0]);
-                forcedcube[1]=parseInt(c[1]);
-                forcedcube[2]=parseInt(c[2]);
+                forcedcube[0]=c[0];
+                forcedcube[1]=c[1];
+                forcedcube[2]=c[2];
                 forcedcube[3]=cubenumber;
                 return;
             }

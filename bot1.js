@@ -5,11 +5,12 @@ function botlevel1(){
     let availablecells=[];
     let cubeid=0;
     let cell=0;
+    let nb=0;
 
     //coup forcé
     if(forcedcube[3]!=-1){
-        forcedmove();
-        return;
+        nb=forcedmove();
+        return nb;
     }
 
     for(let i=0; i<6; i++){
@@ -79,7 +80,10 @@ function forcedmove(){
             selectedcell = document.getElementById("cell-" + forcedcube[2]);
             moveCubeTo3(selectedcell, light);
         }, 500);
+        return 1; //2 coups
     }
+
+    return 0;
 }
 
 function choosecube(memo){

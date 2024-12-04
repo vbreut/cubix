@@ -2,40 +2,49 @@
 
 function botlevel2(){
 
-    let doublemove=0;
+    let nb=0;
     //coup forcé
     if(forcedcube[3]!=-1){
-        forcedmove();
-        return;
+        nb=forcedmove();
+        return nb;
     }
 
     //victoire possible en 2 cases ?
-    if(pathtovictory(2)==1){console.log("pathtovictory(2)");return;}
-    if(defense(2)==1){console.log("defense(2)");return;}
+    nb=pathtovictory(2);
+    if(nb<2){console.log("pathtovictory(2)");return nb;}
 
-    if(pathtovictory(4)==1){console.log("pathtovictory(4)");return;}
-    if(defense(4)==1){console.log("defense(4)");return;}
+    nb=defense(2);
+    if(nb<2){console.log("defense(2)");return nb;}
 
-    if(taketake()==1){console.log("taketake");return;}
+    nb=pathtovictory(4);
+    if(nb<2){console.log("pathtovictory(4)");return nb;}
+
+    nb=defense(4);
+    if(nb<2){console.log("defense(4)");return nb;}
+
+    nb=taketake();
+    if(nb<2){console.log("taketake");return nb;}
 
     //prise possible pour l'adversaire ?
-    if(protect()==1){console.log("protect");return;}
+    nb=protect();
+    if(nb<2){console.log("protect");return nb;}
 
     //attaque agressive ?
 
     //coup en avant si possible
-    if(movecareful()==1){console.log("movecareful");return;}
+    nb=movecareful();
+    if(nb<2){console.log("movecareful");return nb;}
 
     //sinon coup au hasard
-    doublemove=botlevel1();
+    nb=botlevel1();
     console.log("botlevel1");
-    return doublemove;
-
+    return nb;
 }
 
 function pathtovictory(deepmax){
     let i=0;
     let j=0;
+    let k=0;
     let shorter=0;
     let obj=[];
     let cubetomove=[];
@@ -51,6 +60,7 @@ function pathtovictory(deepmax){
     let c2=[0,0,0,0];
     let found=[0];
     let deep=0;
+    let leng=[];
 
     let cubeid=0;
     let currentcell=null;
@@ -75,7 +85,7 @@ function pathtovictory(deepmax){
     }
 
     if(found[0]>0){
-        //recherche du plus court
+        //recherche du plus court //le plus court n'est pas forcément safe, il peut y avoir un plus long qui est safe et on va l'ignorer
         for(i=2;i<5;i++){
             for(j=0;j<found[0];j++){
                 if(solutions[j][i]==0){
@@ -85,6 +95,24 @@ function pathtovictory(deepmax){
                 }
             }
         }
+
+        /*for(i=0;i<found[0];i++){
+            for(j=2;j<5;j++){
+                if(solutions[i][j]==0){
+                    leng[i]=j;
+                }
+            }
+        }
+
+        for(i=0;i<found[0];i++){
+            for(j=i+1;j<found[0];j++){
+                if(leng[i]<leng[j]){
+                    shorter[k]=i;
+                }
+            }
+        }*/
+
+
 
         cubeid=cubestatus[0].indexOf(solutions[shorter][0]) + 1;
 
@@ -103,7 +131,7 @@ function pathtovictory(deepmax){
                 selectcurrentcell(currentcell);
                 selectedcell = document.getElementById("cell-" + solutions[shorter][1]);
                 moveCubeTo3(selectedcell, light);
-                return 1;
+                return 0;
             }
         }
 
@@ -161,7 +189,7 @@ function pathtovictory(deepmax){
             }
         }
 
-        else{//4 cases
+        if(solutions[shorter][4]!=0){//4 cases
             moveCubeTosimu(solutions[shorter][0],solutions[0][1]);
             moveCubeTosimu(solutions[shorter][1],solutions[0][2]);
 
@@ -173,7 +201,7 @@ function pathtovictory(deepmax){
             prisesimu(cubeid);
             c2=capture(cubeid);
 
-            cubestatus=Array.from(sauvstatus);
+            cubestatus=sauvstatus.map(subArray => [...subArray]);
             
             if(c[0]==0 && c2[0]==0){//si pas de capture à l'arrivée et à la deuxième case, on joue jusqu'à la deuxième case
                 selectedScene = document.getElementById("scene-" + cubeid);
@@ -191,7 +219,7 @@ function pathtovictory(deepmax){
             }
         }
     }
-    return 0;
+    return 2;
 }
 
 function moveCubeTosimu(currentcell, targetCell) {
@@ -352,7 +380,7 @@ function menace(deepmax){
             }
         }
 
-        cubeid=cubestatus[0].indexOf(parseInt(solutions[shorter][0])) + 1;
+        cubeid=cubestatus[0].indexOf(solutions[shorter][0]) + 1;
 
         if(solutions[shorter][4]==0 && solutions[shorter][3]==0 && solutions[shorter][2]==0){//1 case de déplacement
             moveCubeTosimu(solutions[shorter][0],solutions[shorter][1]);
@@ -403,7 +431,7 @@ function menace(deepmax){
             }
         }
 
-        else{//4 cases
+        if(solutions[shorter][4]!=0){//4 cases
             moveCubeTosimu(solutions[shorter][0],solutions[0][1]);
             //prisesimu(cubeid);
             c1=capture(cubeid);
@@ -440,7 +468,7 @@ function defense(deepmax){
     let currentcell=null;
     let selectedcell = null;
 
-    if(sol===0){return 0;}
+    if(sol===0){return 2;}
     else{
         let cubeid=cubestatus[0].indexOf(sol[0]) + 1;
 
@@ -466,8 +494,9 @@ function defense(deepmax){
                     selectedcell = document.getElementById("cell-" + c[2]);
                     moveCubeTo3(selectedcell, light);
                 }, 500);
+                return 1;
             }
-            return 1;
+            return 0;
         }
 
         else{
@@ -475,7 +504,7 @@ function defense(deepmax){
             let randomindice = Math.floor(Math.random() * 6);//entre 0 et 5
             let indice=0;
 
-            for(let i=randomindice%6;i<7;i++){//peut-être essayer de résoudre pas toujours en partant du cube 1
+            for(let i=1;i<7;i++){//peut-être essayer de résoudre pas toujours en partant du cube 1
 
                 indice=(i+randomindice)%6+1;
 
@@ -493,8 +522,9 @@ function defense(deepmax){
                                 selectedcell = document.getElementById("cell-" + moves[2]);
                                 moveCubeTo3(selectedcell, light);
                             }, 500);
+                            return 1;
                         }
-                        return 1;
+                        return 0;
                     }
                 }
             }
@@ -504,6 +534,7 @@ function defense(deepmax){
         //si on arrive là on va essayer de se rapprocher de la case d'arrivée
         }
     }
+    return 2;
 }
 
 
@@ -799,30 +830,45 @@ function taketake() {
     let cubeidtomove=0;
     let currentcell=null;
     let selectedcell=0;
+    let sauvstatus=cubestatus.map(subArray => [...subArray]);
 
     for(let i=7;i<13;i++)
     {
         if(cubestatus[0][i - 1]>0){
             c=capture(i);
-            if(c[0]!=0){//securiser
+            if(c[0]!=0){
                 cubeidtomove=cubestatus[0].indexOf(c[0]) + 1;
-                selectedScene = document.getElementById("scene-" + cubeidtomove);
-                currentcell= document.getElementById("cell-" + c[0]);
-                selectcurrentcell(currentcell);
-                selectedcell = document.getElementById("cell-" + c[1]);
-                moveCubeTo3(selectedcell, light);
 
+                moveCubeTosimu(c[0],c[1]);
                 if(c[2]!=0){
-                    setTimeout(() => {
-                        selectedcell = document.getElementById("cell-" + c[2]);
-                        moveCubeTo3(selectedcell, light);
-                    }, 500);
+                    moveCubeTosimu(c[1],c[2]);
+                    prisesimu(cubeidtomove);
                 }
-                return 1;
+
+                let sol=menace(2);
+
+                cubestatus=sauvstatus.map(subArray => [...subArray]);
+
+                if(sol===0){//pas de défaite causée par la capture
+                    selectedScene = document.getElementById("scene-" + cubeidtomove);
+                    currentcell= document.getElementById("cell-" + c[0]);
+                    selectcurrentcell(currentcell);
+                    selectedcell = document.getElementById("cell-" + c[1]);
+                    moveCubeTo3(selectedcell, light);
+    
+                    if(c[2]!=0){
+                        setTimeout(() => {
+                            selectedcell = document.getElementById("cell-" + c[2]);
+                            moveCubeTo3(selectedcell, light);
+                        }, 500);
+                        return 1;
+                    }
+                    return 0;
+                }
             }
         }
     }
-    return 0;
+    return 2;
 }
 
 function movecareful(){
@@ -850,8 +896,9 @@ function movecareful(){
                         selectedcell = document.getElementById("cell-" + moves[2]);
                         moveCubeTo3(selectedcell, light);
                     }, 500);
+                    return 1;
                 }
-                return 1;
+                return 0;
             }
         }
     }
@@ -873,13 +920,13 @@ function movecareful(){
                         selectedcell = document.getElementById("cell-" + moves[2]);
                         moveCubeTo3(selectedcell, light);
                     }, 500);
+                    return 1;
                 }
-                return 1;
+                return 0;
             }
         }
     }
-
-
+    return 2;
 }
 
 function protect(){
@@ -922,14 +969,15 @@ function protect(){
                                 selectedcell = document.getElementById("cell-" + moves[2]);
                                 moveCubeTo3(selectedcell, light);
                             }, 500);
+                            return 1;
                         }
-                        return 1;
+                        return 0;
                     }
                 }
             }
         }
     }
-    return 0;
+    return 2;
 }
 
 function checkmovesdown(cubeid){

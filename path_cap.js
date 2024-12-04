@@ -49,8 +49,10 @@ function path(deep, deepmax, cubetomove, obj, solutions, found, cubeid) {
 
         if (cubetomove[0]==obj[0] && cubetomove[1]==obj[1]) {
             solutions[found[0]][deep + 1]=cubetomove[0];
-            for(i=deep+2; i<solutions.length; i++){
-                solutions[found[0]][i]=0;
+            if(deep + 1<deepmax){
+                for(i=deep+2; i<solutions.length; i++){
+                    solutions[found[0]][i]=0;
+                }
             }
 
             found[0]=found[0] + 1;
@@ -74,8 +76,10 @@ function path(deep, deepmax, cubetomove, obj, solutions, found, cubeid) {
 
         if (cubetomove[0]==obj[0] && cubetomove[1]==obj[1]) {
             solutions[found[0]][deep + 1]=cubetomove[0];
-            for(i=deep+2; i<solutions.length; i++){
-                solutions[found[0]][i]=0;
+            if(deep + 1<deepmax){
+                for(i=deep+2; i<solutions.length; i++){
+                    solutions[found[0]][i]=0;
+                }
             }
             found[0]=found[0] + 1;
 
@@ -95,8 +99,10 @@ function path(deep, deepmax, cubetomove, obj, solutions, found, cubeid) {
 
         if (cubetomove[0]==obj[0] && cubetomove[1]==obj[1]) {
             solutions[found[0]][deep + 1]=cubetomove[0];
-            for(i=deep+2; i<solutions.length; i++){
-                solutions[found[0]][i]=0;
+            if(deep + 1<deepmax){
+                for(i=deep+2; i<solutions.length; i++){
+                    solutions[found[0]][i]=0;
+                }
             }
             found[0]=found[0] + 1;
 
@@ -118,8 +124,10 @@ function path(deep, deepmax, cubetomove, obj, solutions, found, cubeid) {
 
         if (cubetomove[0]==obj[0] && cubetomove[1]==obj[1]) {
             solutions[found[0]][deep + 1]=cubetomove[0];
-            for(i=deep+2; i<solutions.length; i++){
-                solutions[found[0]][i]=0;
+            if(deep + 1<deepmax){
+                for(i=deep+2; i<solutions.length; i++){
+                    solutions[found[0]][i]=0;
+                }
             }
             found[0]=found[0] + 1;
 
@@ -203,12 +211,14 @@ function capture(cubetotest){
         [cellleft,faceup],
         [cellright,faceup],
     ];
-    let c=[0,0,0,0];
+    let c=[0,0,0,0,0];
 
     if (cubetotest<7){start=7;end=13;}
     if (cubetotest>6){start=1;end=7;}
 
-    if(cellnumber==0){console.log("warning");}
+    if(cellnumber==0){
+        console.log("warning");
+    }
 
     for(cubeid=start; cubeid<end; cubeid++){
         cubetomove=[];

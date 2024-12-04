@@ -100,7 +100,7 @@ body {
 #panels {
     display: flex;
     flex-direction: column;
-    align-items: center; 
+    align-items: center;
 }
 
 #control-panel {
@@ -162,21 +162,32 @@ body {
 }
 
 
-
 #playing {
-    /*font-size: 16px;*/
-    font-size: 13px;
     text-align: left;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+    padding: 5px;
+    border-radius:5px;
+    width: 70%;
+    max-width: 300px;
+    border: 1px solid gray;
 }
 
 #titlemenu {
-    /*font-size: 16px;*/
     font-size: 16px;
-    margin-bottom: 5px;
-    margin-top: 15px;
+    margin-right: 25px;
 }
 
-
+#choice {
+    font-size: 16px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    display: flex;
+    flex-direction: column;
+}
 
 @media only screen and (max-width: 600px) {
     #game-container {
@@ -187,12 +198,13 @@ body {
     #panels {
         display: flex;
         flex-direction: row;
-        align-items: center; 
+        align-items: center;
+        justify-content: center;
     }
 
     #control-panel {
-        margin-left: 40px;
-        margin-right: 40px;
+        margin-left: 15%;
+        margin-right: 15%;
         margin-top: 35px;
     }
 

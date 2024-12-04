@@ -20,7 +20,7 @@ let movy = scenerect.width/4 + 5;
 let dark="rgb(111, 135, 167)";
 let light="rgb(141, 165, 197)";
 let changepossible=1;
-let playingmode=0;
+let playingmode=1;
 let choice=null;
 const choice0 = document.getElementById("choice0");
 const choice1 = document.getElementById("choice1");
@@ -293,8 +293,8 @@ const closeModalvicButton = document.getElementById("closeModalvic");
 
 // Ouvrir la modale
 openModalButton.addEventListener("click", () => {
-    //test();
-    defense(2);////////////////////////////////////////
+
+    //botlevel2();////////////////////////////////////////
     modal.style.display = "block";
 });
 
