@@ -61,6 +61,7 @@ function pathtovictory(deepmax){
     let deep=0;
     let taille=[];
     let leng=[];
+    let sol=0;
 
     let cubeid=0;
     let currentcell=null;
@@ -135,7 +136,7 @@ function pathtovictory(deepmax){
 
                 cubestatus=sauvstatus.map(subArray => [...subArray]);
 
-                if(c[0]==0){//si pas de capture à l'arivée on joue
+                if(c[0]==0){//si pas de capture à l'arivée et pas de menace on joue
                     selectedScene = document.getElementById("scene-" + cubeid);
 
                     currentcell= document.getElementById("cell-" + solutions[taille[i]][0]);
@@ -181,10 +182,11 @@ function pathtovictory(deepmax){
                 moveCubeTosimu(solutions[taille[i]][2],solutions[taille[i]][3]);
                 prisesimu(cubeid);
                 c2=capture(cubeid);
+                sol=menace(2);
 
                 cubestatus=sauvstatus.map(subArray => [...subArray]);
                 
-                if(c[0]==0 && c2[0]==0){//si pas de capture à l'arrivée et à la deuxième case, on joue jusqu'à la deuxième case
+                if(c[0]==0 && c2[0]==0 && sol==0){//si pas de capture à l'arrivée et à la deuxième case et pas de menace plus courte, on joue jusqu'à la deuxième case
                     selectedScene = document.getElementById("scene-" + cubeid);
 
                     currentcell= document.getElementById("cell-" + solutions[taille[i]][0]);
@@ -212,9 +214,11 @@ function pathtovictory(deepmax){
                 prisesimu(cubeid);
                 c2=capture(cubeid);
 
+                sol=menace(2);
+
                 cubestatus=sauvstatus.map(subArray => [...subArray]);
                 
-                if(c[0]==0 && c2[0]==0){//si pas de capture à l'arrivée et à la deuxième case, on joue jusqu'à la deuxième case
+                if(c[0]==0 && c2[0]==0 && sol===0){//si pas de capture à l'arrivée et à la deuxième case, on joue jusqu'à la deuxième case
                     selectedScene = document.getElementById("scene-" + cubeid);
 
                     currentcell= document.getElementById("cell-" + solutions[taille[i]][0]);
@@ -479,7 +483,7 @@ function menace(deepmax){
 
             cubestatus=sauvstatus.map(subArray => [...subArray]);
             
-            if(c[0]!=0 || c2[0]!=0 || c1[0]!=0){//si capture à l'arrivée ou à la deuxième case ou à la 1ère
+            if(c[0]!=0 || (c2[0]!=0 && c1[0]!=0)){//si capture à l'arrivée ou à la deuxième case et à la 1ère
                 return 0;
             }
         }
