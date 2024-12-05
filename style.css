@@ -105,8 +105,8 @@ body {
 
 #control-panel {
     margin-left: 20px;
-    margin-top: 40px;
     margin-right: 20px;
+    margin-top: 40px;
 }
 
 #valider {
@@ -132,7 +132,7 @@ body {
     margin: 5px;
     position: absolute;
     font-size: 13px;
-    transform: translate(0px, -25px);
+    transform: translate(15px, -25px);
 }
 
 #control-panel2 {
@@ -183,24 +183,25 @@ body {
         flex-direction: row;
         align-items: center;
         justify-content: center;
+        margin-top: 40px;
     }
 
     #control-panel {
         margin-left: 17%;
         margin-right: 17%;
-        margin-top: 35px;
+        margin-top: 0px;
     }
 
     #control-panel2 {
         margin-left: 0px;
         margin-right: 0px;
-        margin-top: 35px;
+        margin-top: 0px;
     }
 
     #reset {
         margin-left: 0px;
         margin-right: 0px;
-        margin-top: 35px;
+        margin-top: 0px;
     }
 }
 
