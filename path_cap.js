@@ -1,26 +1,3 @@
-function test(){
-/*let deepmax=4;
-let i=0;
-let deep=0;
-let cubeid=7;
-let obj=[31,"rs"];
-let solutions=[
-    [0,0,0,0,0],
-    [0,0,0,0,0],
-    [0,0,0,0,0],
-    [0,0,0,0,0],
-];//numéro des cases
-let found=[0];
-let cubetomove=[];
-for(i=0; i<7; i++){
-    cubetomove.push(cubestatus[i][cubeid-1]);
-}
-
-
-path(deep, deepmax, cubetomove, obj, solutions, found, cubeid);*/
-console.log(capture(7));
-
-}
 
 function path(deep, deepmax, cubetomove, obj, solutions, found, cubeid) {
 
@@ -199,6 +176,9 @@ function capture(cubetotest){
     let deep=0;
     let cubetomove=[];
     let solutions=[
+        [0,0,0,0,0],
+        [0,0,0,0,0],
+        [0,0,0,0,0],
         [0,0,0,0,0],
         [0,0,0,0,0],
         [0,0,0,0,0],

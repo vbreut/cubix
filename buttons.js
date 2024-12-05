@@ -218,6 +218,10 @@ validButton.addEventListener('click', () => {
                 if (playingmode==2){
                     doublemove=botlevel2();
                 }
+
+                if (playingmode==3){
+                    doublemove=botlevel3();
+                }
                 if (doublemove==1){
                     delay=500;
                 }
@@ -293,8 +297,7 @@ const closeModalvicButton = document.getElementById("closeModalvic");
 
 // Ouvrir la modale
 openModalButton.addEventListener("click", () => {
-
-    //botlevel2();////////////////////////////////////////
+    //defense(4);////////////////////////////////////////
     modal.style.display = "block";
 });
 

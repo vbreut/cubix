@@ -1,6 +1,17 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KD5EJG0FQC"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-KD5EJG0FQC');
+</script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Jeu Cubix</title>
@@ -205,7 +216,7 @@
                 </label>
                 
                 <label id="choice3">
-                    <input type="radio" name="niveau" value=2 style="transform: scale(1.2);"> Niveau 3
+                    <input type="radio" name="niveau" value=3 style="transform: scale(1.2);"> Niveau 3
                 </label>
 
                 <label id="choice0">
@@ -221,9 +232,7 @@
 
                 <p>Sur chaque cube, la face "carré rouge" est opposée à la face "rond rouge", la face "carré blanc" à la face "rond blanc", et la face "carré noir" à la face "rond noir".</p>
                         
-                <p>Les blancs jouent en premier. Dans cette démo il est possible de reprendre son coup tant qu'il n'est pas validé.</p>
-                        
-                <p><b>Déplacement :</b> Il est possible de déplacer un cube d'une ou deux cases dans n'importe quelle direction.</p>
+                <p><b>Déplacement :</b> Déplacez un cube d'une ou deux cases dans n'importe quelle direction, puis validez votre coup. Vous pouvez revenir en arrière et choisir un autre coup tant qu'il n'est pas validé.</p>
                         
                 <p><b>Prise :</b> Un cube est éliminé du plateau si un cube adverse est placé sur une case adjacente avec la même face supérieure.</p>
                         
@@ -250,5 +259,6 @@
     <script src="path_cap.js"></script>
     <script src="bot1.js"></script>
     <script src="bot2.js"></script>
+    <script src="bot3.js"></script>
 </body>
 </html>
