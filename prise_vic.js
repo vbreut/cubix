@@ -84,6 +84,9 @@ function prise() {
     {
         if (takencubes[i] != 0){
 
+            nbtakenb=0;
+            nbtakenw=0;
+
             for (k = 0; k <12; k++)
             {
                 if (cubestatus[0][k]===0 && k<6){nbtakenb++;}

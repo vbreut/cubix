@@ -196,9 +196,9 @@ function capture(cubetotest){
     if (cubetotest<7){start=7;end=13;}
     if (cubetotest>6){start=1;end=7;}
 
-    if(cellnumber==0){
+    /*if(cellnumber==0){
         console.log("warning");
-    }
+    }*/
 
     for(cubeid=start; cubeid<end; cubeid++){
         cubetomove=[];

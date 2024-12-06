@@ -11,33 +11,40 @@ function botlevel3(){
 
     //victoire possible en 2 cases ?
     nb=pathtovictory(2);
-    if(nb<2){console.log("pathtovictory(2)");return nb;}
+    if(nb<2){//console.log("pathtovictory(2)");
+        return nb;}
 
     nb=defense(2);
-    if(nb<2){console.log("defense(2)");return nb;}
+    if(nb<2){//console.log("defense(2)");
+        return nb;}
 
     nb=pathtovictory(4);
-    if(nb<2){console.log("pathtovictory(4)");return nb;}
+    if(nb<2){//console.log("pathtovictory(4)");
+        return nb;}
 
     nb=defense(4);
-    if(nb<2){console.log("defense(4)");return nb;}
+    if(nb<2){//console.log("defense(4)");
+        return nb;}
 
     nb=taketake();
-    if(nb<2){console.log("taketake");return nb;}
+    if(nb<2){//console.log("taketake");
+        return nb;}
 
     //prise possible pour l'adversaire ?
     nb=protect();
-    if(nb<2){console.log("protect");return nb;}
+    if(nb<2){//console.log("protect");
+        return nb;}
 
     //attaque agressive ?
 
     //coup en avant si possible
     nb=movecareful();
-    if(nb<2){console.log("movecareful");return nb;}
+    if(nb<2){//console.log("movecareful");
+        return nb;}
 
     //sinon coup au hasard
     nb=botlevel1();
-    console.log("botlevel1");
+    //console.log("botlevel1");
     return nb;
 }
 
@@ -544,7 +551,7 @@ function defense(deepmax){
 
                 indice=(i+randomindice)%6+1;
 
-                if(cubestatus[0][indice-1]>0){//ne résoud pas la menace en 4
+                if(cubestatus[0][indice-1]>0){
                     moves=checkmoves(indice,deepmax);
                     if(moves[0]!=0){
                         cubeidtomove=cubestatus[0].indexOf(moves[0]) + 1;
@@ -921,7 +928,7 @@ function movecareful(){
     for(let i=1;i<7;i++){
         indice=(i+randomindice)%6+1;
         if(cubestatus[0][indice-1]>0){
-            moves=checkmovesdown(indice);
+            moves=checkmovesdown(indice); //potentiellement on va se créer une menace en 4... ça laisse une chance :)
             if(moves[0]!=0){
                 cubeidtomove=cubestatus[0].indexOf(moves[0]) + 1;
                 selectedScene = document.getElementById("scene-" + cubeidtomove);
