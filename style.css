@@ -236,6 +236,7 @@ img {
     margin: 0/*auto 40px*/;
     transform-style: preserve-3d;
     transition: transform 0.5s;
+    z-index: 1;
 }
 
 #scene-1{
