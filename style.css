@@ -389,6 +389,7 @@ img {
     max-width: 700px;
     text-align: justify;
     font-size: 14px;
+    z-index: 1010;
 }
 
 .modal-contentvic {
@@ -402,6 +403,7 @@ img {
     max-width: 500px;
     text-align: center;
     font-size: 16px;
+    z-index: 1000;
 }
 
 /* Bouton de fermeture */
