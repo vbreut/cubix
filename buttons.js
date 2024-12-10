@@ -299,7 +299,7 @@ const closeModalvicButton = document.getElementById("closeModalvic");
 // Ouvrir la modale
 openModalButton.addEventListener("click", () => {
     //defense(4);////////////////////////////////////////
-    modal.style.display = "-webkit-flex";
+    modal.style.display = "block";
 });
 
 // Fermer la modale

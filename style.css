@@ -370,13 +370,15 @@ img {
 /* Style pour masquer la modale par défaut */
 .modal {
     display: none;               /* Masquée par défaut */
-    position: fixed;             /* Fixée par rapport à la fenêtre */
+    position: absolute;             /* Fixée par rapport à la fenêtre */
     z-index: 1000;               /* Au-dessus du contenu principal */
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.3); /* Fond semi-transparent */
+    -webkit-transform: translate3d(0, 0, 200px);
+    transform: translate3d(0, 0, 200px);
 }
 
 /* Contenu de la modale */
@@ -389,7 +391,6 @@ img {
     max-width: 700px;
     text-align: justify;
     font-size: 14px;
-    max-height: 85%;
     overflow-y: auto;
 }
 
