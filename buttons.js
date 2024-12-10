@@ -124,10 +124,10 @@ function moveCubeTo3(targetCell, cellcolor) {
     let currentcell= document.getElementById(cellid);
 
 
-    if (Math.abs(deltax) + Math.abs(deltay) < cellwidth + 20 && Math.abs(deltax) + Math.abs(deltay) > 20) {
+    if (Math.abs(deltax) + Math.abs(deltay) < 1.3*cellwidth && Math.abs(deltax) + Math.abs(deltay) > 0.3*cellwidth) {
 
         //vers le bas
-        if (Math.abs(deltax)<20 && Math.abs(deltay)>20 && deltay>0) {
+        if (Math.abs(deltax)<0.3*cellwidth && Math.abs(deltay)>0.3*cellwidth && deltay>0) {
             if(faceright=="wd"){rotx=-90;cube.style.transform += `rotateX(${rotx}deg)`;}
             if(faceright=="ws"){rotx=90;cube.style.transform += `rotateX(${rotx}deg)`;}
             if(faceright=="bd"){roty=-90;cube.style.transform += `rotateY(${roty}deg)`;}
@@ -142,7 +142,7 @@ function moveCubeTo3(targetCell, cellcolor) {
         }
 
         //vers le haut
-        if (Math.abs(deltax)<20 && Math.abs(deltay)>20 && deltay<0) {
+        if (Math.abs(deltax)<0.3*cellwidth && Math.abs(deltay)>0.3*cellwidth && deltay<0) {
             if(faceright=="wd"){rotx= 90;cube.style.transform += `rotateX(${rotx}deg)`;}
             if(faceright=="ws"){rotx= -90;cube.style.transform += `rotateX(${rotx}deg)`;}
             if(faceright=="bd"){roty=90;cube.style.transform += `rotateY(${roty}deg)`;}
@@ -157,7 +157,7 @@ function moveCubeTo3(targetCell, cellcolor) {
         }
 
         //vers la droite    
-        if (Math.abs(deltax)>20 && Math.abs(deltay)<20 && deltax>0) {
+        if (Math.abs(deltax)>0.3*cellwidth && Math.abs(deltay)<0.3*cellwidth && deltax>0) {
             if(faceback=="bd"){roty=90;cube.style.transform += `rotateY(${roty}deg)`;}
             if(faceback=="bs"){roty= -90;cube.style.transform += `rotateY(${roty}deg)`;}
             if(faceback=="wd"){rotx=90;cube.style.transform += `rotateX(${rotx}deg)`;}
@@ -172,7 +172,7 @@ function moveCubeTo3(targetCell, cellcolor) {
         }
 
         //vers la gauche
-        if (Math.abs(deltax)>20 && Math.abs(deltay)<20 && deltax<0) {
+        if (Math.abs(deltax)>0.3*cellwidth && Math.abs(deltay)<0.3*cellwidth && deltax<0) {
             if(faceback=="bd"){roty= -90;cube.style.transform += `rotateY(${roty}deg)`;}
             if(faceback=="bs"){roty=90;cube.style.transform += `rotateY(${roty}deg)`;}
             if(faceback=="wd"){rotx= -90;cube.style.transform += `rotateX(${rotx}deg)`;}

@@ -24,7 +24,7 @@ function prise() {
     if (cellnumber>30){cubeback= -2;}
     if (cellnumber<7){cubefront= -2;}
 
-    if (cellwidth>80){
+    /*if (cellwidth>80){
         movtakenwy=-60;
         movtakenby=575;
         movtakenb=nbtakenb*30;
@@ -36,7 +36,7 @@ function prise() {
         movtakenby=6*cellwidth+5;
         movtakenb=nbtakenb*cellwidth/3;
         movtakenw=nbtakenw*cellwidth/3;
-    }
+    }*/
 
     if (cubeleft > 0 && ((cubenumber < 7 && cubeleft > 6) || (cubenumber > 6 && cubeleft < 7))){
         if (cubestatus[1][cubenumber - 1] == cubestatus[1][cubeleft - 1]){
