@@ -265,7 +265,7 @@ function changes(){
 function valider(){
     prise();
 
-    if (forcedcube[3]!=-1){
+    if (forcedcube[3]!= -1){
         return;
     }
     else{document.getElementById("info").textContent="";}
