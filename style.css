@@ -34,7 +34,7 @@
     --movy11:calc(var(--cubesize)/4 + var(--marginborder) + 5*(var(--cellsize) + var(--marginborder)));
     --movx12:calc(var(--cubesize)/4 + var(--marginborder) + 5*(var(--cellsize) + var(--marginborder)));
     --movy12:calc(var(--cubesize)/4 + var(--marginborder) + 5*(var(--cellsize) + var(--marginborder)));
-    --brd:3px;
+    --brd:calc(var(--cubesize)/18);
 }
 
 
