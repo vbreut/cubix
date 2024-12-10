@@ -1,9 +1,14 @@
 :root{
-    --cubesize:60px;
+    /*--cubesize:60px;
     --translate:calc(var(--cubesize)/2 - 0.5px);
     --shapesize:40px;
     --marginborder:5px;
-    --cellsize:90px;
+    --cellsize:90px;*/
+    --cubesize:8vh;
+    --translate:calc(var(--cubesize)/2 - 0.4px);
+    --shapesize:5.5vh;
+    --marginborder:5px;
+    --cellsize:12vh;
     --bor:calc(var(--shapesize) - 3px);
     --movx1:calc(var(--cubesize)/4 + var(--marginborder));
     --movy1:calc(var(--cubesize)/4 + var(--marginborder));
@@ -33,7 +38,8 @@
 }
 
 
-@media only screen and (max-width: 600px) {
+/*@media only screen and (max-width: 600px) {*/
+@media (orientation: portrait) {
     :root{
         --cubesize:10vw;
         --translate:calc(var(--cubesize)/2 - 0.4px);
@@ -182,7 +188,7 @@ img {
 
 
 
-@media only screen and (max-width: 600px) {
+@media (orientation: portrait) {
     #game-container {
         flex-direction: column; /* Disposition en colonne : damier au-dessus, bouton en dessous */
         align-items: center;    /* Centrer les éléments horizontalement */

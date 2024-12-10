@@ -93,19 +93,19 @@ function prise() {
                 if (cubestatus[0][k]===0 && k>5){nbtakenw++;}
             }
 
-            if (cellwidth>80){
+            /*if (cellwidth>80){
                 movtakenwy=-60;
                 movtakenby=575;
                 movtakenb=nbtakenb*35;
                 movtakenw=nbtakenw*35;
             }
             else
-            {
+            {*/
                 movtakenwy=-cellwidth/2 - 5;
                 movtakenby=6*cellwidth + 5;
                 movtakenb=nbtakenb*cellwidth/2.5;
                 movtakenw=nbtakenw*cellwidth/2.5;
-            }
+            //}
 
             takenscene=document.getElementById("scene-" + takencubes[i]);
 

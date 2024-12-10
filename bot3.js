@@ -727,7 +727,7 @@ function checkmoves(cubeid,deepmax){
     }
 
     //left left
-    if(cellnumber%6!=2 && cellnumber%6!=1 && cubestatus[0].includes(cellnumber - 2) && cubestatus[0].includes(cellnumber - 1) == false){
+    if(cellnumber%6!=2 && cellnumber%6!=1 && cubestatus[0].includes(cellnumber - 2) == false && cubestatus[0].includes(cellnumber - 1) == false){
         moveCubeTosimu(cellnumber,cellnumber - 1);
         moveCubeTosimu(cellnumber - 1,cellnumber - 2);
         prisesimu(cubeid);
