@@ -225,6 +225,7 @@ validButton.addEventListener('click', () => {
                 if (doublemove==1){
                     delay=500;
                 }
+
                 if (doublemove==-1){
                     //tous les cubes sont bloqués. Les blancs continuent à jouer
                 }
@@ -298,7 +299,7 @@ const closeModalvicButton = document.getElementById("closeModalvic");
 // Ouvrir la modale
 openModalButton.addEventListener("click", () => {
     //defense(4);////////////////////////////////////////
-    modal.style.display = "block";
+    modal.style.display = "-webkit-flex";
 });
 
 // Fermer la modale
