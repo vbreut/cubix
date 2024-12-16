@@ -6,7 +6,7 @@
     --cellsize:90px;*/
     --cubesize:8vh;
     --translate:calc(var(--cubesize)/2 - 0.4px);
-    --shapesize:5.5vh;
+    --shapesize:5.4vh;
     --marginborder:5px;
     --cellsize:12vh;
     --bor:calc(var(--shapesize) - 3px);
@@ -43,7 +43,7 @@
     :root{
         --cubesize:10vw;
         --translate:calc(var(--cubesize)/2 - 0.4px);
-        --shapesize:7vw;
+        --shapesize:6.8vw;
         --marginborder:5px;
         --cellsize:14.8vw;
         --bor:calc(var(--shapesize) - 3px);
@@ -341,7 +341,7 @@ img {
 }
 
 .face.transparent {
-    background-color: rgb(50, 50, 50, 0.7); /* Semi-transparent */
+    background-color: rgb(50, 50, 50, 0.6); /* Semi-transparent */
 }
 
 .front  { transform: translateZ(var(--translate)); }
@@ -364,7 +364,7 @@ img {
 }
 
 .facew.transparent {
-    background-color: rgb(240, 222, 185, 0.8); /* Semi-transparent */
+    background-color: rgb(240, 222, 185, 0.7); /* Semi-transparent */
 }
 
 .shape1 {
