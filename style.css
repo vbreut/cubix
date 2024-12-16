@@ -176,7 +176,17 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+#transparent-toggle{
     margin-top: 15px;
+}
+
+#bottomblock {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     font-size: 15px;
 }
 
@@ -229,6 +239,16 @@ img {
 
     img {
         width: 90%;
+    }
+
+    #bottomblock {
+        margin-top: 20px;
+        flex-direction: row;
+    }
+
+    #transparent-toggle{
+        margin-top: 4px;
+        margin-left: 40px;
     }
 }
 
@@ -320,6 +340,10 @@ img {
     align-items: center;
 }
 
+.face.transparent {
+    background-color: rgb(50, 50, 50, 0.7); /* Semi-transparent */
+}
+
 .front  { transform: translateZ(var(--translate)); }
 .back   { transform: rotateY(180deg) translateZ(var(--translate)); }
 .right  { transform: rotateY(90deg) translateZ(var(--translate));  }
@@ -337,6 +361,10 @@ img {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.facew.transparent {
+    background-color: rgb(240, 222, 185, 0.8); /* Semi-transparent */
 }
 
 .shape1 {

@@ -1,3 +1,5 @@
+"use strict";
+
 let selectedScene = null;
 let isClickable = true;
 let numberofmoves = 0;
@@ -339,4 +341,26 @@ boutonsRadio.forEach(bouton => {
             playingmode=event.target.value;
         }
     });
+});
+
+const toggle = document.getElementById('transparent-toggle');
+const facews = document.getElementsByClassName('facew');
+const faces = document.getElementsByClassName('face');
+
+toggle.addEventListener('change', () => {
+    for (const facew of facews) { // Parcourt chaque cube
+        if (toggle.checked) {
+            facew.classList.add('transparent'); // Ajoute la classe
+        } else {
+            facew.classList.remove('transparent'); // Supprime la classe
+        }
+    }
+
+    for (const face of faces) { // Parcourt chaque cube
+        if (toggle.checked) {
+            face.classList.add('transparent'); // Ajoute la classe
+        } else {
+            face.classList.remove('transparent'); // Supprime la classe
+        }
+    }
 });
