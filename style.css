@@ -178,9 +178,6 @@ body {
     justify-content: center;
 }
 
-#transparent-toggle{
-    margin-top: 15px;
-}
 
 #bottomblock {
     text-align: left;
@@ -188,6 +185,10 @@ body {
     flex-direction: column;
     justify-content: center;
     font-size: 15px;
+}
+
+#rightblock {
+    margin-top: 15px;
 }
 
 #image {
@@ -246,7 +247,7 @@ img {
         flex-direction: row;
     }
 
-    #transparent-toggle{
+    #rightblock {
         margin-top: 4px;
         margin-left: 40px;
     }
