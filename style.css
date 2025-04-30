@@ -129,6 +129,7 @@ body {
     height: 50px;
     align-items: center;
     font-size: 14px;
+    border-radius: 5px;
 }
 
 #valider:active {
@@ -163,6 +164,7 @@ body {
     width: 75px;
     height: 50px;
     font-size: 14px;
+    border-radius: 5px;
 }
 
 #openModal:active {
@@ -182,6 +184,7 @@ body {
     width: 75px;
     height: 50px;
     font-size: 14px;
+    border-radius: 5px;
 }
 
 #res:active {
