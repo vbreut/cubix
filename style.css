@@ -121,7 +121,7 @@ body {
 
 #valider {
     /*font-size: 16px;*/
-    background-color: rgb(141, 165, 197);
+    background-color: rgb(169, 185, 205);
     border: none;
     display: flex;
     flex-direction: row;
@@ -133,7 +133,7 @@ body {
 }
 
 #valider:active {
-    background-color: rgb(169, 185, 205);
+    background-color: rgb(198, 217, 240);
 }
 
 #tour {
@@ -159,7 +159,7 @@ body {
 
 #openModal {
     /*font-size: 16px;*/
-    background-color: rgb(141, 165, 197);
+    background-color: rgb(169, 185, 205);
     border: none;
     width: 75px;
     height: 50px;
@@ -168,7 +168,7 @@ body {
 }
 
 #openModal:active {
-    background-color: rgb(169, 185, 205);
+    background-color: rgb(198, 217, 240);
 }
 
 #reset{
@@ -179,7 +179,7 @@ body {
 
 #res {
     /*font-size: 16px;*/
-    background-color: rgb(141, 165, 197);
+    background-color: rgb(169, 185, 205);
     border: none;
     width: 75px;
     height: 50px;
@@ -188,7 +188,7 @@ body {
 }
 
 #res:active {
-    background-color: rgb(169, 185, 205);
+    background-color: rgb(198, 217, 240);
 }
 
 #playing {
