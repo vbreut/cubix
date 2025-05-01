@@ -121,15 +121,17 @@ body {
 
 #valider {
     /*font-size: 16px;*/
-    background-color: rgb(169, 185, 205);
+    background-color: rgb(145, 172, 204);
     border: none;
     display: flex;
     flex-direction: row;
     width: 110px;
     height: 50px;
     align-items: center;
-    font-size: 14px;
-    border-radius: 6px;
+    font-size: 16px;
+    border-radius: 7px;
+    font-weight: bold;
+    color: white;
 }
 
 #valider:active {
@@ -159,12 +161,13 @@ body {
 
 #openModal {
     /*font-size: 16px;*/
-    background-color: rgb(169, 185, 205);
+    background-color: rgb(145, 172, 204);
     border: none;
     width: 75px;
     height: 50px;
     font-size: 14px;
-    border-radius: 6px;
+    border-radius: 7px;
+    color: white;
 }
 
 #openModal:active {
@@ -179,12 +182,13 @@ body {
 
 #res {
     /*font-size: 16px;*/
-    background-color: rgb(169, 185, 205);
+    background-color: rgb(145, 172, 204);
     border: none;
     width: 75px;
     height: 50px;
     font-size: 14px;
-    border-radius: 6px;
+    border-radius: 7px;
+    color: white;
 }
 
 #res:active {
@@ -476,3 +480,4 @@ img {
     font-weight: bold;
     cursor: pointer;
 }
+
