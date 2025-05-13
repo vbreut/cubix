@@ -13,8 +13,19 @@ const gameboard = document.getElementById('game-board')
 const validButton = document.getElementById('valider');
 const tour = document.getElementById('tour');
 
+
+
 let cellrect = firstcell.getBoundingClientRect();
+
+//document.querySelectorAll(".grid").forEach(el =>{
+//    el.style.width = cellrect.width+"px";
+//    el.style.height = cellrect.height+"px";
+//})
+
 let boardrect= gameboard.getBoundingClientRect();
+//gameboard.style.width = boardrect.width+"px"
+//gameboard.style.height = boardrect.height+"px"
+
 let cellwidth = cellrect.width + 5;
 let scenerect = firstscene.getBoundingClientRect();
 let movx = scenerect.width/4 + 5;
@@ -24,6 +35,7 @@ let light="rgb(141, 165, 197)";
 let changepossible=1;
 let playingmode=1;
 let choice=null;
+let rotationinprogress=0;
 const choice0 = document.getElementById("choice0");
 const choice1 = document.getElementById("choice1");
 const choice2 = document.getElementById("choice2");
@@ -49,6 +61,15 @@ let cubestatus = [
 
 scenes.forEach(scen => {
     scen.addEventListener('click', () => {
+
+        //on reprend les coordonnées vu qu'au départ la grille est en bas sur la page d'accueil.
+        //Cela permet aussi de fonctionner après un redimensionnement de fenêtre au début de la partie (une fois que c'est commencé par contre ça ne marche plus)
+        cellrect = firstcell.getBoundingClientRect();
+        boardrect= gameboard.getBoundingClientRect();
+        cellwidth = cellrect.width + 5;
+        scenerect = firstscene.getBoundingClientRect();
+        movx = scenerect.width/4 + 5;
+        movy = scenerect.width/4 + 5;
 
         let cube=scen.firstElementChild;
         let cubenumber=parseInt(cube.id.match(/\d+/)[0]);
@@ -76,7 +97,7 @@ function selectcurrentcell(currentcell){
 board.forEach(cell => {
     cell.addEventListener('click', () => {
         let cellnumber=parseInt(cell.id.match(/\d+/)[0]);
-        let occupied = cubestatus[0].includes(cellnumber)
+        let occupied = cubestatus[0].includes(cellnumber);
      
         if (selectedScene != null && occupied == false && (playingmode==0 || turn=="white")){
 
@@ -86,13 +107,220 @@ board.forEach(cell => {
 
             if (cell.style.backgroundColor == light && numberofmoves < 2) {
                 moveCubeTo3(cell, cell.style.backgroundColor);
-            }           
+            }
         }
     });
 });
 
+function changefacesup() {
+
+    let cube=selectedScene.firstElementChild;
+    let cubenumber=parseInt(cube.id.match(/\d+/)[0]) - 1;
+    let faceright=cubestatus[6][cubenumber];
+
+    let el1=cube.querySelector('.shape1'); //rs
+    let el6=cube.querySelector('.shape6'); //bd
+    let el5=cube.querySelector('.shape5'); //bs
+    let el2=cube.querySelector('.shape2'); //rd
+    let el4=cube.querySelector('.shape4'); //ws
+    let el3=cube.querySelector('.shape3'); //wd
+
+    if(faceright=="wd"){
+        el1.classList.replace('shape1','shape6');
+        el6.classList.replace('shape6','shape2');
+        el2.classList.replace('shape2','shape5');
+        el5.classList.replace('shape5','shape1');
+    }
+    if(faceright=="ws"){
+        el6.classList.replace('shape6','shape1');
+        el1.classList.replace('shape1','shape5');
+        el5.classList.replace('shape5','shape2');
+        el2.classList.replace('shape2','shape6');
+    }
+    if(faceright=="bd"){
+        el3.classList.replace('shape3','shape1');
+        el1.classList.replace('shape1','shape4');
+        el4.classList.replace('shape4','shape2');
+        el2.classList.replace('shape2','shape3');
+    }
+    if(faceright=="bs"){
+        el1.classList.replace('shape1','shape3');
+        el3.classList.replace('shape3','shape2');
+        el2.classList.replace('shape2','shape4');
+        el4.classList.replace('shape4','shape1');
+    }
+    if(faceright=="rs"){
+        el3.classList.replace('shape3','shape5');
+        el5.classList.replace('shape5','shape4');
+        el4.classList.replace('shape4','shape6');
+        el6.classList.replace('shape6','shape3');
+    }
+    if(faceright=="rd"){
+        el5.classList.replace('shape5','shape3');
+        el3.classList.replace('shape3','shape6');
+        el6.classList.replace('shape6','shape4');
+        el4.classList.replace('shape4','shape5');
+    }
+}
+
+function changefacesdown() {
+
+    let cube=selectedScene.firstElementChild;
+    let cubenumber=parseInt(cube.id.match(/\d+/)[0]) - 1;
+    let faceright=cubestatus[6][cubenumber];
+
+    let el1=cube.querySelector('.shape1'); //rs
+    let el6=cube.querySelector('.shape6'); //bc
+    let el5=cube.querySelector('.shape5'); //bs
+    let el2=cube.querySelector('.shape2'); //rc
+    let el4=cube.querySelector('.shape4'); //ws
+    let el3=cube.querySelector('.shape3'); //wc
+
+    if(faceright=="wd"){
+        el6.classList.replace('shape6','shape1');
+        el1.classList.replace('shape1','shape5');
+        el5.classList.replace('shape5','shape2');
+        el2.classList.replace('shape2','shape6');
+    }
+    if(faceright=="ws"){
+        el1.classList.replace('shape1','shape6');
+        el6.classList.replace('shape6','shape2');
+        el2.classList.replace('shape2','shape5');
+        el5.classList.replace('shape5','shape1');
+    }
+    if(faceright=="bd"){
+        el1.classList.replace('shape1','shape3');
+        el3.classList.replace('shape3','shape2');
+        el2.classList.replace('shape2','shape4');
+        el4.classList.replace('shape4','shape1');
+    }
+    if(faceright=="bs"){
+        el3.classList.replace('shape3','shape1');
+        el1.classList.replace('shape1','shape4');
+        el4.classList.replace('shape4','shape2');
+        el2.classList.replace('shape2','shape3');
+    }
+    if(faceright=="rs"){
+        el5.classList.replace('shape5','shape3');
+        el3.classList.replace('shape3','shape6');
+        el6.classList.replace('shape6','shape4');
+        el4.classList.replace('shape4','shape5');
+    }
+    if(faceright=="rd"){
+        el3.classList.replace('shape3','shape5');
+        el5.classList.replace('shape5','shape4');
+        el4.classList.replace('shape4','shape6');
+        el6.classList.replace('shape6','shape3');
+    }
+}
+
+function changefacesright() {
+
+    let cube=selectedScene.firstElementChild;
+    let cubenumber=parseInt(cube.id.match(/\d+/)[0]) - 1;
+    let faceback=cubestatus[4][cubenumber];
+
+    let el1=cube.querySelector('.shape1'); //rs
+    let el6=cube.querySelector('.shape6'); //bd
+    let el5=cube.querySelector('.shape5'); //bs
+    let el2=cube.querySelector('.shape2'); //rd
+    let el4=cube.querySelector('.shape4'); //ws
+    let el3=cube.querySelector('.shape3'); //wd
+
+    if(faceback=="wd"){
+        el1.classList.replace('shape1','shape6');
+        el6.classList.replace('shape6','shape2');
+        el2.classList.replace('shape2','shape5');
+        el5.classList.replace('shape5','shape1');
+    }
+    if(faceback=="ws"){
+        el6.classList.replace('shape6','shape1');
+        el1.classList.replace('shape1','shape5');
+        el5.classList.replace('shape5','shape2');
+        el2.classList.replace('shape2','shape6');
+    }
+    if(faceback=="bd"){
+        el3.classList.replace('shape3','shape1');
+        el1.classList.replace('shape1','shape4');
+        el4.classList.replace('shape4','shape2');
+        el2.classList.replace('shape2','shape3');
+    }
+    if(faceback=="bs"){
+        el1.classList.replace('shape1','shape3');
+        el3.classList.replace('shape3','shape2');
+        el2.classList.replace('shape2','shape4');
+        el4.classList.replace('shape4','shape1');
+    }
+    if(faceback=="rs"){
+        el3.classList.replace('shape3','shape5');
+        el5.classList.replace('shape5','shape4');
+        el4.classList.replace('shape4','shape6');
+        el6.classList.replace('shape6','shape3');
+    }
+    if(faceback=="rd"){
+        el5.classList.replace('shape5','shape3');
+        el3.classList.replace('shape3','shape6');
+        el6.classList.replace('shape6','shape4');
+        el4.classList.replace('shape4','shape5');
+    }
+}
+
+function changefacesleft() {
+
+    let cube=selectedScene.firstElementChild;
+    let cubenumber=parseInt(cube.id.match(/\d+/)[0]) - 1;
+    let faceback=cubestatus[4][cubenumber];
+
+    let el1=cube.querySelector('.shape1'); //rs
+    let el6=cube.querySelector('.shape6'); //bd
+    let el5=cube.querySelector('.shape5'); //bs
+    let el2=cube.querySelector('.shape2'); //rd
+    let el4=cube.querySelector('.shape4'); //ws
+    let el3=cube.querySelector('.shape3'); //wd
+
+    if(faceback=="wd"){
+        el6.classList.replace('shape6','shape1');
+        el1.classList.replace('shape1','shape5');
+        el5.classList.replace('shape5','shape2');
+        el2.classList.replace('shape2','shape6');
+    }
+    if(faceback=="ws"){
+        el1.classList.replace('shape1','shape6');
+        el6.classList.replace('shape6','shape2');
+        el2.classList.replace('shape2','shape5');
+        el5.classList.replace('shape5','shape1');
+    }
+    if(faceback=="bd"){
+        el1.classList.replace('shape1','shape3');
+        el3.classList.replace('shape3','shape2');
+        el2.classList.replace('shape2','shape4');
+        el4.classList.replace('shape4','shape1');
+    }
+    if(faceback=="bs"){
+        el3.classList.replace('shape3','shape1');
+        el1.classList.replace('shape1','shape4');
+        el4.classList.replace('shape4','shape2');
+        el2.classList.replace('shape2','shape3');
+    }
+    if(faceback=="rs"){
+        el5.classList.replace('shape5','shape3');
+        el3.classList.replace('shape3','shape6');
+        el6.classList.replace('shape6','shape4');
+        el4.classList.replace('shape4','shape5');
+    }
+    if(faceback=="rd"){
+        el3.classList.replace('shape3','shape5');
+        el5.classList.replace('shape5','shape4');
+        el4.classList.replace('shape4','shape6');
+        el6.classList.replace('shape6','shape3');
+    }
+}
 
 function moveCubeTo3(targetCell, cellcolor) {
+
+    if (rotationinprogress){
+        return;
+    }
 
     let rotx=0;
     let roty=0;
@@ -128,14 +356,33 @@ function moveCubeTo3(targetCell, cellcolor) {
 
     if (Math.abs(deltax) + Math.abs(deltay) < 1.3*cellwidth && Math.abs(deltax) + Math.abs(deltay) > 0.3*cellwidth) {
 
+
         //vers le bas
         if (Math.abs(deltax)<0.3*cellwidth && Math.abs(deltay)>0.3*cellwidth && deltay>0) {
-            if(faceright=="wd"){rotx=-90;cube.style.transform += `rotateX(${rotx}deg)`;}
-            if(faceright=="ws"){rotx=90;cube.style.transform += `rotateX(${rotx}deg)`;}
-            if(faceright=="bd"){roty=-90;cube.style.transform += `rotateY(${roty}deg)`;}
-            if(faceright=="bs"){roty=90;cube.style.transform += `rotateY(${roty}deg)`;}
-            if(faceright=="rs"){rotz=-90;cube.style.transform += `rotateZ(${rotz}deg)`;}
-            if(faceright=="rd"){rotz=90;cube.style.transform += `rotateZ(${rotz}deg)`;}
+
+            cube.style.transform = `rotateX(-90deg)`;
+            rotationinprogress=1;
+
+            cube.addEventListener('transitionend', () => {
+                cube.style.transition = 'none';
+
+                cube.style.transform="none";
+                cube.offsetHeight;
+
+                changefacesdown();
+                
+                cube.style.transition = 'transform 0.5s';
+
+                rotationinprogress=0;
+            },{once: true});
+            
+
+            //if(faceright=="wd"){rotx= -90;cube.style.transform += `rotateX(${rotx}deg)`;}
+            //if(faceright=="ws"){rotx= 90;cube.style.transform += `rotateX(${rotx}deg)`;}
+            //if(faceright=="bd"){roty= -90;cube.style.transform += `rotateY(${roty}deg)`;}
+            //if(faceright=="bs"){roty= 90;cube.style.transform += `rotateY(${roty}deg)`;}
+            //if(faceright=="rs"){rotz= -90;cube.style.transform += `rotateZ(${rotz}deg)`;}
+            //if(faceright=="rd"){rotz= 90;cube.style.transform += `rotateZ(${rotz}deg)`;}
             cubestatus[1][cubenumber]= facefront;
             cubestatus[2][cubenumber]= faceback;
             cubestatus[3][cubenumber]= facedown;
@@ -145,12 +392,28 @@ function moveCubeTo3(targetCell, cellcolor) {
 
         //vers le haut
         if (Math.abs(deltax)<0.3*cellwidth && Math.abs(deltay)>0.3*cellwidth && deltay<0) {
-            if(faceright=="wd"){rotx= 90;cube.style.transform += `rotateX(${rotx}deg)`;}
-            if(faceright=="ws"){rotx= -90;cube.style.transform += `rotateX(${rotx}deg)`;}
-            if(faceright=="bd"){roty=90;cube.style.transform += `rotateY(${roty}deg)`;}
-            if(faceright=="bs"){roty=-90;cube.style.transform += `rotateY(${roty}deg)`;}
-            if(faceright=="rs"){rotz=90;cube.style.transform += `rotateZ(${rotz}deg)`;}
-            if(faceright=="rd"){rotz= -90;cube.style.transform += `rotateZ(${rotz}deg)`;}
+  
+            cube.style.transform = `rotateX(90deg)`;
+            rotationinprogress=1;
+
+            cube.addEventListener('transitionend', () => {
+                cube.style.transition = 'none';
+
+                cube.style.transform="none";
+                cube.offsetHeight;
+
+                changefacesup();
+
+                cube.style.transition = 'transform 0.5s';
+                rotationinprogress=0;
+            },{once: true});
+
+            //if(faceright=="wd"){rotx= 90;cube.style.transform += `rotateX(${rotx}deg)`;}
+            //if(faceright=="ws"){rotx= -90;cube.style.transform += `rotateX(${rotx}deg)`;}
+            //if(faceright=="bd"){roty= 90;cube.style.transform += `rotateY(${roty}deg)`;}
+            //if(faceright=="bs"){roty= -90;cube.style.transform += `rotateY(${roty}deg)`;}
+            //if(faceright=="rs"){rotz= 90;cube.style.transform += `rotateZ(${rotz}deg)`;}
+            //if(faceright=="rd"){rotz= -90;cube.style.transform += `rotateZ(${rotz}deg)`;}
             cubestatus[1][cubenumber]= faceback;
             cubestatus[2][cubenumber]= facefront;
             cubestatus[3][cubenumber]= faceup;
@@ -160,12 +423,28 @@ function moveCubeTo3(targetCell, cellcolor) {
 
         //vers la droite    
         if (Math.abs(deltax)>0.3*cellwidth && Math.abs(deltay)<0.3*cellwidth && deltax>0) {
-            if(faceback=="bd"){roty=90;cube.style.transform += `rotateY(${roty}deg)`;}
-            if(faceback=="bs"){roty= -90;cube.style.transform += `rotateY(${roty}deg)`;}
-            if(faceback=="wd"){rotx=90;cube.style.transform += `rotateX(${rotx}deg)`;}
-            if(faceback=="ws"){rotx= -90;cube.style.transform += `rotateX(${rotx}deg)`;}
-            if(faceback=="rs"){rotz= 90;cube.style.transform += `rotateZ(${rotz}deg)`;}
-            if(faceback=="rd"){rotz= -90;cube.style.transform += `rotateZ(${rotz}deg)`;}
+
+            cube.style.transform = `rotateY(90deg)`;
+            rotationinprogress=1;
+
+            cube.addEventListener('transitionend', () => {
+                cube.style.transition = 'none';
+
+                cube.style.transform="none";
+                cube.offsetHeight;
+
+                changefacesright();
+                
+                cube.style.transition = 'transform 0.5s';
+                rotationinprogress=0;
+            },{once: true});
+
+            //if(faceback=="bd"){roty= 90;cube.style.transform += `rotateY(${roty}deg)`;}
+            //if(faceback=="bs"){roty= -90;cube.style.transform += `rotateY(${roty}deg)`;}
+            //if(faceback=="wd"){rotx= 90;cube.style.transform += `rotateX(${rotx}deg)`;}
+            //if(faceback=="ws"){rotx= -90;cube.style.transform += `rotateX(${rotx}deg)`;}
+            //if(faceback=="rs"){rotz= 90;cube.style.transform += `rotateZ(${rotz}deg)`;}
+            //if(faceback=="rd"){rotz= -90;cube.style.transform += `rotateZ(${rotz}deg)`;}
             cubestatus[1][cubenumber]= faceleft;
             cubestatus[2][cubenumber]= faceright;
             cubestatus[5][cubenumber]= facedown;
@@ -175,12 +454,28 @@ function moveCubeTo3(targetCell, cellcolor) {
 
         //vers la gauche
         if (Math.abs(deltax)>0.3*cellwidth && Math.abs(deltay)<0.3*cellwidth && deltax<0) {
-            if(faceback=="bd"){roty= -90;cube.style.transform += `rotateY(${roty}deg)`;}
-            if(faceback=="bs"){roty=90;cube.style.transform += `rotateY(${roty}deg)`;}
-            if(faceback=="wd"){rotx= -90;cube.style.transform += `rotateX(${rotx}deg)`;}
-            if(faceback=="ws"){rotx=90;cube.style.transform += `rotateX(${rotx}deg)`;}
-            if(faceback=="rs"){rotz= -90;cube.style.transform += `rotateZ(${rotz}deg)`;}
-            if(faceback=="rd"){rotz=90;cube.style.transform += `rotateZ(${rotz}deg)`;}
+
+            cube.style.transform = `rotateY(-90deg)`;
+            rotationinprogress=1;
+
+            cube.addEventListener('transitionend', () => {
+                cube.style.transition = 'none';
+
+                cube.style.transform="none";
+                cube.offsetHeight;
+
+                changefacesleft();
+                
+                cube.style.transition = 'transform 0.5s';
+                rotationinprogress=0;
+            },{once: true});
+
+            //if(faceback=="bd"){roty= -90;cube.style.transform += `rotateY(${roty}deg)`;}
+            //if(faceback=="bs"){roty= 90;cube.style.transform += `rotateY(${roty}deg)`;}
+            //if(faceback=="wd"){rotx= -90;cube.style.transform += `rotateX(${rotx}deg)`;}
+            //if(faceback=="ws"){rotx= 90;cube.style.transform += `rotateX(${rotx}deg)`;}
+            //if(faceback=="rs"){rotz= -90;cube.style.transform += `rotateZ(${rotz}deg)`;}
+            //if(faceback=="rd"){rotz= 90;cube.style.transform += `rotateZ(${rotz}deg)`;}
             cubestatus[1][cubenumber]= faceright;
             cubestatus[2][cubenumber]= faceleft;
             cubestatus[5][cubenumber]= faceup;
@@ -197,6 +492,7 @@ function moveCubeTo3(targetCell, cellcolor) {
             currentcell.style.backgroundColor = light;
             numberofmoves -=1;
         }
+        
         if (cellcolor==light){
             targetCell.style.backgroundColor = dark;
             numberofmoves +=1;
@@ -205,6 +501,10 @@ function moveCubeTo3(targetCell, cellcolor) {
 }
 
 validButton.addEventListener('click', () => {
+    if (rotationinprogress){
+        return;
+    }
+
     if (numberofmoves > 0 && (playingmode==0||turn=="white")){
         let doublemove=0;
         let delay=0;
@@ -225,7 +525,7 @@ validButton.addEventListener('click', () => {
                     doublemove=botlevel3();
                 }
                 if (doublemove==1){
-                    delay=500;
+                    delay=550;
                 }
 
                 if (doublemove==-1){
@@ -234,7 +534,7 @@ validButton.addEventListener('click', () => {
                 setTimeout(() => {
                     valider();
                 }, 800 + delay);
-            }, 500);
+            }, 550);
         }
     }
 });
@@ -265,6 +565,7 @@ function changes(){
 }
 
 function valider(){
+
     prise();
 
     if (forcedcube[3]!= -1){
@@ -363,4 +664,5 @@ toggle.addEventListener('change', () => {
             face.classList.remove('transparent'); // Supprime la classe
         }
     }
+
 });
