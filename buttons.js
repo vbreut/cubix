@@ -64,12 +64,12 @@ scenes.forEach(scen => {
 
         //on reprend les coordonnées vu qu'au départ la grille est en bas sur la page d'accueil.
         //Cela permet aussi de fonctionner après un redimensionnement de fenêtre au début de la partie (une fois que c'est commencé par contre ça ne marche plus)
-        cellrect = firstcell.getBoundingClientRect();
-        boardrect= gameboard.getBoundingClientRect();
-        cellwidth = cellrect.width + 5;
-        scenerect = firstscene.getBoundingClientRect();
-        movx = scenerect.width/4 + 5;
-        movy = scenerect.width/4 + 5;
+        //cellrect = firstcell.getBoundingClientRect();
+        //boardrect= gameboard.getBoundingClientRect();
+        //cellwidth = cellrect.width + 5;
+        //scenerect = firstscene.getBoundingClientRect();
+        //movx = scenerect.width/4 + 5;
+        //movy = scenerect.width/4 + 5;
 
         let cube=scen.firstElementChild;
         let cubenumber=parseInt(cube.id.match(/\d+/)[0]);
