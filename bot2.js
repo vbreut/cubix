@@ -11,19 +11,19 @@ function botlevel2(){
 
     //victoire possible en 2 cases ?
     nb=pathtovictory(2);
-    if(nb<2){console.log("pathtovictory(2)");return nb;}
+    //if(nb<2){console.log("pathtovictory(2)");return nb;}
 
     /*nb=defense(2);
     if(nb<2){console.log("defense(2)");return nb;}*/
 
     nb=pathtovictory(4);
-    if(nb<2){console.log("pathtovictory(4)");return nb;}
+    //if(nb<2){console.log("pathtovictory(4)");return nb;}
 
     /*nb=defense(4);
     if(nb<2){console.log("defense(4)");return nb;}*/
 
     let cointoss = Math.floor(Math.random() * 2);
-    console.log(cointoss);
+    //console.log(cointoss);
     if (cointoss == 0){
         nb=taketake();
         if(nb<2){console.log("taketake");return nb;}
@@ -41,6 +41,6 @@ function botlevel2(){
 
     //sinon coup au hasard
     nb=botlevel1();
-    console.log("botlevel1");
+    //console.log("botlevel1");
     return nb;
 }
