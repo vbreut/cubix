@@ -371,7 +371,7 @@ function moveCubeTo3(targetCell, cellcolor) {
 
                 changefacesdown();
                 
-                cube.style.transition = 'transform 0.5s';
+                cube.style.transition = 'transform 0.45s';
 
                 rotationinprogress=0;
             },{once: true});
@@ -404,7 +404,7 @@ function moveCubeTo3(targetCell, cellcolor) {
 
                 changefacesup();
 
-                cube.style.transition = 'transform 0.5s';
+                cube.style.transition = 'transform 0.45s';
                 rotationinprogress=0;
             },{once: true});
 
@@ -435,7 +435,7 @@ function moveCubeTo3(targetCell, cellcolor) {
 
                 changefacesright();
                 
-                cube.style.transition = 'transform 0.5s';
+                cube.style.transition = 'transform 0.45s';
                 rotationinprogress=0;
             },{once: true});
 
@@ -466,7 +466,7 @@ function moveCubeTo3(targetCell, cellcolor) {
 
                 changefacesleft();
                 
-                cube.style.transition = 'transform 0.5s';
+                cube.style.transition = 'transform 0.45s';
                 rotationinprogress=0;
             },{once: true});
 
@@ -525,7 +525,7 @@ validButton.addEventListener('click', () => {
                     doublemove=botlevel3();
                 }
                 if (doublemove==1){
-                    delay=550;
+                    delay=500;
                 }
 
                 if (doublemove==-1){
@@ -534,7 +534,7 @@ validButton.addEventListener('click', () => {
                 setTimeout(() => {
                     valider();
                 }, 800 + delay);
-            }, 550);
+            }, 500);
         }
     }
 });
