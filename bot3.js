@@ -174,7 +174,7 @@ function pathtovictory(deepmax){
                     setTimeout(() => {
                         selectedcell = document.getElementById("cell-" + solutions[taille[i]][2]);
                         moveCubeTo3(selectedcell, light);
-                    }, 550);
+                    }, 500);
                     return 1;
                 }
             }
@@ -204,7 +204,7 @@ function pathtovictory(deepmax){
                     setTimeout(() => {
                         selectedcell = document.getElementById("cell-" + solutions[taille[i]][2]);
                         moveCubeTo3(selectedcell, light);
-                    }, 550);
+                    }, 500);
                     return 1;
                 }
             }
@@ -236,7 +236,7 @@ function pathtovictory(deepmax){
                     setTimeout(() => {
                         selectedcell = document.getElementById("cell-" + solutions[taille[i]][2]);
                         moveCubeTo3(selectedcell, light);
-                    }, 550);
+                    }, 500);
                     return 1;
                 }
             }
@@ -536,7 +536,7 @@ function defense(deepmax){
                 setTimeout(() => {
                     selectedcell = document.getElementById("cell-" + c[2]);
                     moveCubeTo3(selectedcell, light);
-                }, 550);
+                }, 500);
                 return 1;
             }
             return 0;
@@ -564,7 +564,7 @@ function defense(deepmax){
                             setTimeout(() => {
                                 selectedcell = document.getElementById("cell-" + moves[2]);
                                 moveCubeTo3(selectedcell, light);
-                            }, 550);
+                            }, 500);
                             return 1;
                         }
                         return 0;
@@ -905,7 +905,7 @@ function taketake() {
                         setTimeout(() => {
                             selectedcell = document.getElementById("cell-" + c[2]);
                             moveCubeTo3(selectedcell, light);
-                        }, 550);
+                        }, 500);
                         return 1;
                     }
                     return 0;
@@ -940,7 +940,7 @@ function movecareful(){
                     setTimeout(() => {
                         selectedcell = document.getElementById("cell-" + moves[2]);
                         moveCubeTo3(selectedcell, light);
-                    }, 550);
+                    }, 500);
                     return 1;
                 }
                 return 0;
@@ -964,7 +964,7 @@ function movecareful(){
                     setTimeout(() => {
                         selectedcell = document.getElementById("cell-" + moves[2]);
                         moveCubeTo3(selectedcell, light);
-                    }, 550);
+                    }, 500);
                     return 1;
                 }
                 return 0;
@@ -1013,7 +1013,7 @@ function protect(){
                             setTimeout(() => {
                                 selectedcell = document.getElementById("cell-" + moves[2]);
                                 moveCubeTo3(selectedcell, light);
-                            }, 550);
+                            }, 500);
                             return 1;
                         }
                         return 0;
