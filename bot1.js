@@ -54,7 +54,7 @@ function botlevel1(){
         if (availablecells.length!=0){
             setTimeout(() => {
                 randommove(availablecells);
-            }, 550);
+            }, 500);
         }
     }
     return cointoss;
@@ -79,7 +79,7 @@ function forcedmove(){
         setTimeout(() => {
             selectedcell = document.getElementById("cell-" + forcedcube[2]);
             moveCubeTo3(selectedcell, light);
-        }, 550);
+        }, 500);
         return 1; //2 coups
     }
 
