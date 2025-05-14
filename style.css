@@ -1,14 +1,14 @@
 :root{
-    /*--cubesize:60px;
+    --cubesize:50px;
     --translate:calc(var(--cubesize)/2 - 0.5px);
-    --shapesize:40px;
+    --shapesize:35px;
     --marginborder:5px;
-    --cellsize:90px;*/
-    --cubesize:8vh;
+    --cellsize:75px;
+    /*--cubesize:8vh;
     --translate:calc(var(--cubesize)/2 - 0.4px);
     --shapesize:5.4vh;
     --marginborder:5px;
-    --cellsize:12vh;
+    --cellsize:12vh;*/
     --bor:calc(var(--shapesize) - 3px);
     --movx1:calc(var(--cubesize)/4 + var(--marginborder));
     --movy1:calc(var(--cubesize)/4 + var(--marginborder));
@@ -480,3 +480,4 @@ img {
     font-weight: bold;
     cursor: pointer;
 }
+
