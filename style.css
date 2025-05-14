@@ -293,7 +293,7 @@ img {
     position: absolute;
     margin: 0/*auto 40px*/;
     transform-style: preserve-3d;
-    transition: transform 0.45s;
+    transition: transform 0.4s ease-out;
     z-index: 1;
 }
 
@@ -351,7 +351,7 @@ img {
     position: absolute;
     transform-style: preserve-3d;
     transform:  rotateY(0deg) rotateX(0deg) rotateZ(0deg);
-    transition: transform 0.45s;
+    transition: transform 0.4s ease-out;
 }
 
 
@@ -480,4 +480,3 @@ img {
     font-weight: bold;
     cursor: pointer;
 }
-
