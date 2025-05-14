@@ -40,6 +40,7 @@ const choice0 = document.getElementById("choice0");
 const choice1 = document.getElementById("choice1");
 const choice2 = document.getElementById("choice2");
 const choice3 = document.getElementById("choice3");
+const tempo = 400;
 
 //0 cell nb
 //1 face up, par défaut red square
@@ -352,6 +353,8 @@ function moveCubeTo3(targetCell, cellcolor) {
     let currentcellnumber=cubestatus[0][cubenumber];
     let cellid="cell-" + currentcellnumber;
     let currentcell= document.getElementById(cellid);
+    let te = tempo/1000;
+    let transf = 'transform ' + te + 's' + ' ease-out';
 
 
     if (Math.abs(deltax) + Math.abs(deltay) < 1.3*cellwidth && Math.abs(deltax) + Math.abs(deltay) > 0.3*cellwidth) {
@@ -371,7 +374,8 @@ function moveCubeTo3(targetCell, cellcolor) {
 
                 changefacesdown();
                 
-                cube.style.transition = 'transform 0.45s';
+                let te = tempo/1000;
+                cube.style.transition = transf;
 
                 rotationinprogress=0;
             },{once: true});
@@ -404,7 +408,7 @@ function moveCubeTo3(targetCell, cellcolor) {
 
                 changefacesup();
 
-                cube.style.transition = 'transform 0.45s';
+                cube.style.transition = transf;
                 rotationinprogress=0;
             },{once: true});
 
@@ -435,7 +439,7 @@ function moveCubeTo3(targetCell, cellcolor) {
 
                 changefacesright();
                 
-                cube.style.transition = 'transform 0.45s';
+                cube.style.transition = transf;
                 rotationinprogress=0;
             },{once: true});
 
@@ -465,8 +469,8 @@ function moveCubeTo3(targetCell, cellcolor) {
                 cube.offsetHeight;
 
                 changefacesleft();
-                
-                cube.style.transition = 'transform 0.45s';
+
+                cube.style.transition = transf;
                 rotationinprogress=0;
             },{once: true});
 
@@ -525,7 +529,7 @@ validButton.addEventListener('click', () => {
                     doublemove=botlevel3();
                 }
                 if (doublemove==1){
-                    delay=500;
+                    delay=tempo + 50;
                 }
 
                 if (doublemove==-1){
@@ -534,7 +538,7 @@ validButton.addEventListener('click', () => {
                 setTimeout(() => {
                     valider();
                 }, 800 + delay);
-            }, 500);
+            }, tempo + 50);
         }
     }
 });
