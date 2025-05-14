@@ -13,19 +13,8 @@ const gameboard = document.getElementById('game-board')
 const validButton = document.getElementById('valider');
 const tour = document.getElementById('tour');
 
-
-
 let cellrect = firstcell.getBoundingClientRect();
-
-//document.querySelectorAll(".grid").forEach(el =>{
-//    el.style.width = cellrect.width+"px";
-//    el.style.height = cellrect.height+"px";
-//})
-
 let boardrect= gameboard.getBoundingClientRect();
-//gameboard.style.width = boardrect.width+"px"
-//gameboard.style.height = boardrect.height+"px"
-
 let cellwidth = cellrect.width + 5;
 let scenerect = firstscene.getBoundingClientRect();
 let movx = scenerect.width/4 + 5;
@@ -41,6 +30,7 @@ const choice1 = document.getElementById("choice1");
 const choice2 = document.getElementById("choice2");
 const choice3 = document.getElementById("choice3");
 const tempo = 350;
+let largeur = document.documentElement.clientWidth;
 
 //0 cell nb
 //1 face up, par défaut red square
@@ -323,9 +313,12 @@ function moveCubeTo3(targetCell, cellcolor) {
         return;
     }
 
-    let rotx=0;
-    let roty=0;
-    let rotz=0;
+    //let largeur2 = window.innerWidth;
+    let largeur2 = document.documentElement.clientWidth;
+
+    //let rotx=0;
+    //let roty=0;
+    //let rotz=0;
 
     let coordcell = targetCell.getBoundingClientRect();
     let x = coordcell.left+window.scrollX;
@@ -487,7 +480,7 @@ function moveCubeTo3(targetCell, cellcolor) {
             cubestatus[0][cubenumber]= cubestatus[0][cubenumber] - 1;
         }
 
-        x3d = x + movx - boardrect.left - 5 - 0.5;
+        x3d = x + movx - boardrect.left - 5 - 0.5 + (largeur - largeur2)/2;
         y3d = y + movy - boardrect.top - 5 - 0.5;
 
         selectedScene.style.transform = `translate(${x3d}px, ${y3d}px) rotateY(18deg) rotateX(18deg)`;
