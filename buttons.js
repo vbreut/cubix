@@ -91,14 +91,29 @@ board.forEach(cell => {
         let occupied = cubestatus[0].includes(cellnumber);
      
         if (selectedScene != null && occupied == false && (playingmode==0 || turn=="white")){
+            let cube=selectedScene.firstElementChild;
 
-            if (cell.style.backgroundColor == dark) {
-                moveCubeTo3(cell, cell.style.backgroundColor);
+            if (rotationinprogress==0){
+                if (cell.style.backgroundColor == dark) {
+                    moveCubeTo3(cell, cell.style.backgroundColor);
+                }
+    
+                if (cell.style.backgroundColor == light && numberofmoves < 2) {
+                    moveCubeTo3(cell, cell.style.backgroundColor);
+                }
+            }
+            if (rotationinprogress==1){
+                cube.addEventListener('transitionend', () => {
+                    if (cell.style.backgroundColor == dark) {
+                        moveCubeTo3(cell, cell.style.backgroundColor);
+                    }
+        
+                    if (cell.style.backgroundColor == light && numberofmoves < 2) {
+                        moveCubeTo3(cell, cell.style.backgroundColor);
+                    }
+                },{once: true});
             }
 
-            if (cell.style.backgroundColor == light && numberofmoves < 2) {
-                moveCubeTo3(cell, cell.style.backgroundColor);
-            }
         }
     });
 });
