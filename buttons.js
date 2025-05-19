@@ -32,6 +32,14 @@ const choice3 = document.getElementById("choice3");
 const tempo = 350;
 let largeur = document.documentElement.clientWidth;
 
+        //à faire une fois quand le plateau s'affiche
+        //cellrect = firstcell.getBoundingClientRect();
+        //boardrect= gameboard.getBoundingClientRect();
+        //cellwidth = cellrect.width + 5;
+        //scenerect = firstscene.getBoundingClientRect();
+        //movx = scenerect.width/4 + 5;
+        //movy = scenerect.width/4 + 5;
+
 //0 cell nb
 //1 face up, par défaut red square
 //2 face down, red disc
@@ -53,14 +61,6 @@ let cubestatus = [
 scenes.forEach(scen => {
     scen.addEventListener('click', () => {
 
-        //on reprend les coordonnées vu qu'au départ la grille est en bas sur la page d'accueil.
-        //Cela permet aussi de fonctionner après un redimensionnement de fenêtre au début de la partie (une fois que c'est commencé par contre ça ne marche plus)
-        //cellrect = firstcell.getBoundingClientRect();
-        //boardrect= gameboard.getBoundingClientRect();
-        //cellwidth = cellrect.width + 5;
-        //scenerect = firstscene.getBoundingClientRect();
-        //movx = scenerect.width/4 + 5;
-        //movy = scenerect.width/4 + 5;
 
         let cube=scen.firstElementChild;
         let cubenumber=parseInt(cube.id.match(/\d+/)[0]);
