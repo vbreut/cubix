@@ -68,7 +68,7 @@ scenes.forEach(scen => {
         let cellid="cell-" + cellnumber;
         let currentcell= document.getElementById(cellid);
 
-        if ((selectedScene == null || numberofmoves == 0) && (cubenumber<7 && turn=="black" && playingmode==0 || cubenumber>6 && turn=="white") && currentcell!=null){
+        if ((selectedScene == null || numberofmoves == 0) && (cubenumber<7 && turn=="black" && playingmode==0 || cubenumber>6 && turn=="white") && currentcell!=null && rotationinprogress==0){
             selectedScene=scen;
             selectcurrentcell(currentcell);
         }
