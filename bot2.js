@@ -11,13 +11,13 @@ function botlevel2(){
 
     //victoire possible en 2 cases ?
     nb=pathtovictory(2);
-    //if(nb<2){console.log("pathtovictory(2)");return nb;}
+    if(nb<2){console.log("pathtovictory(2)");return nb;}
 
     /*nb=defense(2);
     if(nb<2){console.log("defense(2)");return nb;}*/
 
     nb=pathtovictory(4);
-    //if(nb<2){console.log("pathtovictory(4)");return nb;}
+    if(nb<2){console.log("pathtovictory(4)");return nb;}
 
     /*nb=defense(4);
     if(nb<2){console.log("defense(4)");return nb;}*/
