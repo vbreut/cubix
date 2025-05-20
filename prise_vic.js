@@ -1,3 +1,5 @@
+"use strict";
+
 function prise() {
 
     let cube=selectedScene.firstElementChild;
@@ -125,13 +127,21 @@ function prise() {
     for (i = 0; i <6; i++){
         if(cubestatus[0][i]!=0){j++}
     }
-    if(j==0){affichervic("Victoire des blancs !");turn="end";}
+    if(j==0){
+        affichervic("Victoire des blancs !");
+        confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: { y: 0.6 }
+          });
+        turn="end";
+    }
 
     j=0;
     for (i = 6; i <12; i++){
         if(cubestatus[0][i]!=0){j++}
     }
-    if(j==0){affichervic("Victoire des noirs!");turn="end";}
+    if(j==0){affichervic("Victoire des noirs !");turn="end";}
 
 }
 
@@ -146,6 +156,11 @@ function victoire(){
             c=capture(cubenumber+1);
             if (c[0]==0 && turn=="white"){
                 affichervic("Victoire des blancs !");
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 }
+                  });
                 turn="end";
                 return;
             }
