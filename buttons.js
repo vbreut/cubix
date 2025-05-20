@@ -516,9 +516,7 @@ validButton.addEventListener('click', () => {
     if (rotationinprogress){
         return;
     }
-
-    try{
-return bla;
+        
     if (numberofmoves > 0 && (playingmode==0||turn=="white")){
         let doublemove=0;
         let delay=0;
@@ -552,8 +550,6 @@ return bla;
         }
     }
 
-
-    } catch(e){alert(e.stack);}
 });
 
 function changes(){
