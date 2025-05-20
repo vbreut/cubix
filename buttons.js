@@ -382,7 +382,6 @@ function moveCubeTo3(targetCell, cellcolor) {
 
                 changefacesdown();
                 
-                let te = tempo/1000;
                 cube.style.transition = transf;
 
                 rotationinprogress=0;
