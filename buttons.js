@@ -516,7 +516,8 @@ validButton.addEventListener('click', () => {
     if (rotationinprogress){
         return;
     }
-        
+
+try{
     if (numberofmoves > 0 && (playingmode==0||turn=="white")){
         let doublemove=0;
         let delay=0;
@@ -548,6 +549,11 @@ validButton.addEventListener('click', () => {
                 }, 800 + delay);
             }, tempo + 50);
         }
+    }
+
+            }  catch(e){
+    const err=document.getElementById("image");
+    err.textContent = e.stack; 
     }
 
 });
