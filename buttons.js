@@ -71,6 +71,7 @@ scenes.forEach(scen => {
         if ((selectedScene == null || numberofmoves == 0) && (cubenumber<7 && turn=="black" && playingmode==0 || cubenumber>6 && turn=="white") && currentcell!=null && rotationinprogress==0){
             selectedScene=scen;
             selectcurrentcell(currentcell);
+
         }
 
     });
@@ -381,7 +382,7 @@ function moveCubeTo3(targetCell, cellcolor) {
                 cube.offsetHeight;
 
                 changefacesdown();
-                
+
                 cube.style.transition = transf;
 
                 rotationinprogress=0;
@@ -516,6 +517,8 @@ validButton.addEventListener('click', () => {
         return;
     }
 
+    try{
+return bla;
     if (numberofmoves > 0 && (playingmode==0||turn=="white")){
         let doublemove=0;
         let delay=0;
@@ -548,6 +551,9 @@ validButton.addEventListener('click', () => {
             }, tempo + 50);
         }
     }
+
+
+    } catch(e){alert(e.stack);}
 });
 
 function changes(){
