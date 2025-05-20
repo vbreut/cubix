@@ -2,6 +2,7 @@
 
 function botlevel3(){
 
+    try{
     let nb=0;
     //coup forcé
     if(forcedcube[3]!=-1){
@@ -46,6 +47,13 @@ function botlevel3(){
     nb=botlevel1();
     //console.log("botlevel1");
     return nb;
+
+
+        }  catch(e){
+    const err=document.getElementById("image");
+    err.textContent = e.stack; 
+    }
+    
 }
 
 function pathtovictory(deepmax){
