@@ -1,7 +1,7 @@
 :root{
     --cubesize:50px;
-    --translate:calc(var(--cubesize)/2 - 0.5px);
-    --shapesize:35px;
+    --translate:calc(var(--cubesize)/2 - 1px);
+    --shapesize:34px;
     --marginborder:5px;
     --cellsize:75px;
     /*--cubesize:8vh;
@@ -42,8 +42,8 @@
 @media (orientation: portrait) {
     :root{
         --cubesize:10vw;
-        --translate:calc(var(--cubesize)/2 - 0.4px);
-        --shapesize:6.8vw;
+        --translate:calc(var(--cubesize)/2 - 1px);
+        --shapesize:6.7vw;
         --marginborder:5px;
         --cellsize:14.8vw;
         --bor:calc(var(--shapesize) - 3px);
@@ -79,7 +79,15 @@ body {
     font-family: Arial, sans-serif;
     text-align: center;
     margin: var(--marginborder);
+    background-color:rgb(240, 245, 250);
     /*width: auto;*/
+}
+
+#home {
+    display: block;
+}
+#game {
+    display: none;
 }
 
 #game-container {
@@ -102,6 +110,7 @@ body {
     grid-template-columns: repeat(6, var(--cellsize));
     grid-template-rows: repeat(6, var(--cellsize));
     gap: var(--marginborder);
+    border-radius: 4px;
 }
 
 #panels {
@@ -283,6 +292,7 @@ img {
     height: var(--cellsize);
     display: flex;
     margin: var(--marginborder);
+    border-radius: 2px;
 }
 
 
@@ -363,6 +373,7 @@ img {
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 3px;
 }
 
 .face.transparent {
@@ -382,26 +393,30 @@ img {
     height: var(--cubesize);
     /*background-color: rgb(243, 227, 193);*/
     /*background-color: rgb(235, 218, 183);*/
-    background-color: rgb(240, 222, 185);
+    /*background-color: rgb(240, 222, 185);*/
+    background-color: rgb(238, 223, 200);
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 3px;
 }
 
 .facew.transparent {
-    background-color: rgb(240, 222, 185, 0.7); /* Semi-transparent */
+    background-color: rgb(238, 218, 205, 0.7); /* Semi-transparent */
 }
 
 .shape1 {
     width : var(--shapesize);
     height : var(--shapesize);
-    background-color: rgb(230, 36, 36);
+    /*background-color: rgb(230, 36, 36);*/
+    background-color: rgb(200, 50, 50);
+    border-radius: 2px;
 }
 
 .shape2 {
     width : var(--shapesize);
     height : var(--shapesize);
-    background-color: rgb(230, 36, 36);
+    background-color: rgb(200, 50, 50);
     border-radius:50%;
 }
 
@@ -416,6 +431,7 @@ img {
     width : var(--shapesize);
     height : var(--shapesize);
     background-color: white;
+    border-radius: 2px;
 }
 
 .shape5 {
@@ -423,6 +439,7 @@ img {
     height : var(--bor);
     background-color: rgb(50, 50, 50);
     border: var(--brd) solid white;
+    border-radius: 2px;
 }
 
 .shape6 {
@@ -471,6 +488,7 @@ img {
     max-width: 500px;
     text-align: center;
     font-size: 16px;
+    font-weight: bold;
 }
 
 /* Bouton de fermeture */
