@@ -82,13 +82,6 @@ body {
     /*width: auto;*/
 }
 
-#home {
-    display: block;
-}
-#game {
-    display: none;
-}
-
 #game-container {
     display: flex;
     width: auto;
