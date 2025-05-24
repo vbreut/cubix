@@ -79,7 +79,6 @@ body {
     font-family: Arial, sans-serif;
     text-align: center;
     margin: var(--marginborder);
-    background-color:rgb(235, 240, 245);
     /*width: auto;*/
 }
 
@@ -394,7 +393,8 @@ img {
     /*background-color: rgb(243, 227, 193);*/
     /*background-color: rgb(235, 218, 183);*/
     /*background-color: rgb(240, 222, 185);*/
-    background-color: rgb(238, 223, 200);
+    /*background-color: rgb(238, 223, 200);*/
+    background-color: rgb(238, 223, 195);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -402,7 +402,7 @@ img {
 }
 
 .facew.transparent {
-    background-color: rgb(238, 218, 205, 0.7); /* Semi-transparent */
+    background-color: rgb(238, 223, 195, 0.7); /* Semi-transparent */
 }
 
 .shape1 {
