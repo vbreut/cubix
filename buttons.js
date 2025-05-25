@@ -595,7 +595,7 @@ function valider(){
     victoire();
 
     numberofmoves = 0;
-    selectedScene = null;
+    //selectedScene = null;
 
     if (turn=="end") {return;}
 
