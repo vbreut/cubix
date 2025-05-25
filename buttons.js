@@ -25,6 +25,7 @@ let changepossible=1;
 let playingmode=1;
 let choice=null;
 let rotationinprogress=0;
+let waitforsecondmove=0;
 const choice0 = document.getElementById("choice0");
 const choice1 = document.getElementById("choice1");
 const choice2 = document.getElementById("choice2");
@@ -104,6 +105,7 @@ board.forEach(cell => {
                 }
             }
             if (rotationinprogress==1){
+                waitforsecondmove=1;
                 cube.addEventListener('transitionend', () => {
                     if (cell.style.backgroundColor == dark) {
                         moveCubeTo3(cell, cell.style.backgroundColor);
@@ -112,6 +114,7 @@ board.forEach(cell => {
                     if (cell.style.backgroundColor == light && numberofmoves < 2) {
                         moveCubeTo3(cell, cell.style.backgroundColor);
                     }
+                        waitforsecondmove=0;
                 },{once: true});
             }
 
@@ -513,9 +516,9 @@ function moveCubeTo3(targetCell, cellcolor) {
 }
 
 validButton.addEventListener('click', () => {
-    /*if (rotationinprogress){
+    if (waitforsecondmove){
         return;
-    }*/
+    }
 
 try{
     if (numberofmoves > 0 && (playingmode==0||turn=="white")){
