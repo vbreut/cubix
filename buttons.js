@@ -513,9 +513,9 @@ function moveCubeTo3(targetCell, cellcolor) {
 }
 
 validButton.addEventListener('click', () => {
-    if (rotationinprogress){
+    /*if (rotationinprogress){
         return;
-    }
+    }*/
 
 try{
     if (numberofmoves > 0 && (playingmode==0||turn=="white")){
