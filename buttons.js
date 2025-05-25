@@ -94,17 +94,8 @@ board.forEach(cell => {
      
         if (selectedScene != null && occupied == false && (playingmode==0 || turn=="white")){
             let cube=selectedScene.firstElementChild;
-
-            if (rotationinprogress==0){
-                if (cell.style.backgroundColor == dark) {
-                    moveCubeTo3(cell, cell.style.backgroundColor);
-                }
-    
-                if (cell.style.backgroundColor == light && numberofmoves < 2) {
-                    moveCubeTo3(cell, cell.style.backgroundColor);
-                }
-            }
-            if (rotationinprogress==1){
+                
+            if (rotationinprogress){
                 waitforsecondmove=1;
                 cube.addEventListener('transitionend', () => {
                     if (cell.style.backgroundColor == dark) {
@@ -117,7 +108,16 @@ board.forEach(cell => {
                         waitforsecondmove=0;
                 },{once: true});
             }
-
+                
+            if (rotationinprogress==0){
+                if (cell.style.backgroundColor == dark) {
+                    moveCubeTo3(cell, cell.style.backgroundColor);
+                }
+    
+                if (cell.style.backgroundColor == light && numberofmoves < 2) {
+                    moveCubeTo3(cell, cell.style.backgroundColor);
+                }
+            }
         }
     });
 });
