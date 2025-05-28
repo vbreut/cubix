@@ -688,3 +688,25 @@ toggle.addEventListener('change', () => {
     }
 
 });
+
+function lancerConfettis() {
+    confetti({
+      particleCount: 300,
+      spread: 70,
+      origin: { y: 0.6 }, // hauteur de départ (0 = haut, 1 = bas)
+      colors: [
+        '#26ccff', // bleu clair
+        '#88ff5a', // vert clair
+        '#fcff42', // jaune
+        '#ffffff',
+        '#ffa62d', // orange
+        '#ff36ff'  // magenta
+      ]
+    });
+
+    const canvas=document.querySelector("canvas");
+    if(canvas){
+        canvas.style.zIndex = "2000";
+        canvas.style.transform = "translate3d(0, 0, 400px)";
+    }
+  }
