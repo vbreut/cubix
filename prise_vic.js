@@ -129,6 +129,7 @@ function prise() {
     }
     if(j==0){
         affichervic("Victoire des blancs !");
+        lancerConfettis();
         turn="end";
     }
 
@@ -151,6 +152,7 @@ function victoire(){
             c=capture(cubenumber+1);
             if (c[0]==0 && turn=="white"){
                 affichervic("Victoire des blancs !");
+                lancerConfettis();
                 turn="end";
                 return;
             }
