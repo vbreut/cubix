@@ -493,3 +493,8 @@ img {
     cursor: pointer;
 }
 
+canvas {
+    z-index: 2000;               /* Au-dessus du contenu principal */
+    -webkit-transform: translate3d(0, 0, 400px);
+    transform: translate3d(0, 0, 400px);
+}
