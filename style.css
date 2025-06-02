@@ -469,6 +469,7 @@ img {
     text-align: justify;
     font-size: 14px;
     overflow-y: auto;
+    box-shadow: 4px 4px 15px rgba(0,0,0,0.4);
 }
 
 .modal-contentvic {
@@ -483,6 +484,7 @@ img {
     text-align: center;
     font-size: 16px;
     font-weight: bold;
+    box-shadow: 4px 4px 15px rgba(0,0,0,0.4);
 }
 
 /* Bouton de fermeture */
