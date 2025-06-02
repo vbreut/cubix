@@ -598,7 +598,15 @@ function valider(){
     victoire();
 
     numberofmoves = 0;
-    //selectedScene = null;
+        
+    let cube=selectedScene.firstElementChild;
+    if (rotationinprogress){
+        cube.addEventListener('transitionend', () => {
+            selectedScene = null;
+        },{once: true});
+    } else {
+        selectedScene = null;
+    }
 
     if (turn=="end") {return;}
 
