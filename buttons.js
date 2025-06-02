@@ -706,7 +706,6 @@ function lancerConfettis() {
         '#26ccff', // bleu clair
         '#88ff5a', // vert clair
         '#fcff42', // jaune
-        '#ffffff',
         '#ffa62d', // orange
         '#ff36ff'  // magenta
       ]
