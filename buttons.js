@@ -703,10 +703,4 @@ function lancerConfettis() {
         '#ff36ff'  // magenta
       ]
     });
-
-    const canvas=document.querySelector("canvas");
-    if(canvas){
-        canvas.style.zIndex = "2000";
-        canvas.style.transform = "translate3d(0, 0, 400px)";
-    }
   }
