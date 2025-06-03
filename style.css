@@ -95,7 +95,7 @@ body {
 }
 
 #game-board {
-    background-color: rgb(169, 185, 205);
+    background-color: rgb(191, 202, 217);
     width: calc(7*var(--marginborder) + 6*var(--cellsize));
     height: calc(7*var(--marginborder) + 6*var(--cellsize));
     display: grid;
@@ -280,7 +280,7 @@ img {
 }
 
 .grid {
-    background-color: rgb(141, 165, 197);
+    background-color: rgb(173, 189, 211);
     width: var(--cellsize);
     height: var(--cellsize);
     display: flex;
