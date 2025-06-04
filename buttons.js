@@ -698,16 +698,20 @@ toggle.addEventListener('change', () => {
 });
 
 function lancerConfettis() {
-    confetti({
-      particleCount: 300,
-      spread: 70,
-      origin: { y: 0.6 }, // hauteur de départ (0 = haut, 1 = bas)
-      colors: [
-        '#26ccff', // bleu clair
-        '#88ff5a', // vert clair
-        '#fcff42', // jaune
-        '#ffa62d', // orange
-        '#ff36ff'  // magenta
-      ]
-    });
+    setTimeout(() => {
+
+        confetti({
+        particleCount: 300,
+        spread: 70,
+        origin: { y: 0.6 }, // hauteur de départ (0 = haut, 1 = bas)
+        colors: [
+            '#26ccff', // bleu clair
+            '#88ff5a', // vert clair
+            '#fcff42', // jaune
+            '#ffa62d', // orange
+            '#ff36ff'  // magenta
+        ]
+        });
+
+    }, 100);
   }
