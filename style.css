@@ -110,7 +110,7 @@ body {
     height: 14px;
     margin-bottom:15px;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 18px;
 }
 
 #botsubmenu2 {
@@ -165,7 +165,7 @@ body {
     height: 14px;
     margin-bottom:15px;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 18px;
 }
 
 #onlinesubmenu1 {
@@ -304,7 +304,7 @@ body {
 
 #manualsubmenu {
     font-weight: bold;
-    font-size: 16px;
+    font-size: 18px;
 }
 #manualsubmenu2 {
     display: flex;
@@ -400,7 +400,7 @@ body {
 
 #valider {
     /*font-size: 16px;*/
-    background-color: rgb(251, 133, 0);
+    background-color: rgb(235, 126, 0);
     border: none;
     display: flex;
     flex-direction: row;
