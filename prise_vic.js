@@ -128,7 +128,11 @@ function prise() {
         if(cubestatus[0][i]!=0){j++}
     }
     if(j==0){
-        affichervic(`Victoire de ${pseudo} !`);
+        if(pseudo!==null){
+            affichervic(`Victoire de ${pseudo} !`);
+        }else{
+            affichervic("Victoire des blancs"); 
+        }
         lancerConfettis();
         turn="end";
     }
@@ -154,7 +158,11 @@ function victoire(){
         if (cubestatus[1][cubenumber]=="rs" && cubestatus[0][cubenumber]<7 && cubestatus[0][cubenumber]!=0 && cubenumber>5){
             c=capture(cubenumber+1);
             if (c[0]==0 && turn=="white"){
-                affichervic(`Victoire de ${pseudo} !`);
+                if(pseudo!==null){
+                    affichervic(`Victoire de ${pseudo} !`);
+                }else{
+                    affichervic("Victoire des blancs"); 
+                }
                 lancerConfettis();
                 turn="end";
                 return;
