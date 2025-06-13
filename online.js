@@ -208,14 +208,15 @@ function defierJoueur(adversaire) {
 function listenchallenges(challengeRef){
     let joueurRef = database.ref('joueurs/' + pseudo);
     let adversaire=null;
+    const accept = document.getElementById('accept');
+    const deny= document.getElementById('deny');
 
     challengeRef.on('value', (snapshot) => {
         const data = snapshot.val();
         if (data) {
 
             blockbot=1;
-            const accept = document.getElementById('accept');
-            const deny= document.getElementById('deny');
+
             adversaire = data.from;
 
             document.getElementById("infocom").textContent = `Vous êtes défié par ${adversaire}. Accepter ?`;
@@ -224,10 +225,9 @@ function listenchallenges(challengeRef){
             document.getElementById("joueurs").style.display = "none";
         }
 
-        
     });
 
-    accept.addEventListener('click', () => { //attention si on annule ou refuse, le listener reste et va créer 2 games
+    accept.addEventListener('click', () => {
                 
         blockbot=0;
 
