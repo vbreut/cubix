@@ -1,5 +1,7 @@
 let gameId=0;
 let pseudo=null;
+let database = null;
+let connectedRef = null;
 
 // Configuration Firebase
 const firebaseConfig = {
@@ -14,9 +16,6 @@ const firebaseConfig = {
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-const database = firebase.database();
-const connectedRef = firebase.database().ref(".info/connected");
-
 
 //database.ref().remove();
   
@@ -27,6 +26,8 @@ window.addEventListener("load", loadPseudo)
 
 function loadPseudo(){
     setTimeout(() => {
+        database = firebase.database();
+        connectedRef = firebase.database().ref(".info/connected");
         pseudo = localStorage.getItem("pseudo");
         if (pseudo!==null) {
     
