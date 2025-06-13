@@ -25,7 +25,6 @@ firebase.initializeApp(firebaseConfig);
 window.addEventListener("load", loadPseudo)
 
 function loadPseudo(){
-    setTimeout(() => {
         database = firebase.database();
         connectedRef = firebase.database().ref(".info/connected");
         pseudo = localStorage.getItem("pseudo");
@@ -78,7 +77,6 @@ function loadPseudo(){
                 }
             });
         }, 5000);
-    }, 1000);
 }
 
 
