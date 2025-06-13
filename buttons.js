@@ -65,9 +65,9 @@ function choice0() {
 function showPage() {
     if (blockbot==0){
         if (pseudo !== "" && pseudo!==null){
-            let joueurRef = database.ref('joueurs/' + pseudo);
-            joueurRef.set({ enLigne: "en partie"});
-            joueurRef.onDisconnect().remove();
+            //let joueurRef = database.ref('joueurs/' + pseudo);
+            //joueurRef.set({ enLigne: "en partie"});
+            //joueurRef.onDisconnect().remove();
         }
 
         if(playingmode==1){
