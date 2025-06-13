@@ -405,7 +405,7 @@ function ecouterCoups(gameId,pseudo) {
 
 function clean(){
 
-    let len=moves.length;
+    /*let len=moves.length;
 
     for(i=len-1; i>=0; i--){
         if (moves[i].includes("scene")){
@@ -413,7 +413,7 @@ function clean(){
             //console.log(moves);
             break;
         }
-    }
+    }*/
 
     //console.log(moves);
 
