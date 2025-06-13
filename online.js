@@ -26,56 +26,58 @@ const connectedRef = firebase.database().ref(".info/connected");
 window.addEventListener("load", loadPseudo)
 
 function loadPseudo(){
-    
-    pseudo = localStorage.getItem("pseudo");
-    if (pseudo!==null) {
-        checkIfPseudoExists(pseudo).then(exists => {
-            if (exists) {
-                document.getElementById("form").style.display = "block";
-                document.getElementById("welcome").style.display = "none";
-                document.getElementById("pseudoInput").value = pseudo;
-                document.getElementById("infocom").textContent = "Ce pseudo est déjà pris !";
-            } else {
-                let joueurRef = database.ref('joueurs/' + pseudo);
-                joueurRef.set({ enLigne: "connecté" });
-                joueurRef.onDisconnect().remove();
-                
-                // Écouter si on reçoit un défi
-                const challengeRef = database.ref('challenges/' + pseudo);
-                listenchallenges(challengeRef);
-
-                document.getElementById("pseudoAffiche").textContent = pseudo;
-            }
-        });
-    } else {
-        document.getElementById("form").style.display = "block";
-        document.getElementById("welcome").style.display = "none";
-    }
-
-    // Afficher la liste des joueurs
-    const listeRef = database.ref('joueurs');
-    display(listeRef);
-
-    const input=document.getElementById("pseudoInput");
-
-    input.addEventListener("keydown", function(event){
-        if(event.key ==="Enter"){
-            sauvegarderPseudo();
-        }
-    });
-
     setTimeout(() => {
-        connectedRef.on("value",(snapshot)=>{
-            if(snapshot.val()===true){
-                //console.log("connecté"); 
-            } else{
-                document.getElementById("spacer").style.display="block";
-                document.getElementById("message").textContent="Connexion perdue";
-                document.getElementById("modalvic").style.display="flex";
+        pseudo = localStorage.getItem("pseudo");
+        if (pseudo!==null) {
+    
+                checkIfPseudoExists(pseudo).then(exists => {
+                    if (exists) {
+                        document.getElementById("form").style.display = "block";
+                        document.getElementById("welcome").style.display = "none";
+                        document.getElementById("pseudoInput").value = pseudo;
+                        document.getElementById("infocom").textContent = "Ce pseudo est déjà pris !";
+                    } else {
+                        let joueurRef = database.ref('joueurs/' + pseudo);
+                        joueurRef.set({ enLigne: "connecté" });
+                        joueurRef.onDisconnect().remove();
+                        
+                        // Écouter si on reçoit un défi
+                        const challengeRef = database.ref('challenges/' + pseudo);
+                        listenchallenges(challengeRef);
+        
+                        document.getElementById("pseudoAffiche").textContent = pseudo;
+                    }
+                });
+                
+        } else {
+            document.getElementById("form").style.display = "block";
+            document.getElementById("welcome").style.display = "none";
+        }
+    
+        // Afficher la liste des joueurs
+        const listeRef = database.ref('joueurs');
+        display(listeRef);
+    
+        const input=document.getElementById("pseudoInput");
+    
+        input.addEventListener("keydown", function(event){
+            if(event.key ==="Enter"){
+                sauvegarderPseudo();
             }
         });
-    }, 5000);
-
+    
+        setTimeout(() => {
+            connectedRef.on("value",(snapshot)=>{
+                if(snapshot.val()===true){
+                    //console.log("connecté"); 
+                } else{
+                    document.getElementById("spacer").style.display="block";
+                    document.getElementById("message").textContent="Connexion perdue";
+                    document.getElementById("modalvic").style.display="flex";
+                }
+            });
+        }, 5000);
+    }, 1000);
 }
 
 
@@ -114,10 +116,8 @@ function supprimerPseudo(){
 
 
 function checkIfPseudoExists(pseudo) {
-    setTimeout(() => {
         return firebase.database().ref("joueurs/" + pseudo).once("value")
         .then(snapshot => snapshot.exists());
-    }, 1000);
 }
 
 function display(listeRef){
