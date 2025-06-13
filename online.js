@@ -114,8 +114,10 @@ function supprimerPseudo(){
 
 
 function checkIfPseudoExists(pseudo) {
-    return firebase.database().ref("joueurs/" + pseudo).once("value")
-      .then(snapshot => snapshot.exists());
+    setTimeout(() => {
+        return firebase.database().ref("joueurs/" + pseudo).once("value")
+        .then(snapshot => snapshot.exists());
+    }, 1000);
 }
 
 function display(listeRef){
