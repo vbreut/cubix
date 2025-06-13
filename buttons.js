@@ -105,7 +105,7 @@ scenes.forEach(scen => {
         if ((selectedScene == null || numberofmoves == 0) && (cubenumber<7 && turn=="black" && playingmode==0 || cubenumber>6 && turn=="white") && currentcell!=null && rotationinprogress==0){
             selectedScene=scen;
             selectcurrentcell(currentcell);
-
+            moves = [];
             moves.push(scen.id);
             moves.push(cellid);
             //console.log(moves);
