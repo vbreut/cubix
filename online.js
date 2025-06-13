@@ -239,7 +239,7 @@ function listenchallenges(challengeRef){
             //début: Date.now()
         });
 
-        database.ref('reponses/' + data.from).set({
+        database.ref('reponses/' + adversaire).set({
             from: pseudo,
             accepted: true,
             gameId: gameId
@@ -269,7 +269,7 @@ function listenchallenges(challengeRef){
     deny.addEventListener('click', () => {
 
         blockbot=0;
-        database.ref('reponses/' + data.from).set({
+        database.ref('reponses/' + adversaire).set({
             from: pseudo,
             accepted: false,
         });
