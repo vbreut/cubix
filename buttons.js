@@ -67,6 +67,7 @@ function showPage() {
         if (pseudo !== "" && pseudo!==null){
             let joueurRef = database.ref('joueurs/' + pseudo);
             joueurRef.set({ enLigne: "en partie"});
+            joueurRef.onDisconnect().remove();
         }
 
         if(playingmode==1){
