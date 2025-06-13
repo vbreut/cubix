@@ -421,8 +421,6 @@ function moveCubeTo3(targetCell, cellcolor) {
                 cube.offsetHeight;
 
                 changefacesdown();
-                moves.push(targetCell.id);
-                //console.log(moves);
                 
                 cube.style.transition = transf;
 
@@ -449,8 +447,6 @@ function moveCubeTo3(targetCell, cellcolor) {
                 cube.offsetHeight;
 
                 changefacesup();
-                moves.push(targetCell.id);
-                //console.log(moves);
 
                 cube.style.transition = transf;
                 rotationinprogress=0;
@@ -476,8 +472,6 @@ function moveCubeTo3(targetCell, cellcolor) {
                 cube.offsetHeight;
 
                 changefacesright();
-                moves.push(targetCell.id);
-                //console.log(moves);
                 
                 cube.style.transition = transf;
                 rotationinprogress=0;
@@ -503,8 +497,6 @@ function moveCubeTo3(targetCell, cellcolor) {
                 cube.offsetHeight;
 
                 changefacesleft();
-                moves.push(targetCell.id);
-                //console.log(moves);
 
                 cube.style.transition = transf;
                 rotationinprogress=0;
@@ -521,6 +513,8 @@ function moveCubeTo3(targetCell, cellcolor) {
         y3d = y + movy - boardrect.top - 5 - 0.5;
 
         selectedScene.style.transform = `translate(${x3d}px, ${y3d}px) rotateY(18deg) rotateX(18deg)`;
+
+        moves.push(targetCell.id);
 
         if (cellcolor==dark){
             currentcell.style.backgroundColor = light;
