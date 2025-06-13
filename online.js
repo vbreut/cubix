@@ -22,7 +22,6 @@ const firebaseConfig = {
 window.addEventListener("load", loadPseudo)
 
 function loadPseudo(){
-    setTimeout(() => {
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         database = firebase.database();
@@ -36,7 +35,7 @@ function loadPseudo(){
                         document.getElementById("form").style.display = "block";
                         document.getElementById("welcome").style.display = "none";
                         document.getElementById("pseudoInput").value = pseudo;
-                        document.getElementById("infocom").textContent = "Ce pseudo est déjà pris lol !";
+                        document.getElementById("infocom").textContent = "Ce pseudo est déjà pris !";
                     } else {
                         let joueurRef = database.ref('joueurs/' + pseudo);
                         joueurRef.set({ enLigne: "connecté" });
@@ -78,7 +77,6 @@ function loadPseudo(){
                 }
             });
         }, 5000);
-    }, 2000);
 }
 
 
