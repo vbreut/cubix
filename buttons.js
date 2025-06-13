@@ -546,8 +546,6 @@ validButton.addEventListener('click', () => {
         let delay=50;
         //changes();
         valider();
-
-        clean();
         
         if (turn=="end") {return;}
         if (playingmode!=0){
