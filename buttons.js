@@ -71,7 +71,7 @@ function showPage() {
         }
 
         if(playingmode==1){
-            document.getElementById("adv").textContent = "Niveau 1";
+            document.getElementById("adv").textContent = "Niveau 11";
         }
         if(playingmode==2){
             document.getElementById("adv").textContent = "Niveau 2";
