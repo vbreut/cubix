@@ -14,7 +14,6 @@ const firebaseConfig = {
     appId: "1:528272643607:web:f22567ac94de1b60a6ee52"
 };
 
-// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
 //database.ref().remove();
@@ -25,11 +24,14 @@ firebase.initializeApp(firebaseConfig);
 window.addEventListener("load", loadPseudo)
 
 function loadPseudo(){
+
+        // Initialize Firebase
         database = firebase.database();
         connectedRef = firebase.database().ref(".info/connected");
+    
         pseudo = localStorage.getItem("pseudo");
         if (pseudo!==null) {
-    
+
                 checkIfPseudoExists(pseudo).then(exists => {
                     if (exists) {
                         document.getElementById("form").style.display = "block";
@@ -44,28 +46,28 @@ function loadPseudo(){
                         // Écouter si on reçoit un défi
                         const challengeRef = database.ref('challenges/' + pseudo);
                         listenchallenges(challengeRef);
-        
+
                         document.getElementById("pseudoAffiche").textContent = pseudo;
                     }
                 });
-                
+
         } else {
             document.getElementById("form").style.display = "block";
             document.getElementById("welcome").style.display = "none";
         }
-    
+
         // Afficher la liste des joueurs
         const listeRef = database.ref('joueurs');
         display(listeRef);
-    
+
         const input=document.getElementById("pseudoInput");
-    
+
         input.addEventListener("keydown", function(event){
             if(event.key ==="Enter"){
                 sauvegarderPseudo();
             }
         });
-    
+
         setTimeout(() => {
             connectedRef.on("value",(snapshot)=>{
                 if(snapshot.val()===true){
@@ -109,8 +111,10 @@ function sauvegarderPseudo(){
 }
 
 function supprimerPseudo(){
-    localStorage.removeItem("pseudo");
-    document.getElementById("pseudoInput").value = "";
+
+        localStorage.removeItem("pseudo");
+        document.getElementById("pseudoInput").value = "";
+
 }
 
 
@@ -227,6 +231,7 @@ function listenchallenges(challengeRef){
         }
 
     });
+
 
     accept.addEventListener('click', () => {
                 
@@ -406,9 +411,9 @@ function ecouterCoups(gameId,pseudo) {
 
 function clean(){
 
-    /*let len=moves.length;
+    //let len=moves.length;
 
-    for(i=len-1; i>=0; i--){
+    /*for(i=len-1; i>=0; i--){
         if (moves[i].includes("scene")){
             moves.splice(0,i);
             //console.log(moves);
