@@ -427,7 +427,7 @@ function clean(){
             if(moves[i]==moves[j]){
                 moves.splice(i,j-i);
 
-                j=j-1;
+                j=i;
             }
 
         }
