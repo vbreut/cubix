@@ -112,6 +112,7 @@ function waitforconnected(joueurRef){
     });
 }
 
+sauvpseudo.addEventListener('click',sauvegarderPseudo);
 
 function sauvegarderPseudo(){
     pseudo = document.getElementById("pseudoInput").value.trim();
