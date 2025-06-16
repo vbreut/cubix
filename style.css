@@ -94,7 +94,7 @@ body {
     display: flex;
     flex-direction: column;
     width: 95%;
-    height: 100px;
+    height: 500px;
     max-width: 500px;
     padding: 10px;
     border-radius: 8px;
@@ -104,12 +104,15 @@ body {
 }
 
 #botsubmenu {
-    justify-content: left;
-    text-align: left;
-    height: 14px;
-    margin-bottom:15px;
+    text-align: center;
+    height: 20px;
+    margin-bottom:10px;
     font-weight: bold;
     font-size: 18px;
+    background-color: white;
+    color:rgb(69, 123, 157);
+    border-radius: 6px;
+    padding: 4px;
 }
 
 #botsubmenu2 {
@@ -137,6 +140,7 @@ body {
     color: white;
     font-weight: bold;
     box-shadow: 0px 4px 5px rgba(0,0,0,0.4);
+    margin-top:15px;
 }
 
 #okbot:active {
@@ -149,22 +153,21 @@ body {
 #onlinemenu {
     display: flex;
     flex-direction: column;
-    text-align: left;
-    width: 95%;
-    height: 260px;
-    max-width: 500px;
-    padding: 10px;
-    border-radius: 8px;
-    margin-bottom:10px;
+    height: 280px;
     background-color: rgb(169, 200, 217);
 }
 
 #onlinesubmenu {
-    justify-content: left;
-    height: 14px;
-    margin-bottom:15px;
+    text-align: center;
+    height: 20px;
+    margin-bottom:10px;
     font-weight: bold;
     font-size: 18px;
+    background-color: white;
+    border-radius: 6px;
+    padding: 4px;
+    margin-top:15px;
+    color:rgb(69, 123, 157);
 }
 
 #onlinesubmenu1 {
@@ -292,19 +295,27 @@ body {
     flex-direction: column;
     text-align: left;
     width: 95%;
-    height: 70px;
+    height: 80px;
     max-width: 500px;
     padding: 10px;
     border-radius: 8px;
     margin-bottom:10px;
-    /*border: 2px solid rgb(199, 199, 199);*/
     background-color: rgb(169, 200, 217);
 }
 
 #manualsubmenu {
+    text-align: center;
     font-weight: bold;
     font-size: 18px;
+    background-color: white;
+    border-radius: 6px;
+    padding: 4px;
+    margin-bottom:10px;
+    margin-top:15px;
+    color:rgb(69, 123, 157);
+    
 }
+
 #manualsubmenu2 {
     display: flex;
     justify-content: center;
@@ -358,6 +369,7 @@ body {
     position : absolute;
     right:0px;
     border-radius: 8px;
+
     background-color: white;
 }
 
@@ -447,6 +459,7 @@ body {
     width: 75px;
     height: 50px;
     font-size: 14px;
+    font-weight: bold;
     border-radius: 7px;
     color: white;
     box-shadow: 0px 4px 5px rgba(0,0,0,0.4);
@@ -471,6 +484,7 @@ body {
     width: 75px;
     height: 50px;
     font-size: 14px;
+    font-weight: bold;
     border-radius: 7px;
     color: white;
     box-shadow: 0px 4px 5px rgba(0,0,0,0.4);
