@@ -14,6 +14,7 @@ const firebaseConfig = {
     appId: "1:528272643607:web:f22567ac94de1b60a6ee52"
 };
 
+
 //database.ref().remove();
   
 // Pseudo du joueur
@@ -21,62 +22,94 @@ const firebaseConfig = {
 
 window.addEventListener("load", loadPseudo)
 
+
 function loadPseudo(){
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        database = firebase.database();
-        connectedRef = firebase.database().ref(".info/connected");
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    database = firebase.database();
     
-        pseudo = localStorage.getItem("pseudo");
-        if (pseudo!==null) {
+    pseudo = localStorage.getItem("pseudo");
+    if (pseudo!==null) {
 
-                checkIfPseudoExists(pseudo).then(exists => {
-                    if (exists) {
-                        document.getElementById("form").style.display = "block";
-                        document.getElementById("welcome").style.display = "none";
-                        document.getElementById("pseudoInput").value = pseudo;
-                        document.getElementById("infocom").textContent = "Ce pseudo est déjà pris !";
-                    } else {
-                        let joueurRef = database.ref('joueurs/' + pseudo);
-                        joueurRef.set({ enLigne: "connecté" });
-                        joueurRef.onDisconnect().remove();
-                        
-                        // Écouter si on reçoit un défi
-                        const challengeRef = database.ref('challenges/' + pseudo);
-                        listenchallenges(challengeRef);
+        checkIfPseudoExists(pseudo).then(exists => {
+            if (exists) {
+                document.getElementById("form").style.display = "block";
+                document.getElementById("welcome").style.display = "none";
+                document.getElementById("pseudoInput").value = pseudo;
+                document.getElementById("infocom").textContent = "Ce pseudo est déjà pris !";
+            } else {
+                let joueurRef = database.ref('joueurs/' + pseudo);
 
-                        document.getElementById("pseudoAffiche").textContent = pseudo;
-                    }
-                });
+                if (checkifconnected()){ //peut-être pas utile mais bon...
+                    joueurRef.set({ enLigne: "connecté" });
+                    joueurRef.onDisconnect().remove();
+                } else{
+                    waitforconnected(joueurRef);
+                }
+                
+                // Écouter si on reçoit un défi
+                const challengeRef = database.ref('challenges/' + pseudo);
+                listenchallenges(challengeRef);
 
-        } else {
-            document.getElementById("form").style.display = "block";
-            document.getElementById("welcome").style.display = "none";
-        }
+                document.getElementById("pseudoAffiche").textContent = pseudo;
 
-        // Afficher la liste des joueurs
-        const listeRef = database.ref('joueurs');
-        display(listeRef);
-
-        const input=document.getElementById("pseudoInput");
-
-        input.addEventListener("keydown", function(event){
-            if(event.key ==="Enter"){
-                sauvegarderPseudo();
+                // Afficher la liste des joueurs
+                const listeRef = database.ref('joueurs');
+                display(listeRef);
             }
         });
 
-        setTimeout(() => {
-            connectedRef.on("value",(snapshot)=>{
-                if(snapshot.val()===true){
-                    //console.log("connecté"); 
-                } else{
-                    document.getElementById("spacer").style.display="block";
-                    document.getElementById("message").textContent="Connexion perdue";
-                    document.getElementById("modalvic").style.display="flex";
-                }
-            });
-        }, 5000);
+    } else {
+        document.getElementById("form").style.display = "block";
+        document.getElementById("welcome").style.display = "none";
+    }
+
+    const input=document.getElementById("pseudoInput");
+
+    input.addEventListener("keydown", function(event){
+        if(event.key ==="Enter"){
+            sauvegarderPseudo();
+        }
+    });
+
+    setTimeout(() => {
+        firebase.database().ref(".info/connected").on("value",(snapshot)=>{
+            if(snapshot.val()===true){
+                document.getElementById("joueurs").style.display = "block";
+                document.getElementById("infocom").style.display = "block";
+                modalvic.style.display = "none";
+            } else{
+                document.getElementById("spacer").style.display="block";
+                document.getElementById("message").textContent="Connexion perdue";
+                document.getElementById("modalvic").style.display="flex";
+                document.getElementById("joueurs").style.display = "none";
+                document.getElementById("infocom").style.display = "none";
+            }
+        });
+
+    }, 5000);
+
+
+}
+
+function checkifconnected(){
+    firebase.database().ref(".info/connected").once("value").then((snapshot)=>{
+        if(snapshot.val()===true){
+            return true;
+        } else{
+            return false;
+        }
+    });
+}
+
+function waitforconnected(joueurRef){
+    firebase.database().ref(".info/connected").on("value",(snapshot)=>{
+        if(snapshot.val()===true){
+            joueurRef.set({ enLigne: "connecté" });
+            joueurRef.onDisconnect().remove();
+        }
+    });
 }
 
 
@@ -249,6 +282,9 @@ function listenchallenges(challengeRef){
             gameId: gameId
         });
 
+        database.ref('games/'+ gameId).onDisconnect().remove();
+        database.ref('reponses/'+ adversaire).onDisconnect().remove();
+
         //document.getElementById("infocom").textContent = `Partie lancée avec ${data.from} (ID : ${gameId})`;
 
         //joueurRef.set({ enLigne: "en partie"});
@@ -261,12 +297,6 @@ function listenchallenges(challengeRef){
 
         document.getElementById("adv").textContent = `${adversaire}`;
         showPage();
-
-
-        // Nettoyage
-        challengeRef.onDisconnect().remove();
-        database.ref('games/'+ gameId).onDisconnect().remove();
-        database.ref('reponses/'+ adversaire).onDisconnect().remove();
 
     });
 
