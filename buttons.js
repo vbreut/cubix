@@ -57,16 +57,21 @@ let cubestatus = [
 
 let moves = [];
 
+okman.addEventListener('click',choice0);
+
 function choice0() {
     playingmode=0;
     showPage();
 }
+
+okbot.addEventListener('click',showPage);
 
 function showPage() {
     if (blockbot==0){
         if (pseudo !== "" && pseudo!==null){
             let joueurRef = database.ref('joueurs/' + pseudo);
             joueurRef.set({ enLigne: "en partie"});
+            //joueurRef.onDisconnect().remove();
         }
 
         if(playingmode==1){
@@ -421,6 +426,7 @@ function moveCubeTo3(targetCell, cellcolor) {
                 cube.offsetHeight;
 
                 changefacesdown();
+                //console.log(moves);
                 
                 cube.style.transition = transf;
 
@@ -447,6 +453,7 @@ function moveCubeTo3(targetCell, cellcolor) {
                 cube.offsetHeight;
 
                 changefacesup();
+                //console.log(moves);
 
                 cube.style.transition = transf;
                 rotationinprogress=0;
@@ -472,6 +479,7 @@ function moveCubeTo3(targetCell, cellcolor) {
                 cube.offsetHeight;
 
                 changefacesright();
+                //console.log(moves);
                 
                 cube.style.transition = transf;
                 rotationinprogress=0;
@@ -497,6 +505,7 @@ function moveCubeTo3(targetCell, cellcolor) {
                 cube.offsetHeight;
 
                 changefacesleft();
+                //console.log(moves);
 
                 cube.style.transition = transf;
                 rotationinprogress=0;
