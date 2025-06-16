@@ -171,6 +171,12 @@ function display(listeRef){
                 const div = document.createElement('div');
                 div.className = 'joueur';
                 div.textContent = key + " " + joueur.enLigne;
+                if (joueur.enLigne=="connecté"){
+                    div.style.backgroundColor = "rgb(129, 217, 154)"
+                } else {
+                    div.style.backgroundColor = "rgb(217, 169, 97)"
+                }
+                
 
                 if (joueur.enLigne == "connecté" && pseudo !== null){
                     div.style.cursor = 'pointer';
