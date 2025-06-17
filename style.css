@@ -141,6 +141,7 @@ body {
     font-weight: bold;
     box-shadow: 0px 4px 5px rgba(0,0,0,0.4);
     margin-top:15px;
+    transition:transform 0.1s ease;
 }
 
 #okbot:active {
@@ -209,6 +210,7 @@ body {
     color: white;
     font-weight: bold;
     box-shadow: 0px 4px 5px rgba(0,0,0,0.4);
+    transition:transform 0.1s ease;
 }
 
 #sauvpseudo:active {
@@ -244,6 +246,7 @@ body {
     color: white;
     font-weight: bold;
     box-shadow: 0px 4px 5px rgba(0,0,0,0.4);
+    transition:transform 0.1s ease;
 }
 
 #cancel:active {
@@ -263,6 +266,7 @@ body {
     color: white;
     font-weight: bold;
     box-shadow: 0px 4px 5px rgba(0,0,0,0.4);
+    transition:transform 0.1s ease;
 }
 
 #accept:active {
@@ -282,6 +286,7 @@ body {
     color: white;
     font-weight: bold;
     box-shadow: 0px 4px 5px rgba(0,0,0,0.4);
+    transition:transform 0.1s ease;
 }
 
 #deny:active {
@@ -332,6 +337,7 @@ body {
     color: white;
     font-weight: bold;
     box-shadow: 0px 4px 5px rgba(0,0,0,0.4);
+    transition:transform 0.1s ease;
 }
 
 #okman:active {
@@ -422,6 +428,7 @@ body {
     font-weight: bold;
     color: white;
     box-shadow: 0px 3px 5px rgba(0,0,0,0.4);
+    transition:transform 0.1s ease;
 }
 
 #valider:active {
@@ -463,6 +470,7 @@ body {
     border-radius: 7px;
     color: white;
     box-shadow: 0px 4px 5px rgba(0,0,0,0.4);
+    transition:transform 0.1s ease;
 }
 
 #openModal:active {
@@ -488,6 +496,7 @@ body {
     border-radius: 7px;
     color: white;
     box-shadow: 0px 4px 5px rgba(0,0,0,0.4);
+    transition:transform 0.1s ease;
 }
 
 #res:active {
@@ -797,6 +806,7 @@ img {
     border-radius: 7px;
     color: white;
     box-shadow: 0px 3px 5px rgba(0,0,0,0.4);
+    transition:transform 0.1s ease;
 }
 
 #confirm-no {
@@ -809,6 +819,7 @@ img {
     border-radius: 7px;
     color: white;
     box-shadow: 0px 3px 5px rgba(0,0,0,0.4);
+    transition:transform 0.1s ease;
 }
 
 #confirm-no:active {
