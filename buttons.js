@@ -75,13 +75,13 @@ function showPage() {
         }
 
         if(playingmode==1){
-            document.getElementById("adv").textContent = "Niveau 1";
+            document.getElementById("adv").textContent = "Bot 1";
         }
         if(playingmode==2){
-            document.getElementById("adv").textContent = "Niveau 2";
+            document.getElementById("adv").textContent = "Bot 2";
         }
         if(playingmode==3){
-            document.getElementById("adv").textContent = "Niveau 3";
+            document.getElementById("adv").textContent = "Bot 3";
         }
         document.getElementById("game").style.display="block";
         document.getElementById("home").style.display="none";
