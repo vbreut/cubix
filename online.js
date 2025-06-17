@@ -111,7 +111,7 @@ function waitforconnected(joueurRef){
     });
 }
 
-sauvpseudo.addEventListener('click',sauvegarderPseudo);
+sauvpseudo.addEventListener('pointerdown',sauvegarderPseudo);
 
 function sauvegarderPseudo(){
     pseudo = document.getElementById("pseudoInput").value.trim();
@@ -223,7 +223,7 @@ function defierJoueur(adversaire) {
             document.getElementById("cancelchallenge").style.display = "block";
             document.getElementById("joueurs").style.display = "none";
 
-            cancel.addEventListener('click', () => {
+            cancel.addEventListener('pointerdown', () => {
                 blockbot=0;
                 challengeRef.remove();
                 document.getElementById("infocom").textContent = "Choisir un joueur";
@@ -284,7 +284,7 @@ function listenchallenges(challengeRef){
     });
 
 
-    accept.addEventListener('click', () => {
+    accept.addEventListener('pointerdown', () => {
                 
         blockbot=0;
 
@@ -320,7 +320,7 @@ function listenchallenges(challengeRef){
 
     });
 
-    deny.addEventListener('click', () => {
+    deny.addEventListener('pointerdown', () => {
 
         blockbot=0;
         database.ref('reponses/' + adversaire).set({
