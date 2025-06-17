@@ -31,7 +31,7 @@ function loadPseudo(){
     if (pseudo!==null && pseudo!=="") {
 
         checkIfPseudoExists(pseudo).then(exists => { 
-            if (exists) {
+            if (exists) {//ne pas le faire si on a appuyé sur le bouton accueil. Mémoriser dans local storage ?
                 document.getElementById("form").style.display = "block";
                 document.getElementById("welcome").style.display = "none";
                 document.getElementById("pseudoInput").value = pseudo;
@@ -406,6 +406,9 @@ function surveillerreponse(pseudo){
                 document.getElementById("adv").textContent = `${adversaire}`;
                 showPage();
 
+                const challengeRef = database.ref('challenges/' + adversaire);
+                challengeRef.remove();
+                repRef.remove(); // c'est nous qui supprimons la réponse de l'adversaire
 
             } else {
                 adversaire=data.from;
