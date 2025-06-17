@@ -196,54 +196,65 @@ function display(listeRef){
 }
 
 
+
 // Fonction pour défier un joueur
 function defierJoueur(adversaire) {
     let joueurRef = database.ref('joueurs/' + pseudo);
-    const challengeRef = database.ref('challenges/' + adversaire);
-    challengeRef.onDisconnect().remove(); 
-    challengeRef.set({
-        from: pseudo,
-        //timestamp: Date.now()
-    });
+    let advref = database.ref('joueurs/' + adversaire);
+    let stat=null
+    
+    advref.once("value").then(snapshot=>{
+        stat= snapshot.val().enLigne;
 
-    joueurRef.set({ enLigne: "en défi"});
+        if(stat=="connecté"){
 
-    surveillerreponse(pseudo);
+            const challengeRef = database.ref('challenges/' + adversaire);
+            challengeRef.onDisconnect().remove(); 
+            challengeRef.set({
+                from: pseudo,
+                //timestamp: Date.now()
+            });
 
-    document.getElementById("infocom").textContent = `Défi envoyé à ${adversaire}`;
-    document.getElementById("cancelchallenge").style.display = "block";
-    document.getElementById("joueurs").style.display = "none";
+            joueurRef.set({ enLigne: "en défi"});
 
-    cancel.addEventListener('click', () => {
-        blockbot=0;
-        challengeRef.remove();
-        document.getElementById("infocom").textContent = "Choisir un joueur";
-        document.getElementById("cancelchallenge").style.display = "none";
-        document.getElementById("joueurs").style.display = "block";
-        joueurRef.set({ enLigne: "connecté" });
-        adversaire=null;
-    });
+            surveillerreponse(pseudo);
 
-    //si l'autre joueur se déconnecte on passe à "connecté" uniquement si on n'est pas en partie
-    const listeRef = database.ref('joueurs');
-    listeRef.once('child_removed', (snapshot) =>{
-        const pseudodeleted = snapshot.key;
-        const element = document.getElementById("game");
+            document.getElementById("infocom").textContent = `Défi envoyé à ${adversaire}`;
+            document.getElementById("cancelchallenge").style.display = "block";
+            document.getElementById("joueurs").style.display = "none";
 
-        if (pseudodeleted==adversaire && getComputedStyle(element).display==="none"){
-            document.getElementById("infocom").textContent = "Choisir un joueur";
-            document.getElementById("cancelchallenge").style.display = "none";
-            document.getElementById("joueurs").style.display = "block";
-            joueurRef.set({ enLigne: "connecté" });
-            challengeRef.remove();
-            adversaire=null;
-        }
-        if (pseudodeleted==adversaire && getComputedStyle(element).display!=="none"){
-            document.getElementById("spacer").style.display="block";
-            document.getElementById("message").textContent=`${adversaire} s'est déconnecté`;
-            document.getElementById("modalvic").style.display="flex";
-            challengeRef.remove();
-            adversaire=null;
+            cancel.addEventListener('click', () => {
+                blockbot=0;
+                challengeRef.remove();
+                document.getElementById("infocom").textContent = "Choisir un joueur";
+                document.getElementById("cancelchallenge").style.display = "none";
+                document.getElementById("joueurs").style.display = "block";
+                joueurRef.set({ enLigne: "connecté" });
+                adversaire=null;
+            });
+
+            //si l'autre joueur se déconnecte on passe à "connecté" uniquement si on n'est pas en partie
+            const listeRef = database.ref('joueurs');
+            listeRef.once('child_removed', (snapshot) =>{
+                const pseudodeleted = snapshot.key;
+                const element = document.getElementById("game");
+
+                if (pseudodeleted==adversaire && getComputedStyle(element).display==="none"){
+                    document.getElementById("infocom").textContent = "Choisir un joueur";
+                    document.getElementById("cancelchallenge").style.display = "none";
+                    document.getElementById("joueurs").style.display = "block";
+                    joueurRef.set({ enLigne: "connecté" });
+                    challengeRef.remove();
+                    adversaire=null;
+                }
+                if (pseudodeleted==adversaire && getComputedStyle(element).display!=="none"){
+                    document.getElementById("spacer").style.display="block";
+                    document.getElementById("message").textContent=`${adversaire} s'est déconnecté`;
+                    document.getElementById("modalvic").style.display="flex";
+                    challengeRef.remove();
+                    adversaire=null;
+                }
+            });
         }
     });
   
