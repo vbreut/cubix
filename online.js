@@ -456,7 +456,7 @@ function ecouterCoups(gameId,pseudo) {
         
         setTimeout(() => {
             valider();
-        }, 800 + delay);
+        }, 700 + delay);
 
     });
 }
