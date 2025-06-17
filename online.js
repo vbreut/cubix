@@ -520,6 +520,7 @@ function convert(coup){
     currentcell= document.getElementById(currentcellid);
     selectcurrentcell(currentcell);
     selectedcell = document.getElementById(targetcellid);
+    //let time=performance.now();
     moveCubeTo3(selectedcell, light);
 
     if (Object.values(coup)[1].length == 4 ){
@@ -531,14 +532,17 @@ function convert(coup){
         targetcellid_2 = "cell-" + targetcellnumber_2;
 
         let cube=selectedScene.firstElementChild;
+        setTimeout(() => {
+            cube.addEventListener('transitionend', () => { //question de perfo, le mouvement peut prendre plus de temps que prévu. A faire pour tous les bots aussi
+                setTimeout(() => {
+                    selectedcell = document.getElementById(targetcellid_2);
+                    //console.log(performance.now()-time);
+                    moveCubeTo3(selectedcell, light);
+                }, 50);
+            },{once: true});
+        }, 50);
 
-        cube.addEventListener('transitionend', () => { //question de perfo, le mouvement peut prendre plus de temps que prévu. A faire pour tous les bots aussi
-            setTimeout(() => {
-                selectedcell = document.getElementById(targetcellid_2);
-                moveCubeTo3(selectedcell, light);
-            }, 50);
 
-        },{once: true});
     }
 }
 
