@@ -14,23 +14,21 @@ const firebaseConfig = {
     appId: "1:528272643607:web:f22567ac94de1b60a6ee52"
 };
 
-
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+database = firebase.database();
 //database.ref().remove();
   
 // Pseudo du joueur
-//localStorage.removeItem("pseudo");
+localStorage.removeItem("pseudo");
 
 window.addEventListener("load", loadPseudo)
 
 
 function loadPseudo(){
 
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    database = firebase.database();
-    
     pseudo = localStorage.getItem("pseudo");
-    if (pseudo!==null) {
+    if (pseudo!==null && pseudo!=="") {
 
         checkIfPseudoExists(pseudo).then(exists => {
             if (exists) {
@@ -60,9 +58,28 @@ function loadPseudo(){
             }
         });
 
+        setTimeout(() => {
+            firebase.database().ref(".info/connected").on("value",(snapshot)=>{
+                if(snapshot.val()===true){
+                    document.getElementById("onlinesubmenu2").style.display = "flex";
+                    document.getElementById("infocom").style.display = "block";
+                    modalvic.style.display = "none";
+                }
+                if(snapshot.val()===false && pseudo!==null && pseudo!==""){
+                    document.getElementById("spacer").style.display="block";
+                    document.getElementById("message").textContent="Connexion perdue";
+                    document.getElementById("modalvic").style.display="flex";
+                    document.getElementById("onlinesubmenu2").style.display = "none";
+                    document.getElementById("infocom").style.display = "none";
+                }
+            });
+    
+        }, 5000);
+
     } else {
         document.getElementById("form").style.display = "block";
         document.getElementById("welcome").style.display = "none";
+        document.getElementById("infocom").textContent = "";
     }
 
     const input=document.getElementById("pseudoInput");
@@ -72,25 +89,6 @@ function loadPseudo(){
             sauvegarderPseudo();
         }
     });
-
-    setTimeout(() => {
-        firebase.database().ref(".info/connected").on("value",(snapshot)=>{
-            if(snapshot.val()===true){
-                document.getElementById("onlinesubmenu2").style.display = "flex";
-                document.getElementById("infocom").style.display = "block";
-                modalvic.style.display = "none";
-            }
-            if(snapshot.val()===false && pseudo!==null && pseudo!==""){
-                document.getElementById("spacer").style.display="block";
-                document.getElementById("message").textContent="Connexion perdue";
-                document.getElementById("modalvic").style.display="flex";
-                document.getElementById("onlinesubmenu2").style.display = "none";
-                document.getElementById("infocom").style.display = "none";
-            }
-        });
-
-    }, 5000);
-
 
 }
 
@@ -126,9 +124,9 @@ function sauvegarderPseudo(){
                 // Le pseudo est disponible, on l'enregistre
 
                 localStorage.setItem("pseudo", pseudo);
-                let joueurRef = database.ref('joueurs/' + pseudo);
+                /*let joueurRef = database.ref('joueurs/' + pseudo);
                 joueurRef.set({ enLigne: "connecté" });
-                joueurRef.onDisconnect().remove(); // Supprimer quand il quitte
+                joueurRef.onDisconnect().remove(); // Supprimer quand il quitte*/
 
                 document.getElementById("form").style.display = "none";
                 document.getElementById("welcome").style.display = "block";
@@ -136,8 +134,10 @@ function sauvegarderPseudo(){
                 document.getElementById("infocom").textContent = "Choisir un joueur";
 
                 // Écouter si on reçoit un défi
-                const challengeRef = database.ref('challenges/' + pseudo);
-                listenchallenges(challengeRef);
+                //const challengeRef = database.ref('challenges/' + pseudo);
+                //listenchallenges(challengeRef);
+
+                loadPseudo();
             }
         });
     }
