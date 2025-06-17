@@ -55,14 +55,14 @@ let cubestatus = [
 
 let moves = [];
 
-okman.addEventListener('click',choice0);
+okman.addEventListener('pointerdown',choice0);
 
 function choice0() {
     playingmode=0;
     showPage();
 }
 
-okbot.addEventListener('click',showPage);
+okbot.addEventListener('pointerdown',showPage);
 
 function showPage() {
     if (blockbot==0){
@@ -99,7 +99,7 @@ function showPage() {
 }
 
 scenes.forEach(scen => {
-    scen.addEventListener('click', () => {
+    scen.addEventListener('pointerdown', () => {
 
 
         let cube=scen.firstElementChild;
@@ -130,7 +130,7 @@ function selectcurrentcell(currentcell){
 
 // Écouter les clics sur chaque case du plateau
 board.forEach(cell => {
-    cell.addEventListener('click', () => {
+    cell.addEventListener('pointerdown', () => {
         let cellnumber=parseInt(cell.id.match(/\d+/)[0]);
         let occupied = cubestatus[0].includes(cellnumber);
      
@@ -371,6 +371,7 @@ function changefacesleft() {
 function moveCubeTo3(targetCell, cellcolor) {
 
     if (rotationinprogress){ //normalement ça n'arrive jamais, mais ça évite de tout planter
+        //console.log("err")
         return;
     }
 
@@ -539,7 +540,7 @@ function moveCubeTo3(targetCell, cellcolor) {
     }
 }
 
-validButton.addEventListener('click', () => {
+validButton.addEventListener('pointerdown', () => {
 
     if (waitforsecondmove){
         return;
@@ -645,23 +646,23 @@ const modalvic = document.getElementById("modalvic");
 const closeModalvicButton = document.getElementById("closeModalvic");
 
 // Ouvrir la modale
-openModalButton.addEventListener("click", () => {
+openModalButton.addEventListener("pointerdown", () => {
 
     modal.style.display = "block";
 });
 
 // Fermer la modale
-closeModalButton.addEventListener("click", () => {
+closeModalButton.addEventListener("pointerdown", () => {
     modal.style.display = "none";
 });
 
 // Fermer la modale
-closeModalvicButton.addEventListener("click", () => {
+closeModalvicButton.addEventListener("pointerdown", () => {
     modalvic.style.display = "none";
 });
 
 // Fermer la modale en cliquant en dehors de la fenêtre
-window.addEventListener("click", (event) => {
+window.addEventListener("pointerdown", (event) => {
     if (event.target === modal || event.target === modalvic) {
         modal.style.display = "none";
         modalvic.style.display = "none";
@@ -685,7 +686,7 @@ const boutonsRadio = document.querySelectorAll('input[name="niveau"]');
 
 // Ajouter un écouteur d'événement pour chaque bouton radio
 boutonsRadio.forEach(bouton => {
-    bouton.addEventListener("click", (event) => {
+    bouton.addEventListener("pointerdown", (event) => {
 
         playingmode=event.target.value;
 
@@ -715,7 +716,7 @@ toggle.addEventListener('change', () => {
 
 });
 
-resButton.addEventListener('click', () => {
+resButton.addEventListener('pointerdown', () => {
     document.getElementById("message").textContent="Quitter la partie ?";
     document.getElementById("spacer").style.display="none";
     document.querySelector(".modal-contentvic").style.justifyContent="space-evenly";
@@ -725,13 +726,13 @@ resButton.addEventListener('click', () => {
     document.getElementById("closeModalvic").style.display="none";
 });
 
-confirmyesButton.addEventListener('click', () => {
+confirmyesButton.addEventListener('pointerdown', () => {
     let joueurRef = database.ref('joueurs/' + pseudo);
     joueurRef.remove();
     window.location.href = window.location.href;
 });
 
-confirmnoButton.addEventListener('click', () => {
+confirmnoButton.addEventListener('pointerdown', () => {
     modalvic.style.display = "none";
     confirmyesButton.style.display="none";
     confirmnoButton.style.display="none";
