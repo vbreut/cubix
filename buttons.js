@@ -30,12 +30,10 @@ let playingmode=1;
 //let choice=null;
 let rotationinprogress=0;
 let waitforsecondmove =0;
-//let wait = 0;
 
 const tempo = 350;
 let largeur = document.documentElement.clientWidth;
 
-//mettre à jour confettis
 
 //0 cell nb
 //1 face up, par défaut red square
@@ -82,6 +80,9 @@ function showPage() {
         }
         if(playingmode==3){
             document.getElementById("adv").textContent = "Bot 3";
+        }
+        if(playingmode==0){
+            document.getElementById("adv").style.display="none";
         }
         document.getElementById("game").style.display="block";
         document.getElementById("home").style.display="none";
@@ -369,7 +370,7 @@ function changefacesleft() {
 
 function moveCubeTo3(targetCell, cellcolor) {
 
-    if (rotationinprogress){
+    if (rotationinprogress){ //normalement ça n'arrive jamais, mais ça évite de tout planter
         return;
     }
 
@@ -408,7 +409,7 @@ function moveCubeTo3(targetCell, cellcolor) {
     let currentcell= document.getElementById(cellid);
     let te = tempo/1000;
     let transf = 'transform ' + te + 's' + ' ease-out';
-
+ 
 
     if (Math.abs(deltax) + Math.abs(deltay) < 1.3*cellwidth && Math.abs(deltax) + Math.abs(deltay) > 0.3*cellwidth) {
 
@@ -431,6 +432,7 @@ function moveCubeTo3(targetCell, cellcolor) {
                 cube.style.transition = transf;
 
                 rotationinprogress=0;
+
             },{once: true});
             
             cubestatus[1][cubenumber]= facefront;
@@ -547,6 +549,7 @@ validButton.addEventListener('click', () => {
 
         let doublemove=0;
         let delay=50;
+
         //changes();
         valider();
         
@@ -554,6 +557,7 @@ validButton.addEventListener('click', () => {
         if (playingmode!=0){
             setTimeout(() => {
 
+  
                 if (playingmode==1){
                     doublemove=botlevel1();
                 }
@@ -574,7 +578,7 @@ validButton.addEventListener('click', () => {
                 }
                 setTimeout(() => {
                     valider();
-                }, 800 + delay);
+                }, 700 + delay);
             }, tempo + 50);
         }
     }
