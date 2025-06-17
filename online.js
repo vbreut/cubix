@@ -26,12 +26,20 @@ window.addEventListener("load", loadPseudo)
 
 
 function loadPseudo(){
+    let reload=0;
 
     pseudo = localStorage.getItem("pseudo");
     if (pseudo!==null && pseudo!=="") {
 
-        checkIfPseudoExists(pseudo).then(exists => {
-            if (exists) {
+        firebase.database().ref(".info/connected").once("value",(snapshot)=>{
+            if(snapshot.val()===false){
+                console.log("reload");
+                reload=1;
+            }
+        });
+
+        checkIfPseudoExists(pseudo).then(exists => { 
+            if (exists && reload ==1) {//ne pas le faire si on ne détecte pas de déconnexion firebase
                 document.getElementById("form").style.display = "block";
                 document.getElementById("welcome").style.display = "none";
                 document.getElementById("pseudoInput").value = pseudo;
