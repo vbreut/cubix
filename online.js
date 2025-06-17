@@ -18,7 +18,7 @@ const firebaseConfig = {
 //database.ref().remove();
   
 // Pseudo du joueur
-//localStorage.removeItem("pseudo");
+localStorage.removeItem("pseudo");
 
 window.addEventListener("load", loadPseudo)
 
@@ -79,7 +79,8 @@ function loadPseudo(){
                 document.getElementById("onlinesubmenu2").style.display = "flex";
                 document.getElementById("infocom").style.display = "block";
                 modalvic.style.display = "none";
-            } else{
+            }
+            if(snapshot.val()===false && pseudo!==null && pseudo!==""){
                 document.getElementById("spacer").style.display="block";
                 document.getElementById("message").textContent="Connexion perdue";
                 document.getElementById("modalvic").style.display="flex";
