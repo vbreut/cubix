@@ -726,6 +726,8 @@ resButton.addEventListener('click', () => {
 });
 
 confirmyesButton.addEventListener('click', () => {
+    let joueurRef = database.ref('joueurs/' + pseudo);
+    joueurRef.remove();
     window.location.href = window.location.href;
 });
 
