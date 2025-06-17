@@ -130,7 +130,8 @@ function prise() {
     if(j==0){
         if(pseudo!==null){
             affichervic(`Victoire de ${pseudo} !`);
-        }else{
+        }
+        if (pseudo==null || playingmode==0){
             affichervic("Victoire des blancs"); 
         }
         lancerConfettis();
@@ -142,7 +143,13 @@ function prise() {
         if(cubestatus[0][i]!=0){j++}
     }
     if(j==0){
-        affichervic(`Victoire de ${adv} !`);
+        if(pseudo!==null){
+            let adv=document.getElementById("adv").textContent
+            affichervic(`Victoire de ${adv} !`);
+        }
+        if (pseudo==null || playingmode==0){
+            affichervic("Victoire des noirs"); 
+        }
         turn="end";
     }
 
@@ -160,7 +167,8 @@ function victoire(){
             if (c[0]==0 && turn=="white"){
                 if(pseudo!==null){
                     affichervic(`Victoire de ${pseudo} !`);
-                }else{
+                }
+                if (pseudo==null || playingmode==0){
                     affichervic("Victoire des blancs"); 
                 }
                 lancerConfettis();
@@ -180,8 +188,13 @@ function victoire(){
         if (cubestatus[1][cubenumber]=="rs" && cubestatus[0][cubenumber]>30 && cubenumber<6){
             c=capture(cubenumber+1);
             if (c[0]==0 && turn=="black"){
-                let adv=document.getElementById("adv").textContent
-                affichervic(`Victoire de ${adv} !`);
+                if(pseudo!==null){
+                    let adv=document.getElementById("adv").textContent
+                    affichervic(`Victoire de ${adv} !`);
+                }
+                if (pseudo==null || playingmode==0){
+                    affichervic("Victoire des noirs"); 
+                }
                 turn="end";
                 return;
             }
