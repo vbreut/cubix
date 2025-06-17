@@ -174,7 +174,7 @@ function display(listeRef){
                 if (joueur.enLigne=="connecté"){
                     div.style.backgroundColor = "rgb(129, 217, 154)"
                 } else {
-                    div.style.backgroundColor = "rgb(217, 169, 97)"
+                    div.style.backgroundColor = "rgb(235, 126, 0)"
                 }
                 
 
@@ -205,7 +205,7 @@ function defierJoueur(adversaire) {
         //timestamp: Date.now()
     });
 
-    joueurRef.set({ enLigne: "Défi envoyé"});
+    joueurRef.set({ enLigne: "en défi"});
 
     surveillerreponse(pseudo);
 
@@ -508,16 +508,22 @@ function convert(coup){
     moveCubeTo3(selectedcell, light);
 
     if (Object.values(coup)[1].length == 4 ){
+
         let targetcellid_2 = Object.values(coup)[1][3];
 
         let targetcellnumber_2=targetcellid_2.match(/\d+/)[0];
         targetcellnumber_2 = 37 - targetcellnumber_2;
         targetcellid_2 = "cell-" + targetcellnumber_2;
 
-        setTimeout(() => {
-            selectedcell = document.getElementById(targetcellid_2);
-            moveCubeTo3(selectedcell, light);
-        }, tempo + 50);
+        let cube=selectedScene.firstElementChild;
+
+        cube.addEventListener('transitionend', () => { //question de perfo, le mouvement peut prendre plus de temps que prévu. A faire pour tous les bots aussi
+            setTimeout(() => {
+                selectedcell = document.getElementById(targetcellid_2);
+                moveCubeTo3(selectedcell, light);
+            }, 50);
+
+        },{once: true});
     }
 }
 
@@ -563,4 +569,3 @@ function flip()
     //il va falloir stocker la matrice à cause des cubes pris. Pas la peine de stocker sur firebase.
     //on va redessiner tout le plateau à chaque fois à partir de la matrice
     //pas d'animation car on n'a pas l'historique des double cases dans la matrice, ce serait trop lent de toute façon
-    //empecher le defi vers un joueur déjà challenge, empecher de lanncer plusieurs challenges
