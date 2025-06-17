@@ -18,7 +18,7 @@ const firebaseConfig = {
 //database.ref().remove();
   
 // Pseudo du joueur
-localStorage.removeItem("pseudo");
+//localStorage.removeItem("pseudo");
 
 window.addEventListener("load", loadPseudo)
 
