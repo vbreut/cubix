@@ -602,10 +602,9 @@ function valider(){
     if (forcedcube[3]!= -1){
         return;
     }
+    else{document.getElementById("info").textContent="";}
 
     clean();
-    
-    else{document.getElementById("info").textContent="";}
 
     victoire();
 
