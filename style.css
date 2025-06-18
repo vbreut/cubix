@@ -534,7 +534,10 @@ img {
     width: 60%;
 }
 
-
+#imgdisc {
+    width: 30px;
+    transform: translateY(5px);
+}
 
 @media (orientation: portrait) {
     #game-container {
