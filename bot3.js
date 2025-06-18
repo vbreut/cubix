@@ -117,7 +117,7 @@ function pathtovictory(deepmax){
             }
         }*/
 
-        for(i=0;i<5;i++){
+        for(i=0;i<20;i++){
             taille[i]=i;
         }
 
@@ -422,7 +422,7 @@ function menace(deepmax){
     if(found[0]>0){
         //recherche du plus court. On peut louper une menace d'égale longueur... tant pis.
 
-        for(i=0;i<5;i++){
+        for(i=0;i<20;i++){
             taille[i]=i;
         }
 
