@@ -586,10 +586,13 @@ validButton.addEventListener('pointerdown', () => {
 
     if (numberofmoves > 0 && playingmode==4){
 
-        //changes();
         valider();
         
         if (turn=="end") {return;}
+
+        if (forcedcube[3]== -1){// si on a bien pris le cube forcé
+            clean();//envoie le coup, et valide mon coup chez l'adversaire
+        }
 
     }
 
@@ -597,14 +600,12 @@ validButton.addEventListener('pointerdown', () => {
 
 function valider(){
 
-    prise();
+    prise(); //la fonction va s'exécuter avant de passer à la suite
 
-    if (forcedcube[3]!= -1){
+    if (forcedcube[3]!= -1){//mis à jour dans prise
         return;
     }
     else{document.getElementById("info").textContent="";}
-
-    clean();
 
     victoire();
 
