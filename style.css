@@ -75,6 +75,16 @@
     }
 }
 
+h1 {
+    font-family: Arial;
+    color: rgb(69, 123, 157);
+}
+
+h2 {
+    font-family: Arial;
+    color: rgb(69, 123, 157);
+}
+
 body {
     font-family: Arial;
     text-align: center;
