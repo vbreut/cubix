@@ -1,9 +1,9 @@
 :root{
-    --cubesize:50px;
+    --cubesize:55px;
     --translate:calc(var(--cubesize)/2 - 1px);
-    --shapesize:34px;
+    --shapesize:37px;
     --marginborder:5px;
-    --cellsize:75px;
+    --cellsize:82px;
     /*--cubesize:8vh;
     --translate:calc(var(--cubesize)/2 - 0.4px);
     --shapesize:5.4vh;
@@ -413,6 +413,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
     width: 200px;
 }
 
@@ -524,15 +525,17 @@ body {
 
 
 #bottomblock {
+    margin-top: 50px;
     text-align: left;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     font-size: 15px;
+    align-items: center;
 }
 
 #rightblock {
-    margin-top: 15px;
+
+    margin-top: 50px;
 }
 
 #image {
@@ -549,6 +552,7 @@ img {
     transform: translateY(5px);
 }
 
+
 @media (orientation: portrait) {
     #game-container {
         flex-direction: column; /* Disposition en colonne : damier au-dessus, bouton en dessous */
@@ -559,7 +563,7 @@ img {
     #panels {
         display: flex;
         flex-direction: row;
-        justify-content: center;
+        justify-items: space-between;
         margin-top: 40px;
         width: 100%;
     }
@@ -591,12 +595,11 @@ img {
 
     #bottomblock {
         margin-top: 20px;
-        flex-direction: row;
+        width: 100%;
     }
 
     #rightblock {
-        margin-top: 0px;
-        margin-left: 0px;
+        margin-top: 30px;
     }
 }
 
