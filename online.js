@@ -30,6 +30,8 @@ function loadPseudo(){
     pseudo = localStorage.getItem("pseudo");
     if (pseudo!==null && pseudo!=="") {
 
+        let joueurRef = database.ref('joueurs/' + pseudo);
+
         checkIfPseudoExists(pseudo).then(exists => { 
             if (exists) {//ne pas le faire si on a appuyé sur le bouton accueil. Mémoriser dans local storage ?
                 document.getElementById("form").style.display = "block";
@@ -37,7 +39,6 @@ function loadPseudo(){
                 document.getElementById("pseudoInput").value = pseudo;
                 document.getElementById("infocom").textContent = "Ce pseudo est déjà pris !";
             } else {
-                let joueurRef = database.ref('joueurs/' + pseudo);
 
                 if (checkifconnected()){ //peut-être pas utile mais bon...
                     joueurRef.onDisconnect().remove();
@@ -66,6 +67,7 @@ function loadPseudo(){
                     modalvic.style.display = "none";
                 }
                 if(snapshot.val()===false && pseudo!==null && pseudo!==""){
+                    joueurRef.onDisconnect().remove();
                     document.getElementById("spacer").style.display="block";
                     document.getElementById("message").textContent="Connexion perdue";
                     document.getElementById("modalvic").style.display="flex";
