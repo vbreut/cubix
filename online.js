@@ -62,12 +62,12 @@ function loadPseudo(){
         setTimeout(() => {
             firebase.database().ref(".info/connected").on("value",(snapshot)=>{
                 if(snapshot.val()===true){
+                    joueurRef.onDisconnect().remove();
                     document.getElementById("onlinesubmenu2").style.display = "flex";
                     document.getElementById("infocom").style.display = "block";
                     modalvic.style.display = "none";
                 }
                 if(snapshot.val()===false && pseudo!==null && pseudo!==""){
-                    joueurRef.onDisconnect().remove();
                     document.getElementById("spacer").style.display="block";
                     document.getElementById("message").textContent="Connexion perdue";
                     document.getElementById("modalvic").style.display="flex";
