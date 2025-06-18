@@ -40,8 +40,8 @@ function loadPseudo(){
                 let joueurRef = database.ref('joueurs/' + pseudo);
 
                 if (checkifconnected()){ //peut-être pas utile mais bon...
-                    joueurRef.set({ enLigne: "connecté" });
                     joueurRef.onDisconnect().remove();
+                    joueurRef.set({ enLigne: "connecté" });
                 } else{
                     waitforconnected(joueurRef);
                 }
@@ -105,8 +105,8 @@ function checkifconnected(){
 function waitforconnected(joueurRef){
     firebase.database().ref(".info/connected").on("value",(snapshot)=>{
         if(snapshot.val()===true){
-            joueurRef.set({ enLigne: "connecté" });
             joueurRef.onDisconnect().remove();
+            joueurRef.set({ enLigne: "connecté" });
         }
     });
 }
