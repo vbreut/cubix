@@ -588,8 +588,6 @@ validButton.addEventListener('pointerdown', () => {
 
         //changes();
         valider();
-
-        clean();
         
         if (turn=="end") {return;}
 
@@ -604,6 +602,9 @@ function valider(){
     if (forcedcube[3]!= -1){
         return;
     }
+
+    clean();
+    
     else{document.getElementById("info").textContent="";}
 
     victoire();
