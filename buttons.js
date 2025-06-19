@@ -588,11 +588,12 @@ validButton.addEventListener('click', () => {
 
         valider();
         
-        if (turn=="end") {return;}
 
         if (forcedcube[3]== -1 || forcedcube[3]>5){// si on a bien pris le cube forcé de l'adversaire ou si c'est l'autre qui est forcé
             clean();//envoie le coup, et valide mon coup chez l'adversaire
         }
+
+        if (turn=="end") {return;}
 
     }
 
@@ -676,7 +677,7 @@ function affichervic(message){
     confirmnoButton.style.display="none";
     document.getElementById("closeModalvic").style.display="block";
     modalvic.style.display = "block";
-    //document.querySelector(".modal-contentvic").style.justifyContent="space-between";
+    document.querySelector(".modal-contentvic").style.justifyContent="space-between";
     document.getElementById("spacer").style.display="block";
 }
 
