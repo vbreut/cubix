@@ -11,35 +11,29 @@ const scenes = document.querySelectorAll('.scene');
 const firstscene = document.querySelector('.scene');
 const gameboard = document.getElementById('game-board')
 const validButton = document.getElementById('valider');
+const confirmyesButton = document.getElementById("confirm-yes");
+const confirmnoButton = document.getElementById("confirm-no");
+const resButton = document.getElementById("res");
 const tour = document.getElementById('tour');
 
 let cellrect = firstcell.getBoundingClientRect();
-let boardrect= gameboard.getBoundingClientRect();
+let boardrect = null;// gameboard.getBoundingClientRect();
 let cellwidth = cellrect.width + 5;
 let scenerect = firstscene.getBoundingClientRect();
 let movx = scenerect.width/4 + 5;
 let movy = scenerect.width/4 + 5;
-let dark="rgb(121, 145, 177)";
-let light="rgb(156, 176, 202)";
-let changepossible=1;
+let dark="rgb(105, 149, 183)";
+let light="rgb(140, 174, 200)";
+let blockbot=0;
+//let changepossible=1;
 let playingmode=1;
-let choice=null;
+//let choice=null;
 let rotationinprogress=0;
-let waitforsecondmove=0;
-const choice0 = document.getElementById("choice0");
-const choice1 = document.getElementById("choice1");
-const choice2 = document.getElementById("choice2");
-const choice3 = document.getElementById("choice3");
+let waitforsecondmove =0;
+
 const tempo = 350;
 let largeur = document.documentElement.clientWidth;
 
-        //à faire une fois quand le plateau s'affiche
-        //cellrect = firstcell.getBoundingClientRect();
-        //boardrect= gameboard.getBoundingClientRect();
-        //cellwidth = cellrect.width + 5;
-        //scenerect = firstscene.getBoundingClientRect();
-        //movx = scenerect.width/4 + 5;
-        //movy = scenerect.width/4 + 5;
 
 //0 cell nb
 //1 face up, par défaut red square
@@ -59,6 +53,51 @@ let cubestatus = [
     ["wd", "wd", "wd", "wd", "wd", "wd", "wd", "wd", "wd", "wd", "wd", "wd"],
 ]
 
+let moves = [];
+
+okman.addEventListener('click',choice0);
+
+function choice0() {
+    playingmode=0;
+    showPage();
+}
+
+okbot.addEventListener('click',showPage);
+
+function showPage() {
+    if (blockbot==0){
+        if (pseudo !== "" && pseudo!==null){
+            let joueurRef = database.ref('joueurs/' + pseudo);
+            joueurRef.set({ enLigne: "en partie"});
+            //joueurRef.onDisconnect().remove();
+        }
+
+        if(playingmode==1){
+            document.getElementById("adv").textContent = "Bot 1";
+        }
+        if(playingmode==2){
+            document.getElementById("adv").textContent = "Bot 2";
+        }
+        if(playingmode==3){
+            document.getElementById("adv").textContent = "Bot 3";
+        }
+        if(playingmode==0){
+            document.getElementById("adv").style.display="none";
+        }
+        document.getElementById("game").style.display="block";
+        document.getElementById("home").style.display="none";
+
+        boardrect= gameboard.getBoundingClientRect();
+        scenerect = firstscene.getBoundingClientRect();
+        cellrect = firstcell.getBoundingClientRect();
+        largeur = document.documentElement.clientWidth;
+        cellwidth = cellrect.width + 5;
+        movx = scenerect.width/4 + 5;
+        movy = scenerect.width/4 + 5;
+
+    }
+}
+
 scenes.forEach(scen => {
     scen.addEventListener('click', () => {
 
@@ -72,7 +111,10 @@ scenes.forEach(scen => {
         if ((selectedScene == null || numberofmoves == 0) && (cubenumber<7 && turn=="black" && playingmode==0 || cubenumber>6 && turn=="white") && currentcell!=null && rotationinprogress==0){
             selectedScene=scen;
             selectcurrentcell(currentcell);
-
+            moves = [];
+            moves.push(scen.id);
+            moves.push(cellid);
+            //console.log(moves);
         }
 
     });
@@ -94,9 +136,9 @@ board.forEach(cell => {
      
         if (selectedScene != null && occupied == false && (playingmode==0 || turn=="white")){
             let cube=selectedScene.firstElementChild;
-                
+
             if (rotationinprogress){
-                waitforsecondmove=1;
+                waitforsecondmove =1;
                 cube.addEventListener('transitionend', () => {
                     if (cell.style.backgroundColor == dark) {
                         moveCubeTo3(cell, cell.style.backgroundColor);
@@ -105,10 +147,10 @@ board.forEach(cell => {
                     if (cell.style.backgroundColor == light && numberofmoves < 2) {
                         moveCubeTo3(cell, cell.style.backgroundColor);
                     }
-                        waitforsecondmove=0;
+                    waitforsecondmove =0;
                 },{once: true});
             }
-                
+
             if (rotationinprogress==0){
                 if (cell.style.backgroundColor == dark) {
                     moveCubeTo3(cell, cell.style.backgroundColor);
@@ -328,7 +370,8 @@ function changefacesleft() {
 
 function moveCubeTo3(targetCell, cellcolor) {
 
-    if (rotationinprogress){
+    if (rotationinprogress){ //normalement ça n'arrive jamais, mais ça évite de tout planter
+        //console.log("err")
         return;
     }
 
@@ -340,12 +383,12 @@ function moveCubeTo3(targetCell, cellcolor) {
     //let rotz=0;
 
     let coordcell = targetCell.getBoundingClientRect();
-    let x = coordcell.left+window.scrollX;
-    let y = coordcell.top+window.scrollY;
+    let x = coordcell.left;//+window.scrollX;
+    let y = coordcell.top;//+window.scrollY;
 
     let coordscene= selectedScene.getBoundingClientRect();
-    let xc = coordscene.left+window.scrollX;
-    let yc = coordscene.top+window.scrollY;
+    let xc = coordscene.left;//+window.scrollX;
+    let yc = coordscene.top;//+window.scrollY;
 
     let x3d=0;
     let y3d=0;
@@ -367,7 +410,7 @@ function moveCubeTo3(targetCell, cellcolor) {
     let currentcell= document.getElementById(cellid);
     let te = tempo/1000;
     let transf = 'transform ' + te + 's' + ' ease-out';
-
+ 
 
     if (Math.abs(deltax) + Math.abs(deltay) < 1.3*cellwidth && Math.abs(deltax) + Math.abs(deltay) > 0.3*cellwidth) {
 
@@ -385,19 +428,14 @@ function moveCubeTo3(targetCell, cellcolor) {
                 cube.offsetHeight;
 
                 changefacesdown();
-
+                //console.log(moves);
+                
                 cube.style.transition = transf;
 
                 rotationinprogress=0;
+
             },{once: true});
             
-
-            //if(faceright=="wd"){rotx= -90;cube.style.transform += `rotateX(${rotx}deg)`;}
-            //if(faceright=="ws"){rotx= 90;cube.style.transform += `rotateX(${rotx}deg)`;}
-            //if(faceright=="bd"){roty= -90;cube.style.transform += `rotateY(${roty}deg)`;}
-            //if(faceright=="bs"){roty= 90;cube.style.transform += `rotateY(${roty}deg)`;}
-            //if(faceright=="rs"){rotz= -90;cube.style.transform += `rotateZ(${rotz}deg)`;}
-            //if(faceright=="rd"){rotz= 90;cube.style.transform += `rotateZ(${rotz}deg)`;}
             cubestatus[1][cubenumber]= facefront;
             cubestatus[2][cubenumber]= faceback;
             cubestatus[3][cubenumber]= facedown;
@@ -418,17 +456,12 @@ function moveCubeTo3(targetCell, cellcolor) {
                 cube.offsetHeight;
 
                 changefacesup();
+                //console.log(moves);
 
                 cube.style.transition = transf;
                 rotationinprogress=0;
             },{once: true});
 
-            //if(faceright=="wd"){rotx= 90;cube.style.transform += `rotateX(${rotx}deg)`;}
-            //if(faceright=="ws"){rotx= -90;cube.style.transform += `rotateX(${rotx}deg)`;}
-            //if(faceright=="bd"){roty= 90;cube.style.transform += `rotateY(${roty}deg)`;}
-            //if(faceright=="bs"){roty= -90;cube.style.transform += `rotateY(${roty}deg)`;}
-            //if(faceright=="rs"){rotz= 90;cube.style.transform += `rotateZ(${rotz}deg)`;}
-            //if(faceright=="rd"){rotz= -90;cube.style.transform += `rotateZ(${rotz}deg)`;}
             cubestatus[1][cubenumber]= faceback;
             cubestatus[2][cubenumber]= facefront;
             cubestatus[3][cubenumber]= faceup;
@@ -449,17 +482,12 @@ function moveCubeTo3(targetCell, cellcolor) {
                 cube.offsetHeight;
 
                 changefacesright();
+                //console.log(moves);
                 
                 cube.style.transition = transf;
                 rotationinprogress=0;
             },{once: true});
 
-            //if(faceback=="bd"){roty= 90;cube.style.transform += `rotateY(${roty}deg)`;}
-            //if(faceback=="bs"){roty= -90;cube.style.transform += `rotateY(${roty}deg)`;}
-            //if(faceback=="wd"){rotx= 90;cube.style.transform += `rotateX(${rotx}deg)`;}
-            //if(faceback=="ws"){rotx= -90;cube.style.transform += `rotateX(${rotx}deg)`;}
-            //if(faceback=="rs"){rotz= 90;cube.style.transform += `rotateZ(${rotz}deg)`;}
-            //if(faceback=="rd"){rotz= -90;cube.style.transform += `rotateZ(${rotz}deg)`;}
             cubestatus[1][cubenumber]= faceleft;
             cubestatus[2][cubenumber]= faceright;
             cubestatus[5][cubenumber]= facedown;
@@ -480,17 +508,12 @@ function moveCubeTo3(targetCell, cellcolor) {
                 cube.offsetHeight;
 
                 changefacesleft();
+                //console.log(moves);
 
                 cube.style.transition = transf;
                 rotationinprogress=0;
             },{once: true});
 
-            //if(faceback=="bd"){roty= -90;cube.style.transform += `rotateY(${roty}deg)`;}
-            //if(faceback=="bs"){roty= 90;cube.style.transform += `rotateY(${roty}deg)`;}
-            //if(faceback=="wd"){rotx= -90;cube.style.transform += `rotateX(${rotx}deg)`;}
-            //if(faceback=="ws"){rotx= 90;cube.style.transform += `rotateX(${rotx}deg)`;}
-            //if(faceback=="rs"){rotz= -90;cube.style.transform += `rotateZ(${rotz}deg)`;}
-            //if(faceback=="rd"){rotz= 90;cube.style.transform += `rotateZ(${rotz}deg)`;}
             cubestatus[1][cubenumber]= faceright;
             cubestatus[2][cubenumber]= faceleft;
             cubestatus[5][cubenumber]= faceup;
@@ -498,10 +521,12 @@ function moveCubeTo3(targetCell, cellcolor) {
             cubestatus[0][cubenumber]= cubestatus[0][cubenumber] - 1;
         }
 
-        x3d = x + movx - boardrect.left - 5 - 0.5 + (largeur - largeur2)/2;
+        x3d = x + movx - boardrect.left - 5 - 0.5+ (largeur - largeur2)/2;
         y3d = y + movy - boardrect.top - 5 - 0.5;
 
         selectedScene.style.transform = `translate(${x3d}px, ${y3d}px) rotateY(18deg) rotateX(18deg)`;
+
+        moves.push(targetCell.id);
 
         if (cellcolor==dark){
             currentcell.style.backgroundColor = light;
@@ -516,19 +541,24 @@ function moveCubeTo3(targetCell, cellcolor) {
 }
 
 validButton.addEventListener('click', () => {
+
     if (waitforsecondmove){
         return;
     }
 
-try{
-    if (numberofmoves > 0 && (playingmode==0||turn=="white")){
+    if (numberofmoves > 0 && (playingmode==0||turn=="white") && playingmode !== 4){
+
         let doublemove=0;
-        let delay=0;
-        changes();
+        let delay=50;
+
+        //changes();
         valider();
+        
         if (turn=="end") {return;}
         if (playingmode!=0){
             setTimeout(() => {
+
+  
                 if (playingmode==1){
                     doublemove=botlevel1();
                 }
@@ -549,48 +579,30 @@ try{
                 }
                 setTimeout(() => {
                     valider();
-                }, 800 + delay);
+                }, 700 + delay);
             }, tempo + 50);
         }
     }
 
-            }  catch(e){
-    const err=document.getElementById("image");
-    err.textContent = e.stack; 
+    if (numberofmoves > 0 && playingmode==4){
+
+        valider();
+        
+        if (turn=="end") {return;}
+
+        if (forcedcube[3]== -1 || forcedcube[3]>5){// si on a bien pris le cube forcé de l'adversaire ou si c'est l'autre qui est forcé
+            clean();//envoie le coup, et valide mon coup chez l'adversaire
+        }
+
     }
 
 });
 
-function changes(){
-    changepossible=0;
-    if(playingmode==0){
-        choice1.style.color = "lightgrey";
-        choice2.style.color = "lightgrey";
-        choice3.style.color = "lightgrey";
-    }
-    if(playingmode==1){
-        choice0.style.color = "lightgrey";
-        choice2.style.color = "lightgrey";
-        choice3.style.color = "lightgrey";
-    }
-    if(playingmode==2){
-        choice0.style.color = "lightgrey";
-        choice1.style.color = "lightgrey";
-        choice3.style.color = "lightgrey";
-    }
-    if(playingmode==3){
-        choice1.style.color = "lightgrey";
-        choice2.style.color = "lightgrey";
-        choice0.style.color = "lightgrey";
-    }
-
-}
-
 function valider(){
 
-    prise();
+    prise(); //la fonction va s'exécuter avant de passer à la suite
 
-    if (forcedcube[3]!= -1){
+    if (forcedcube[3]!= -1){//mis à jour dans prise
         return;
     }
     else{document.getElementById("info").textContent="";}
@@ -598,7 +610,7 @@ function valider(){
     victoire();
 
     numberofmoves = 0;
-        
+
     let cube=selectedScene.firstElementChild;
     if (rotationinprogress){
         cube.addEventListener('transitionend', () => {
@@ -610,14 +622,19 @@ function valider(){
 
     if (turn=="end") {return;}
 
+    let colortest = document.querySelector('.face'); //on regarde une face pour voir de quelle couleur on est (si les noirs sont en haut)
+    let col= getComputedStyle(colortest).backgroundColor;
     if (turn=="white") {
         turn="black";
-        tour.style.backgroundColor = "rgb(0, 0, 0)";
+
+        if (col == "rgb(50, 50, 50)"){tour.style.backgroundColor = "rgb(0, 0, 0)";
+        } else {tour.style.backgroundColor = "rgb(255, 255, 255)";}
+
     } else {
         turn="white";
-        tour.style.backgroundColor = "rgb(255, 255, 255)";
+        if (col == "rgb(50, 50, 50)"){tour.style.backgroundColor = "rgb(255, 255, 255)";
+        } else {tour.style.backgroundColor = "rgb(0, 0, 0)";}
     }
-
 }
 
 
@@ -631,7 +648,7 @@ const closeModalvicButton = document.getElementById("closeModalvic");
 
 // Ouvrir la modale
 openModalButton.addEventListener("click", () => {
-    //defense(4);////////////////////////////////////////
+
     modal.style.display = "block";
 });
 
@@ -655,7 +672,12 @@ window.addEventListener("click", (event) => {
 
 function affichervic(message){
     document.getElementById("message").textContent=message;
-    document.getElementById("modalvic").style.display="flex";
+    confirmyesButton.style.display="none";
+    confirmnoButton.style.display="none";
+    document.getElementById("closeModalvic").style.display="block";
+    modalvic.style.display = "block";
+    //document.querySelector(".modal-contentvic").style.justifyContent="space-between";
+    document.getElementById("spacer").style.display="block";
 }
 
 
@@ -666,11 +688,9 @@ const boutonsRadio = document.querySelectorAll('input[name="niveau"]');
 // Ajouter un écouteur d'événement pour chaque bouton radio
 boutonsRadio.forEach(bouton => {
     bouton.addEventListener("click", (event) => {
-        if (!changepossible) {
-            event.preventDefault(); // Empêche le changement de sélection
-        } else {
-            playingmode=event.target.value;
-        }
+
+        playingmode=event.target.value;
+
     });
 });
 
@@ -697,7 +717,30 @@ toggle.addEventListener('change', () => {
 
 });
 
+resButton.addEventListener('click', () => {
+    document.getElementById("message").textContent="Quitter la partie ?";
+    document.getElementById("spacer").style.display="none";
+    document.querySelector(".modal-contentvic").style.justifyContent="space-evenly";
+    modalvic.style.display="flex";
+    confirmyesButton.style.display="block";
+    confirmnoButton.style.display="block";
+    document.getElementById("closeModalvic").style.display="none";
+});
+
+confirmyesButton.addEventListener('click', () => {
+    let joueurRef = database.ref('joueurs/' + pseudo);
+    joueurRef.remove();
+    window.location.href = window.location.href;
+});
+
+confirmnoButton.addEventListener('click', () => {
+    modalvic.style.display = "none";
+    confirmyesButton.style.display="none";
+    confirmnoButton.style.display="none";
+});
+
 function lancerConfettis() {
+
     setTimeout(() => {
 
         confetti({
@@ -714,4 +757,5 @@ function lancerConfettis() {
         });
 
     }, 100);
-  }
+
+}
