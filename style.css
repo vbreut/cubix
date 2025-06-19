@@ -149,14 +149,12 @@ body {
     border-radius: 8px;
     color: white;
     font-weight: bold;
-    box-shadow: 0px 4px 5px rgba(0,0,0,0.4);
+    box-shadow: 0px 3px 4px rgba(0,0,0,0.4);
     margin-top:15px;
-    transition:transform 0.1s ease;
 }
 
 #okbot:active {
     background-color: rgb(87, 156, 198);
-    transform: translateY(4px);
     box-shadow: none;
 }
 
@@ -219,13 +217,11 @@ body {
     border-radius: 8px;
     color: white;
     font-weight: bold;
-    box-shadow: 0px 4px 5px rgba(0,0,0,0.4);
-    transition:transform 0.1s ease;
+    box-shadow: 0px 3px 4px rgba(0,0,0,0.4);
 }
 
 #sauvpseudo:active {
     background-color: rgb(87, 156, 198);
-    transform: translateY(4px);
     box-shadow: none;
 }
 
@@ -255,13 +251,11 @@ body {
     border-radius: 8px;
     color: white;
     font-weight: bold;
-    box-shadow: 0px 4px 5px rgba(0,0,0,0.4);
-    transition:transform 0.1s ease;
+    box-shadow: 0px 3px 4px rgba(0,0,0,0.4);
 }
 
 #cancel:active {
     background-color: rgb(87, 156, 198);
-    transform: translateY(4px);
     box-shadow: none;
 }
 
@@ -275,13 +269,11 @@ body {
     border-radius: 8px;
     color: white;
     font-weight: bold;
-    box-shadow: 0px 4px 5px rgba(0,0,0,0.4);
-    transition:transform 0.1s ease;
+    box-shadow: 0px 3px 4px rgba(0,0,0,0.4);
 }
 
 #accept:active {
     background-color: rgb(87, 156, 198);
-    transform: translateY(4px);
     box-shadow: none;
 }
 
@@ -295,13 +287,11 @@ body {
     border-radius: 8px;
     color: white;
     font-weight: bold;
-    box-shadow: 0px 4px 5px rgba(0,0,0,0.4);
-    transition:transform 0.1s ease;
+    box-shadow: 0px 3px 4px rgba(0,0,0,0.4);
 }
 
 #deny:active {
     background-color: rgb(87, 156, 198);
-    transform: translateY(4px);
     box-shadow: none;
 }
 
@@ -346,13 +336,11 @@ body {
     border-radius: 8px;
     color: white;
     font-weight: bold;
-    box-shadow: 0px 4px 5px rgba(0,0,0,0.4);
-    transition:transform 0.1s ease;
+    box-shadow: 0px 3px 4px rgba(0,0,0,0.4);
 }
 
 #okman:active {
     background-color: rgb(87, 156, 198);
-    transform: translateY(4px);
     box-shadow: none;
 }
 
@@ -438,13 +426,11 @@ body {
     border-radius: 7px;
     font-weight: bold;
     color: white;
-    box-shadow: 0px 3px 5px rgba(0,0,0,0.4);
-    transition:transform 0.1s ease;
+    box-shadow: 0px 3px 4px rgba(0,0,0,0.4);
 }
 
 #valider:active {
     background-color: rgb(255, 188, 111);
-    transform: translateY(4px);
     box-shadow: none;
 }
 
@@ -480,13 +466,11 @@ body {
     font-weight: bold;
     border-radius: 7px;
     color: white;
-    box-shadow: 0px 4px 5px rgba(0,0,0,0.4);
-    transition:transform 0.1s ease;
+    box-shadow: 0px 3px 4px rgba(0,0,0,0.4);
 }
 
 #openModal:active {
     background-color: rgb(87, 156, 198);
-    transform: translateY(4px);
     box-shadow: none;
 }
 
@@ -506,13 +490,11 @@ body {
     font-weight: bold;
     border-radius: 7px;
     color: white;
-    box-shadow: 0px 4px 5px rgba(0,0,0,0.4);
-    transition:transform 0.1s ease;
+    box-shadow: 0px 3px 4px rgba(0,0,0,0.4);
 }
 
 #res:active {
     background-color: rgb(92, 165, 210);
-    transform: translateY(4px);
     box-shadow: none;
 }
 
@@ -821,8 +803,7 @@ img {
     font-size: 14px;
     border-radius: 7px;
     color: white;
-    box-shadow: 0px 3px 5px rgba(0,0,0,0.4);
-    transition:transform 0.1s ease;
+    box-shadow: 0px 3px 4px rgba(0,0,0,0.4);
 }
 
 #confirm-no {
@@ -834,19 +815,16 @@ img {
     font-size: 14px;
     border-radius: 7px;
     color: white;
-    box-shadow: 0px 3px 5px rgba(0,0,0,0.4);
-    transition:transform 0.1s ease;
+    box-shadow: 0px 3px 4px rgba(0,0,0,0.4);
 }
 
 #confirm-no:active {
     background-color: rgb(92, 165, 210);
-    transform: translateY(4px);
     box-shadow: none;
 }
 
 #confirm-yes:active {
     background-color: rgb(92, 165, 210);
-    transform: translateY(4px);
     box-shadow: none;
 }
 
