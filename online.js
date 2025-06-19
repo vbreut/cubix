@@ -22,6 +22,7 @@ database = firebase.database();
 // Pseudo du joueur
 //localStorage.removeItem("pseudo");
 
+
 window.addEventListener("load", loadPseudo)
 
 
@@ -40,12 +41,14 @@ function loadPseudo(){
                 document.getElementById("infocom").textContent = "Ce pseudo est déjà pris !";
             } else {
 
-                if (checkifconnected()){ //peut-être pas utile mais bon...
-                    joueurRef.onDisconnect().remove();
-                    joueurRef.set({ enLigne: "connecté" });
-                } else{
+                checkifconnected().then(connected => {
+                    if(connected){
+                        joueurRef.onDisconnect().remove();
+                        joueurRef.set({ enLigne: "connecté" });
+                    } else{
                     waitforconnected(joueurRef);
-                }
+                    }
+                });
                 
                 // Écouter si on reçoit un défi
                 const challengeRef = database.ref('challenges/' + pseudo);
@@ -95,13 +98,7 @@ function loadPseudo(){
 }
 
 function checkifconnected(){
-    firebase.database().ref(".info/connected").once("value").then((snapshot)=>{
-        if(snapshot.val()===true){
-            return true;
-        } else{
-            return false;
-        }
-    });
+    return firebase.database().ref(".info/connected").once("value").then(snapshot=>snapshot.val()===true);
 }
 
 function waitforconnected(joueurRef){
@@ -113,7 +110,7 @@ function waitforconnected(joueurRef){
     });
 }
 
-sauvpseudo.addEventListener('pointerdown',sauvegarderPseudo);
+sauvpseudo.addEventListener('click',sauvegarderPseudo);
 
 function sauvegarderPseudo(){
     pseudo = document.getElementById("pseudoInput").value.trim();
@@ -225,7 +222,7 @@ function defierJoueur(adversaire) {
             document.getElementById("cancelchallenge").style.display = "block";
             document.getElementById("joueurs").style.display = "none";
 
-            cancel.addEventListener('pointerdown', () => {
+            cancel.addEventListener('click', () => {
                 blockbot=0;
                 challengeRef.remove();
                 document.getElementById("infocom").textContent = "Choisir un joueur";
@@ -233,7 +230,7 @@ function defierJoueur(adversaire) {
                 document.getElementById("joueurs").style.display = "block";
                 joueurRef.set({ enLigne: "connecté" });
                 adversaire=null;
-            });
+            },{once: true});
 
             //si l'autre joueur se déconnecte on passe à "connecté" uniquement si on n'est pas en partie
             const listeRef = database.ref('joueurs');
@@ -286,7 +283,7 @@ function listenchallenges(challengeRef){
     });
 
 
-    accept.addEventListener('pointerdown', () => {
+    accept.addEventListener('click', () => {
                 
         blockbot=0;
 
@@ -322,7 +319,7 @@ function listenchallenges(challengeRef){
 
     });
 
-    deny.addEventListener('pointerdown', () => {
+    deny.addEventListener('click', () => {
 
         blockbot=0;
         database.ref('reponses/' + adversaire).set({
@@ -543,7 +540,6 @@ function convert(coup){
                 }, 50);
             },{once: true});
         }, 50);
-
 
     }
 }
