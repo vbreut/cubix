@@ -55,14 +55,14 @@ let cubestatus = [
 
 let moves = [];
 
-okman.addEventListener('pointerdown',choice0);
+okman.addEventListener('click',choice0);
 
 function choice0() {
     playingmode=0;
     showPage();
 }
 
-okbot.addEventListener('pointerdown',showPage);
+okbot.addEventListener('click',showPage);
 
 function showPage() {
     if (blockbot==0){
@@ -99,7 +99,7 @@ function showPage() {
 }
 
 scenes.forEach(scen => {
-    scen.addEventListener('pointerdown', () => {
+    scen.addEventListener('click', () => {
 
 
         let cube=scen.firstElementChild;
@@ -130,7 +130,7 @@ function selectcurrentcell(currentcell){
 
 // Écouter les clics sur chaque case du plateau
 board.forEach(cell => {
-    cell.addEventListener('pointerdown', () => {
+    cell.addEventListener('click', () => {
         let cellnumber=parseInt(cell.id.match(/\d+/)[0]);
         let occupied = cubestatus[0].includes(cellnumber);
      
@@ -540,7 +540,7 @@ function moveCubeTo3(targetCell, cellcolor) {
     }
 }
 
-validButton.addEventListener('pointerdown', () => {
+validButton.addEventListener('click', () => {
 
     if (waitforsecondmove){
         return;
@@ -590,7 +590,7 @@ validButton.addEventListener('pointerdown', () => {
         
         if (turn=="end") {return;}
 
-        if (forcedcube[3]== -1){// si on a bien pris le cube forcé
+        if (forcedcube[3]== -1 || forcedcube[3]>5){// si on a bien pris le cube forcé de l'adversaire ou si c'est l'autre qui est forcé
             clean();//envoie le coup, et valide mon coup chez l'adversaire
         }
 
@@ -647,23 +647,23 @@ const modalvic = document.getElementById("modalvic");
 const closeModalvicButton = document.getElementById("closeModalvic");
 
 // Ouvrir la modale
-openModalButton.addEventListener("pointerdown", () => {
+openModalButton.addEventListener("click", () => {
 
     modal.style.display = "block";
 });
 
 // Fermer la modale
-closeModalButton.addEventListener("pointerdown", () => {
+closeModalButton.addEventListener("click", () => {
     modal.style.display = "none";
 });
 
 // Fermer la modale
-closeModalvicButton.addEventListener("pointerdown", () => {
+closeModalvicButton.addEventListener("click", () => {
     modalvic.style.display = "none";
 });
 
 // Fermer la modale en cliquant en dehors de la fenêtre
-window.addEventListener("pointerdown", (event) => {
+window.addEventListener("click", (event) => {
     if (event.target === modal || event.target === modalvic) {
         modal.style.display = "none";
         modalvic.style.display = "none";
@@ -687,7 +687,7 @@ const boutonsRadio = document.querySelectorAll('input[name="niveau"]');
 
 // Ajouter un écouteur d'événement pour chaque bouton radio
 boutonsRadio.forEach(bouton => {
-    bouton.addEventListener("pointerdown", (event) => {
+    bouton.addEventListener("click", (event) => {
 
         playingmode=event.target.value;
 
@@ -717,7 +717,7 @@ toggle.addEventListener('change', () => {
 
 });
 
-resButton.addEventListener('pointerdown', () => {
+resButton.addEventListener('click', () => {
     document.getElementById("message").textContent="Quitter la partie ?";
     document.getElementById("spacer").style.display="none";
     document.querySelector(".modal-contentvic").style.justifyContent="space-evenly";
@@ -727,13 +727,13 @@ resButton.addEventListener('pointerdown', () => {
     document.getElementById("closeModalvic").style.display="none";
 });
 
-confirmyesButton.addEventListener('pointerdown', () => {
+confirmyesButton.addEventListener('click', () => {
     let joueurRef = database.ref('joueurs/' + pseudo);
     joueurRef.remove();
     window.location.href = window.location.href;
 });
 
-confirmnoButton.addEventListener('pointerdown', () => {
+confirmnoButton.addEventListener('click', () => {
     modalvic.style.display = "none";
     confirmyesButton.style.display="none";
     confirmnoButton.style.display="none";
