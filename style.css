@@ -801,6 +801,7 @@ img {
     width: 50px;
     height: 40px;
     font-size: 14px;
+    font-weight: bold;
     border-radius: 7px;
     color: white;
     box-shadow: 0px 3px 4px rgba(0,0,0,0.4);
@@ -813,6 +814,7 @@ img {
     width: 50px;
     height: 40px;
     font-size: 14px;
+    font-weight: bold;
     border-radius: 7px;
     color: white;
     box-shadow: 0px 3px 4px rgba(0,0,0,0.4);
