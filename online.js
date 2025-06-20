@@ -247,10 +247,12 @@ function defierJoueur(adversaire) {
                     challengeRef.remove();
                     adversaire=null;
                 }
-                if (pseudodeleted==adversaire && getComputedStyle(element).display!=="none" && turn !=="end"){
+                if (pseudodeleted==adversaire && getComputedStyle(element).display!=="none" && turn !== "end"){
                     document.getElementById("spacer").style.display="block";
                     document.getElementById("message").textContent=`${adversaire} s'est déconnecté`;
                     document.getElementById("modalvic").style.display="flex";
+                    document.getElementById("closeModalvic").style.display="block";
+                    document.querySelector(".modal-contentvic").style.justifyContent="space-between";
                     challengeRef.remove();
                     adversaire=null;
                 }
@@ -364,7 +366,7 @@ function listenchallenges(challengeRef){
     listeRef.on('child_removed', (snapshot) =>{
         const pseudodeleted = snapshot.key;
         const element = document.getElementById("game");
-        if (pseudodeleted==adversaire && getComputedStyle(element).display!=="none" && turn !=="end"){
+        if (pseudodeleted==adversaire && getComputedStyle(element).display!=="none" && turn !== "end"){
             blockbot=0;
             document.getElementById("spacer").style.display="block";
             document.getElementById("message").textContent=`${adversaire} s'est déconnecté`;
@@ -592,3 +594,4 @@ function flip()
     //il va falloir stocker la matrice à cause des cubes pris. Pas la peine de stocker sur firebase.
     //on va redessiner tout le plateau à chaque fois à partir de la matrice
     //pas d'animation car on n'a pas l'historique des double cases dans la matrice, ce serait trop lent de toute façon
+    //faire une fonction générique de déconnexion ?
