@@ -247,7 +247,7 @@ function defierJoueur(adversaire) {
                     challengeRef.remove();
                     adversaire=null;
                 }
-                if (pseudodeleted==adversaire && getComputedStyle(element).display!=="none"){
+                if (pseudodeleted==adversaire && getComputedStyle(element).display!=="none" && turn !=="end"){
                     document.getElementById("spacer").style.display="block";
                     document.getElementById("message").textContent=`${adversaire} s'est déconnecté`;
                     document.getElementById("modalvic").style.display="flex";
@@ -364,7 +364,7 @@ function listenchallenges(challengeRef){
     listeRef.on('child_removed', (snapshot) =>{
         const pseudodeleted = snapshot.key;
         const element = document.getElementById("game");
-        if (pseudodeleted==adversaire && getComputedStyle(element).display!=="none"){
+        if (pseudodeleted==adversaire && getComputedStyle(element).display!=="none" && turn !=="end"){
             blockbot=0;
             document.getElementById("spacer").style.display="block";
             document.getElementById("message").textContent=`${adversaire} s'est déconnecté`;
