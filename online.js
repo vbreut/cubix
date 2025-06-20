@@ -235,7 +235,7 @@ function defierJoueur(adversaire) {
 
             //si l'autre joueur se déconnecte on passe à "connecté" uniquement si on n'est pas en partie
             const listeRef = database.ref('joueurs');
-            listeRef.once('child_removed', (snapshot) =>{
+            listeRef.once('child_removed', (snapshot) =>{ //s'il se déconnecte plusieurs fois on ne le saura pas...
                 const pseudodeleted = snapshot.key;
                 const element = document.getElementById("game");
 
@@ -434,7 +434,7 @@ function surveillerreponse(pseudo){
 
 function pushcoup(gameId,pseudo, m1) {
     const refCoups = firebase.database().ref('games/' + gameId + '/coups');
-
+    database.ref('games/'+ gameId).onDisconnect().remove();
     refCoups.push({ joueur: pseudo, move: m1 });
 }
 
