@@ -290,19 +290,21 @@ function listenchallenges(challengeRef){
 
         document.getElementById("buttonchallenge").style.display = "none";
         gameId=`game_${Date.now()}`;
+        database.ref('games/'+ gameId).onDisconnect().remove();
         database.ref('games/' + gameId).set({
             joueur1: adversaire,
             joueur2: pseudo
             //début: Date.now()
         });
 
+        database.ref('reponses/' + adversaire).onDisconnect().remove(); 
         database.ref('reponses/' + adversaire).set({
             from: pseudo,
             accepted: true,
             gameId: gameId
         });
 
-        database.ref('games/'+ gameId).onDisconnect().remove();
+
         //database.ref('reponses/'+ adversaire).onDisconnect().remove();
 
         //document.getElementById("infocom").textContent = `Partie lancée avec ${data.from} (ID : ${gameId})`;
@@ -383,7 +385,6 @@ function surveillerreponse(pseudo){
 
     blockbot=1;
 
-    repRef.onDisconnect().remove(); 
     repRef.on('value', (snapshot) =>{
         const data = snapshot.val();
 
