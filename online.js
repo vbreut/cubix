@@ -66,6 +66,7 @@ function loadPseudo(){
             firebase.database().ref(".info/connected").on("value",(snapshot)=>{
                 if(snapshot.val()===true){
                     joueurRef.onDisconnect().remove();
+                    joueurRef.set({ enLigne: "connecté" });
                     document.getElementById("onlinesubmenu2").style.display = "flex";
                     document.getElementById("infocom").style.display = "block";
                     modalvic.style.display = "none";
