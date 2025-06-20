@@ -30,7 +30,6 @@ let playingmode=1;
 //let choice=null;
 let rotationinprogress=0;
 let waitforsecondmove =0;
-
 const tempo = 350;
 let largeur = document.documentElement.clientWidth;
 
@@ -537,6 +536,8 @@ function moveCubeTo3(targetCell, cellcolor) {
             targetCell.style.backgroundColor = dark;
             numberofmoves +=1;
         }
+        //problème de couleur parfois sur la première case ??
+        //attention si le joueur appuie sur valider pendant le coup de l'adversaire ça fait tout planter
     }
 }
 
@@ -584,7 +585,7 @@ validButton.addEventListener('click', () => {
         }
     }
 
-    if (numberofmoves > 0 && playingmode==4){
+    if (numberofmoves > 0 && playingmode==4 && turn=="white"){
 
         valider();
         
