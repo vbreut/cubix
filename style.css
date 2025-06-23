@@ -1,9 +1,9 @@
 :root{
-    --cubesize:55px;
+    --cubesize:54px;
     --translate:calc(var(--cubesize)/2 - 1px);
-    --shapesize:37px;
+    --shapesize:36px;
     --marginborder:5px;
-    --cellsize:82px;
+    --cellsize:80px;
     /*--cubesize:8vh;
     --translate:calc(var(--cubesize)/2 - 0.4px);
     --shapesize:5.4vh;
