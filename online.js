@@ -65,8 +65,11 @@ function loadPseudo(){
         setTimeout(() => {
             firebase.database().ref(".info/connected").on("value",(snapshot)=>{
                 if(snapshot.val()===true){
+                    const element = document.getElementById("game");
                     joueurRef.onDisconnect().remove();
-                    joueurRef.set({ enLigne: "connecté" });
+                    if(getComputedStyle(element).display!=="none"){//si la déco/reco a lieu en partie
+                        joueurRef.set({ enLigne: "en partie" });
+                    }
                     document.getElementById("onlinesubmenu2").style.display = "flex";
                     document.getElementById("infocom").style.display = "block";
                     modalvic.style.display = "none";
@@ -196,21 +199,16 @@ function deco(){
     const element = document.getElementById("game");
 
     listeRef.on('child_removed', (snapshot) =>{
-        const challengeRef = database.ref('challenges/' + adversaire);
+
         const pseudodeleted = snapshot.key;
 
         if (pseudodeleted==adversaire && getComputedStyle(element).display==="none"){
             blockbot=0;
             document.getElementById("infocom").textContent = "Choisir un joueur";
             document.getElementById("joueurs").style.display = "block";
-
             document.getElementById("cancelchallenge").style.display = "none";
-
             document.getElementById("buttonchallenge").style.display = "none";
-
             joueurRef.set({ enLigne: "connecté" });
-            challengeRef.remove();
-
             adversaire=null;
         }
         if (pseudodeleted==adversaire && getComputedStyle(element).display!=="none" && turn !== "end"){
@@ -228,7 +226,8 @@ function deco(){
     //s'il se reconnecte
     listeRef.on('child_added', (snapshot) =>{
         const pseudoadded = snapshot.key;
-        if (pseudoadded==adversaire && getComputedStyle(element).display!=="none" && turn !== "end"){
+
+        if (pseudoadded==adversaire && getComputedStyle(element).display!=="none" && turn !== "end" && joueurs[key].enLigne=="en partie"){
             document.getElementById("spacer").style.display="block";
             document.getElementById("message").textContent=`${adversaire} s'est reconnecté`;
             document.getElementById("modalvic").style.display="flex";
