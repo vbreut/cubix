@@ -2,6 +2,7 @@ let gameId=0;
 let pseudo=null;
 let database = null;
 let connectedRef = null;
+let adversaire =null;
 
 // Configuration Firebase
 const firebaseConfig = {
@@ -40,6 +41,7 @@ function loadPseudo(){
                 document.getElementById("pseudoInput").value = pseudo;
                 document.getElementById("infocom").textContent = "Ce pseudo est déjà pris !";
             } else {
+                document.getElementById("pseudoAffiche").textContent = pseudo;
 
                 checkifconnected().then(connected => {
                     if(connected){
@@ -51,14 +53,12 @@ function loadPseudo(){
                 });
                 
                 // Écouter si on reçoit un défi
-                const challengeRef = database.ref('challenges/' + pseudo);
-                listenchallenges(challengeRef);
-
-                document.getElementById("pseudoAffiche").textContent = pseudo;
+                listenchallenges();
 
                 // Afficher la liste des joueurs
-                const listeRef = database.ref('joueurs');
-                display(listeRef);
+                display();
+
+                deco();
             }
         });
 
@@ -88,9 +88,7 @@ function loadPseudo(){
         document.getElementById("infocom").textContent = "";
     }
 
-    const input=document.getElementById("pseudoInput");
-
-    input.addEventListener("keydown", function(event){
+    document.getElementById("pseudoInput").addEventListener("keydown", function(event){
         if(event.key ==="Enter"){
             sauvegarderPseudo();
         }
@@ -122,20 +120,12 @@ function sauvegarderPseudo(){
                 document.getElementById("infocom").textContent = "Ce pseudo est déjà pris !";
             } else {
                 // Le pseudo est disponible, on l'enregistre
-
                 localStorage.setItem("pseudo", pseudo);
-                /*let joueurRef = database.ref('joueurs/' + pseudo);
-                joueurRef.set({ enLigne: "connecté" });
-                joueurRef.onDisconnect().remove(); // Supprimer quand il quitte*/
 
                 document.getElementById("form").style.display = "none";
                 document.getElementById("welcome").style.display = "block";
                 document.getElementById("pseudoAffiche").textContent = pseudo;
                 document.getElementById("infocom").textContent = "Choisir un joueur";
-
-                // Écouter si on reçoit un défi
-                //const challengeRef = database.ref('challenges/' + pseudo);
-                //listenchallenges(challengeRef);
 
                 loadPseudo();
             }
@@ -156,8 +146,9 @@ function checkIfPseudoExists(pseudo) {
         .then(snapshot => snapshot.exists());
 }
 
-function display(listeRef){
+function display(){
 
+    const listeRef = database.ref('joueurs');
     //listeRef.onDisconnect().remove(); 
     listeRef.on('value', (snapshot) => {
         const joueurs = snapshot.val();
@@ -198,7 +189,8 @@ function display(listeRef){
 
 
 // Fonction pour défier un joueur
-function defierJoueur(adversaire) {
+function defierJoueur(adv) {
+    adversaire=adv;
     let joueurRef = database.ref('joueurs/' + pseudo);
     let advref = database.ref('joueurs/' + adversaire);
     let stat=null
@@ -217,7 +209,7 @@ function defierJoueur(adversaire) {
 
             joueurRef.set({ enLigne: "en défi"});
 
-            surveillerreponse(pseudo);
+            surveillerreponse();
 
             document.getElementById("infocom").textContent = `Défi envoyé à ${adversaire}`;
             document.getElementById("cancelchallenge").style.display = "block";
@@ -233,6 +225,7 @@ function defierJoueur(adversaire) {
                 adversaire=null;
             },{once: true});
 
+            /*
             //si l'autre joueur se déconnecte on passe à "connecté" uniquement si on n'est pas en partie
             const listeRef = database.ref('joueurs');
             listeRef.once('child_removed', (snapshot) =>{ //s'il se déconnecte plusieurs fois on ne le saura pas...
@@ -249,23 +242,24 @@ function defierJoueur(adversaire) {
                 }
                 if (pseudodeleted==adversaire && getComputedStyle(element).display!=="none" && turn !== "end"){
                     document.getElementById("spacer").style.display="block";
-                    document.getElementById("message").textContent=`${adversaire} s'est déconnecté`;
+                    document.getElementById("message").textContent=`${adversaire} s'est déconnecté`; //doublon avec l'autre dans listenchallenge
                     document.getElementById("modalvic").style.display="flex";
                     document.getElementById("closeModalvic").style.display="block";
                     document.querySelector(".modal-contentvic").style.justifyContent="space-between";
                     challengeRef.remove();
                     adversaire=null;
                 }
-            });
+            });*/
         }
     });
   
 }
 
 
-function listenchallenges(challengeRef){
+function listenchallenges(){
     let joueurRef = database.ref('joueurs/' + pseudo);
-    let adversaire=null;
+    const challengeRef = database.ref('challenges/' + pseudo);
+    //let adversaire=null;
     const accept = document.getElementById('accept');
     const deny= document.getElementById('deny');
 
@@ -307,16 +301,11 @@ function listenchallenges(challengeRef){
         });
 
 
-        //database.ref('reponses/'+ adversaire).onDisconnect().remove();
-
-        //document.getElementById("infocom").textContent = `Partie lancée avec ${data.from} (ID : ${gameId})`;
-
-        //joueurRef.set({ enLigne: "en partie"});
-
         playingmode = 4;
 
         ecouterCoups(gameId,pseudo);
         //lancer partie avec les noirs
+        turn = "black"; //black veut dire "joueur du haut"
         flip();
 
         document.getElementById("adv").textContent = `${adversaire}`;
@@ -331,11 +320,6 @@ function listenchallenges(challengeRef){
             from: pseudo,
             accepted: false,
         });
-        //joueurRef.set({ enLigne: "connecté"});
-
-        //document.getElementById("buttonchallenge").style.display = "none";
-        //document.getElementById("infocom").textContent = "Défier un joueur";
-        //document.getElementById("joueurs").style.display = "block";
     });
 
     //si l'autre joueur annule le défi ou si on refuse le défi le challenge sera effacé par l'autre.
@@ -352,15 +336,9 @@ function listenchallenges(challengeRef){
             joueurRef.set({ enLigne: "connecté" });
             adversaire=null;
         }
-        /*if (pseudodeleted==pseudo && getComputedStyle(element).display!=="none"){
-            blockbot=0;
-            document.getElementById("spacer").style.display="block";
-            document.getElementById("message").textContent=`${adversaire} s'est déconnecté`;
-            document.getElementById("modalvic").style.display="flex";
-            adversaire=null;
-        }*/
     });
 
+    /*
     // s'il se déconnecte et qu'on est en partie on affiche le message
     const listeRef = database.ref('joueurs');
     listeRef.on('child_removed', (snapshot) =>{
@@ -377,12 +355,12 @@ function listenchallenges(challengeRef){
             confirmnoButton.style.display="none";
             adversaire=null;
         }
-    });
+    });*/
 }
 
-function surveillerreponse(pseudo){
+function surveillerreponse(){
     let joueurRef = database.ref('joueurs/' + pseudo);
-    let adversaire=null;
+    //let adversaire=null;
     const repRef = firebase.database().ref('reponses/' + pseudo);
 
     blockbot=1;
@@ -394,14 +372,9 @@ function surveillerreponse(pseudo){
             blockbot=0;
 
             if (data.accepted){
-                //let playerfound=0;
-                //document.getElementById("infocom").textContent = `${data.from} a accepté le défi ! (ID : ${data.gameId})`;
-                adversaire=data.from;
-                //joueurRef.set({ enLigne: "en partie"});
 
-              //lancer page jeu avec les blancs
-                //let m1 ="test";
-                //pushcoup(data.gameId,pseudo,m1);
+                adversaire=data.from;
+
                 gameId=data.gameId;
 
                 playingmode = 4;
@@ -433,12 +406,45 @@ function surveillerreponse(pseudo){
 
 }
 
+function deco(){
+    //si l'autre joueur se déconnecte on passe à "connecté" uniquement si on n'est pas en partie
+    //fonction générique si on est défié, si on a envoyé un défi ou si on est en partie
+    const listeRef = database.ref('joueurs');
+    const joueurRef = database.ref('joueurs/' + pseudo);
 
-function pushcoup(gameId,pseudo, m1) {
-    const refCoups = firebase.database().ref('games/' + gameId + '/coups');
-    database.ref('games/'+ gameId).onDisconnect().remove();
-    refCoups.push({ joueur: pseudo, move: m1 });
+    listeRef.on('child_removed', (snapshot) =>{
+        const challengeRef = database.ref('challenges/' + adversaire);
+        const pseudodeleted = snapshot.key;
+        const element = document.getElementById("game");
+
+        if (pseudodeleted==adversaire && getComputedStyle(element).display==="none"){
+            blockbot=0;
+            document.getElementById("infocom").textContent = "Choisir un joueur";
+            document.getElementById("joueurs").style.display = "block";
+
+            document.getElementById("cancelchallenge").style.display = "none";
+
+            document.getElementById("buttonchallenge").style.display = "none";
+
+            joueurRef.set({ enLigne: "connecté" });
+            challengeRef.remove();
+
+            adversaire=null;
+        }
+        if (pseudodeleted==adversaire && getComputedStyle(element).display!=="none" && turn !== "end"){
+            document.getElementById("spacer").style.display="block";
+            document.getElementById("message").textContent=`${adversaire} s'est déconnecté`;
+            document.getElementById("modalvic").style.display="flex";
+            document.getElementById("closeModalvic").style.display="block";
+            document.querySelector(".modal-contentvic").style.justifyContent="space-between";
+            confirmyesButton.style.display="none";
+            confirmnoButton.style.display="none";
+            challengeRef.remove();
+            adversaire=null;
+        }
+    });
 }
+
 
 function ecouterCoups(gameId,pseudo) {
 
@@ -468,20 +474,14 @@ function ecouterCoups(gameId,pseudo) {
     });
 }
 
+function pushcoup(gameId,pseudo, m1) {
+    const refCoups = firebase.database().ref('games/' + gameId + '/coups');
+    database.ref('games/'+ gameId).onDisconnect().remove();
+    refCoups.push({ joueur: pseudo, move: m1 });
+}
 
 function clean(){
 
-    //let len=moves.length;
-
-    /*for(i=len-1; i>=0; i--){
-        if (moves[i].includes("scene")){
-            moves.splice(0,i);
-            //console.log(moves);
-            break;
-        }
-    }*/
-
-    //console.log(moves);
 
     for(i=1; i<moves.length; i++){
 
@@ -491,9 +491,7 @@ function clean(){
 
                 j=i;
             }
-
         }
-
     }
     //console.log(moves);
 
@@ -585,8 +583,6 @@ function flip()
         cubestatus[5][cubenumber]= faceright;
         cubestatus[6][cubenumber]= faceleft;
     });
-
-    turn = "black"; //black veut dire "joueur du haut"
 
 }
 
