@@ -188,6 +188,57 @@ function display(){
     });
 }
 
+function deco(){
+    //si l'autre joueur se déconnecte on passe à "connecté" uniquement si on n'est pas en partie
+    //fonction générique si on est défié, si on a envoyé un défi ou si on est en partie
+    const listeRef = database.ref('joueurs');
+    const joueurRef = database.ref('joueurs/' + pseudo);
+    const element = document.getElementById("game");
+
+    listeRef.on('child_removed', (snapshot) =>{
+        const challengeRef = database.ref('challenges/' + adversaire);
+        const pseudodeleted = snapshot.key;
+
+        if (pseudodeleted==adversaire && getComputedStyle(element).display==="none"){
+            blockbot=0;
+            document.getElementById("infocom").textContent = "Choisir un joueur";
+            document.getElementById("joueurs").style.display = "block";
+
+            document.getElementById("cancelchallenge").style.display = "none";
+
+            document.getElementById("buttonchallenge").style.display = "none";
+
+            joueurRef.set({ enLigne: "connecté" });
+            challengeRef.remove();
+
+            adversaire=null;
+        }
+        if (pseudodeleted==adversaire && getComputedStyle(element).display!=="none" && turn !== "end"){
+            document.getElementById("spacer").style.display="block";
+            document.getElementById("message").textContent=`${adversaire} s'est déconnecté`;
+            document.getElementById("modalvic").style.display="flex";
+            document.getElementById("closeModalvic").style.display="block";
+            document.querySelector(".modal-contentvic").style.justifyContent="space-between";
+            confirmyesButton.style.display="none";
+            confirmnoButton.style.display="none";
+            //adversaire=null;
+        }
+    });
+
+    //s'il se reconnecte
+    listeRef.on('child_added', (snapshot) =>{
+        const pseudoadded = snapshot.key;
+        if (pseudoadded==adversaire && getComputedStyle(element).display!=="none" && turn !== "end"){
+            document.getElementById("spacer").style.display="block";
+            document.getElementById("message").textContent=`${adversaire} s'est reconnecté`;
+            document.getElementById("modalvic").style.display="flex";
+            document.getElementById("closeModalvic").style.display="block";
+            document.querySelector(".modal-contentvic").style.justifyContent="space-between";
+            confirmyesButton.style.display="none";
+            confirmnoButton.style.display="none";
+        }
+    });
+}
 
 
 // Fonction pour défier un joueur
@@ -375,7 +426,7 @@ function surveillerreponse(){
 
             if (data.accepted){
 
-                adversaire=data.from;
+                //adversaire=data.from;
 
                 gameId=data.gameId;
 
@@ -406,45 +457,6 @@ function surveillerreponse(){
 
     });
 
-}
-
-function deco(){
-    //si l'autre joueur se déconnecte on passe à "connecté" uniquement si on n'est pas en partie
-    //fonction générique si on est défié, si on a envoyé un défi ou si on est en partie
-    const listeRef = database.ref('joueurs');
-    const joueurRef = database.ref('joueurs/' + pseudo);
-
-    listeRef.on('child_removed', (snapshot) =>{
-        const challengeRef = database.ref('challenges/' + adversaire);
-        const pseudodeleted = snapshot.key;
-        const element = document.getElementById("game");
-
-        if (pseudodeleted==adversaire && getComputedStyle(element).display==="none"){
-            blockbot=0;
-            document.getElementById("infocom").textContent = "Choisir un joueur";
-            document.getElementById("joueurs").style.display = "block";
-
-            document.getElementById("cancelchallenge").style.display = "none";
-
-            document.getElementById("buttonchallenge").style.display = "none";
-
-            joueurRef.set({ enLigne: "connecté" });
-            challengeRef.remove();
-
-            adversaire=null;
-        }
-        if (pseudodeleted==adversaire && getComputedStyle(element).display!=="none" && turn !== "end"){
-            document.getElementById("spacer").style.display="block";
-            document.getElementById("message").textContent=`${adversaire} s'est déconnecté`;
-            document.getElementById("modalvic").style.display="flex";
-            document.getElementById("closeModalvic").style.display="block";
-            document.querySelector(".modal-contentvic").style.justifyContent="space-between";
-            confirmyesButton.style.display="none";
-            confirmnoButton.style.display="none";
-            challengeRef.remove();
-            adversaire=null;
-        }
-    });
 }
 
 
