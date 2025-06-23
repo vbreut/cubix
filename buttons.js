@@ -1,7 +1,6 @@
 "use strict";
 
 let selectedScene = null;
-let isClickable = true;
 let numberofmoves = 0;
 let turn = "white";
 let forcedcube =[0,0,0,-1];
@@ -134,30 +133,13 @@ board.forEach(cell => {
         let occupied = cubestatus[0].includes(cellnumber);
      
         if (selectedScene != null && occupied == false && (playingmode==0 || turn=="white")){
-            let cube=selectedScene.firstElementChild;
 
-            if (rotationinprogress){
-                waitforsecondmove =1;
-                cube.addEventListener('transitionend', () => {
-                    if (cell.style.backgroundColor == dark) {
-                        moveCubeTo3(cell, cell.style.backgroundColor);
-                    }
-        
-                    if (cell.style.backgroundColor == light && numberofmoves < 2) {
-                        moveCubeTo3(cell, cell.style.backgroundColor);
-                    }
-                    waitforsecondmove =0;
-                },{once: true});
+            if (cell.style.backgroundColor == dark) {
+                moveCubeTo3(cell, cell.style.backgroundColor);
             }
 
-            if (rotationinprogress==0){
-                if (cell.style.backgroundColor == dark) {
-                    moveCubeTo3(cell, cell.style.backgroundColor);
-                }
-    
-                if (cell.style.backgroundColor == light && numberofmoves < 2) {
-                    moveCubeTo3(cell, cell.style.backgroundColor);
-                }
+            if (cell.style.backgroundColor == light && numberofmoves < 2) {
+                moveCubeTo3(cell, cell.style.backgroundColor);
             }
         }
     });
@@ -367,12 +349,26 @@ function changefacesleft() {
     }
 }
 
-function moveCubeTo3(targetCell, cellcolor) {
+function moveCubeTo3(targetCell, cellcolor) {//étage de protection 
 
-    if (rotationinprogress){ //normalement ça n'arrive jamais, mais ça évite de tout planter
-        //console.log("err")
-        return;
+    let cube=selectedScene.firstElementChild;
+
+    if (rotationinprogress){
+        waitforsecondmove =1;
+        cube.addEventListener('transitionend', () => {
+
+            moveCubeTo4(targetCell, cellcolor);
+
+            waitforsecondmove =0;
+        },{once: true});
     }
+
+    else {
+        moveCubeTo4(targetCell, cellcolor);
+    }
+}
+
+function moveCubeTo4(targetCell, cellcolor) {
 
     //let largeur2 = window.innerWidth;
     let largeur2 = document.documentElement.clientWidth;
@@ -409,7 +405,7 @@ function moveCubeTo3(targetCell, cellcolor) {
     let currentcell= document.getElementById(cellid);
     let te = tempo/1000;
     let transf = 'transform ' + te + 's' + ' ease-out';
- 
+
 
     if (Math.abs(deltax) + Math.abs(deltay) < 1.3*cellwidth && Math.abs(deltax) + Math.abs(deltay) > 0.3*cellwidth) {
 
@@ -444,7 +440,7 @@ function moveCubeTo3(targetCell, cellcolor) {
 
         //vers le haut
         if (Math.abs(deltax)<0.3*cellwidth && Math.abs(deltay)>0.3*cellwidth && deltay<0) {
-  
+
             cube.style.transform = `rotateX(90deg)`;
             rotationinprogress=1;
 
@@ -537,7 +533,6 @@ function moveCubeTo3(targetCell, cellcolor) {
             numberofmoves +=1;
         }
         //problème de couleur parfois sur la première case ??
-        //attention si le joueur appuie sur valider pendant le coup de l'adversaire ça fait tout planter
     }
 }
 
