@@ -226,8 +226,9 @@ function deco(){
     //s'il se reconnecte
     listeRef.on('child_added', (snapshot) =>{
         const pseudoadded = snapshot.key;
+        const joueur = snapshot.val();
 
-        if (pseudoadded==adversaire && getComputedStyle(element).display!=="none" && turn !== "end" && joueurs[key].enLigne=="en partie"){
+        if (pseudoadded==adversaire && getComputedStyle(element).display!=="none" && turn !== "end" && joueur.enLigne == "en partie"){
             document.getElementById("spacer").style.display="block";
             document.getElementById("message").textContent=`${adversaire} s'est reconnecté`;
             document.getElementById("modalvic").style.display="flex";
