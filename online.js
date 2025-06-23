@@ -74,6 +74,8 @@ function loadPseudo(){
                 if(snapshot.val()===false && pseudo!==null && pseudo!==""){
                     document.getElementById("spacer").style.display="block";
                     document.getElementById("message").textContent="Connexion perdue";
+                    confirmyesButton.style.display="none";
+                    confirmnoButton.style.display="none";
                     document.getElementById("modalvic").style.display="flex";
                     document.getElementById("onlinesubmenu2").style.display = "none";
                     document.getElementById("infocom").style.display = "none";
