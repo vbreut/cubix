@@ -213,7 +213,7 @@ function deco(){
         }
         if (pseudodeleted==adversaire && getComputedStyle(element).display!=="none" && turn !== "end"){
             document.getElementById("spacer").style.display="block";
-            document.getElementById("message").textContent=`${adversaire} s'est déconnecté`;
+            document.getElementById("message").textContent=`${adversaire} a quitté la partie`;
             document.getElementById("modalvic").style.display="flex";
             document.getElementById("closeModalvic").style.display="block";
             document.querySelector(".modal-contentvic").style.justifyContent="space-between";
