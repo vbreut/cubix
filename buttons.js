@@ -624,12 +624,12 @@ function valider(){
     if (turn=="white") {
         turn="black";
 
-        if (col == "rgb(50, 50, 50)" || col == "rgb(50, 50, 50, 0.6)"){tour.style.backgroundColor = "rgb(0, 0, 0)";
+        if (col == "rgb(50, 50, 50)" || col == "rgba(50, 50, 50, 0.6)"){tour.style.backgroundColor = "rgb(0, 0, 0)";
         } else {tour.style.backgroundColor = "rgb(255, 255, 255)";}
 
     } else {
         turn="white";
-        if (col == "rgb(50, 50, 50)" || col == "rgb(50, 50, 50, 0.6)"){tour.style.backgroundColor = "rgb(255, 255, 255)";
+        if (col == "rgb(50, 50, 50)" || col == "rgba(50, 50, 50, 0.6)"){tour.style.backgroundColor = "rgb(255, 255, 255)";
         } else {tour.style.backgroundColor = "rgb(0, 0, 0)";}
     }
 }
