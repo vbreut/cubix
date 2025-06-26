@@ -530,8 +530,8 @@ body {
 }
 
 #imgdisc {
-    width: 30px;
-    transform: translateY(5px);
+    width: 25px;
+    transform: translateY(10px);
 }
 
 @media (orientation: portrait) {
