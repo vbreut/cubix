@@ -33,78 +33,49 @@
         </h1>
     </div>
 
-    <div id="botmenu">
-        <div id="botsubmenu">Jouer contre un bot</div>
-        
-        <div id="botsubmenu2">
+    <div id="globalmenu">
 
-            <div id="botsubmenu3">
+        <div id="form" style="display: none;">
 
-                <label id="choice1">
-                    <input type="radio" name="niveau" value=1 style="transform: scale(1.2);" checked> Bot 1
-                </label>
-                
-                <label id="choice2">
-                    <input type="radio" name="niveau" value=2 style="transform: scale(1.2);"> Bot 2
-                </label>
-                
-                <label id="choice3">
-                    <input type="radio" name="niveau" value=3 style="transform: scale(1.2);"> Bot 3
-                </label>
-            </div>
-
-            <button id="okbot">Ok</button>
+            <label>Pseudo </label>
+            <input type="text" id="pseudoInput">
+            <button id="sauvpseudo">Enregistrer</button>
+            <!--<button onclick="supprimerPseudo()">Effacer</button>-->
         </div>
 
-
-        <div id="onlinemenu">
-
-            <div id ="onlinesubmenu">Jouer en ligne</div>
-
-            <div id="onlinesubmenu1">
-
-                <div id="form" style="display: none;">
-
-                    <label>Pseudo </label>
-                    <input type="text" id="pseudoInput">
-                    <button id="sauvpseudo">Enregistrer</button>
-                    <!--<button onclick="supprimerPseudo()">Effacer</button>-->
-                </div>
-
-                <div id="welcome">
-                    Bienvenue <span id="pseudoAffiche"></span> !
-                </div>
-                <div id="infocom">Choisir un joueur</div>
-            </div> 
-                
-            <div id="onlinesubmenu2">
-
-                <div id="cancelchallenge" style="display: none;">
-                    <button id="cancel">Annuler</button>
-                </div> 
-                <div id="buttonchallenge" style="display: none;">
-                    <button id="accept">Accepter</button>
-                    <button id="deny">Refuser</button>
-                </div> 
-                <div id="joueurs"></div>
-            </div> 
+        <div id="welcome">
+            Bienvenue <span id="pseudoAffiche"></span> !
+        </div>
+        <div class="menubox">
+            <button class="menutitle" id="botbutton">Jouer contre un bot</button>
+            <div class="desc">Entraînez-vous contre trois niveaux de jeu</div>
         </div>
 
-
-
-        <div id="manualsubmenu">Jouer en manuel</div>
-
-        <div id="manualsubmenu2">
-            <button id="okman">Ok</button>
+        <div class="menubox">
+            <button class="menutitle" id="diffbutton">Jouer en différé
+                <div id="flag" style="display: none;"></div>
+            </button>
+            <div class="desc">Jouez en ligne à votre rythme, reprenez la partie quand vous voulez</div>
         </div>
+
+        <div class="menubox">
+            <button class="menutitle" id="realbutton">Jouer en temps réel
+                <div id="flagreal" style="display: none;"></div>
+            </button>
+            <div class="desc">Jouez en ligne contre un adversaire actuellement connecté</div>
+        </div>
+
+        <div class="menubox">
+            <button class="menutitle" id="manbutton">Jouer en manuel</button>
+            <div class="desc">Jouez à deux sur le même écran</div>
+        </div>
+
+        <div id="disc">
+            <img id="imgdisc" src="discord.png">
+            <a href="https://discord.com/invite/RX7EEY7d2K">On en parle sur Discord !</a>
+        </div>
+
     </div>
-
-    <div id="disc">
-        <img id="imgdisc" src="discord.png">
-        <a href="https://discord.com/invite/RX7EEY7d2K">On en parle sur Discord !</a>
-    </div>
-
-
 
 </div>
 
@@ -283,7 +254,7 @@
             <div id="panels">
 
                 <div id="reset">
-                    <button id="res">Accueil</button>
+                    <button id="res">Abandon</button>
                 </div>
 
                 <div id="control-panel">
@@ -304,43 +275,46 @@
 
 
             <div id="rightblock">
-                <input type="checkbox" id="transparent-toggle"> Transparence
-            </div>
-
-        </div>
-
-        <!-- Fenêtre modale -->
-        <div id="modal" class="modal">
-            <div class="modal-content">
-                <span id="closeModal" class="close">&times;</span>
-                <h3>Règles du jeu</h3>
-
-                <p><b>Disposition des faces :</b> Sur chaque cube, la face "carré rouge" est opposée à la face "rond rouge", la face "carré blanc" à la face "rond blanc", et la face "carré noir" à la face "rond noir".</p>
-                        
-                <p><b>Déplacez un cube</b> d'une ou deux cases dans n'importe quelle direction, puis validez votre coup. Vous pouvez revenir en arrière et choisir un autre coup tant qu'il n'est pas validé.</p>
-                        
-                <p><b>Capturez un cube adverse</b> en plaçant l'un de vos cubes sur une case adjacente avec la même face supérieure.</p>
-                        
-                <p><b>Remportez la partie</b> en plaçant un cube sur la dernière rangée, avec la face "carré rouge" vers le haut, sans que l’adversaire ne puisse le capturer.</p>
-
-                <p>Contact : vincent.breut@gmail.com</p>
-
-                <div id="image">
-                    <img id = "photo" src="pic.jpg">
+                <button id="leave">Accueil</button>
+                <div>
+                    <input type="checkbox" id="transparent-toggle"> Transparence
                 </div>
-
             </div>
-        </div>
 
+        </div>
+    </div>
+</div>
+
+<!-- Fenêtre modale -->
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <span id="closeModal" class="close">&times;</span>
+
+        <h3>Règles du jeu</h3>
+
+        <p><b>Disposition des faces :</b> Sur chaque cube, la face "carré rouge" est opposée à la face "rond rouge", la face "carré blanc" à la face "rond blanc", et la face "carré noir" à la face "rond noir".</p>
+                
+        <p><b>Déplacez un cube</b> d'une ou deux cases dans n'importe quelle direction, puis validez votre coup. Vous pouvez revenir en arrière et choisir un autre coup tant qu'il n'est pas validé.</p>
+                
+        <p><b>Capturez un cube adverse</b> en plaçant l'un de vos cubes sur une case adjacente avec la même face supérieure.</p>
+                
+        <p><b>Remportez la partie</b> en plaçant un cube sur la dernière rangée, avec la face "carré rouge" vers le haut, sans que l’adversaire ne puisse le capturer.</p>
+
+        <p>Contact : vincent.breut@gmail.com</p>
+
+        <div id="image">
+            <img id = "photo" src="pic.jpg">
+        </div>
 
     </div>
+
 </div>
 
 <div id="modalvic" class="modal">
     <div class="modal-contentvic">
 
         <div id="spacer"></div>
-        <p id="message">Contenu par défaut</p>
+        <div id="message">Contenu par défaut</div>
 
         <button id = "confirm-yes" style="display: none;">Oui</button>
         <button id = "confirm-no" style="display: none;">Non</button>
@@ -348,6 +322,83 @@
         <span id="closeModalvic" class="close">&times;</span>
                 
     </div>
+
+</div>
+
+<div id="modalbot" class="modal">
+    <div class="modal-contentbot">
+
+        <div id="spacer4"></div>
+            
+        <div id="botsubmenu2">
+
+            <div id="botsubmenu3">
+    
+                <label id="choice1">
+                    <input type="radio" name="niveau" value=1 style="transform: scale(1.2);" checked> Bot 1
+                </label>
+                
+                <label id="choice2">
+                    <input type="radio" name="niveau" value=2 style="transform: scale(1.2);"> Bot 2
+                </label>
+                
+                <label id="choice3">
+                    <input type="radio" name="niveau" value=3 style="transform: scale(1.2);"> Bot 3
+                </label>
+            </div>
+    
+            <button id="okbot">Ok</button>
+        </div>
+
+        <span id="closeModalbot" class="close">&times;</span>
+                
+    </div>
+
+</div>
+
+<div id="modaldiff" class="modal">
+    <div class="modal-contentdiff">
+
+        <div id="spacer2"></div>
+            
+        <div id="onlinediffsubmenu">
+
+            <div id="deftitle">Défis ouverts</div>
+            <div id="def"></div>
+            <div id="infodiff"></div>
+            <button id="diffinprogress" style="display: none;">Voir votre partie </button>
+    
+            <button id="newdiff">Créer un défi</button>
+        </div>
+
+        <span id="closeModaldiff" class="close">&times;</span>
+                
+    </div>
+
+</div>
+
+
+<div id="modalreal" class="modal">
+    <div class="modal-contentreal">
+
+        <div id="spacer3"></div>
+            
+        <div id="onlinesubmenu">
+            <div id="infocom">Choisir un joueur</div>
+            <div id="cancelchallenge" style="display: none;">
+                <button id="cancel">Annuler</button>
+            </div> 
+            <div id="buttonchallenge" style="display: none;">
+                <button id="accept">Accepter</button>
+                <button id="deny">Refuser</button>
+            </div> 
+            <div id="joueurs"></div>
+        </div> 
+
+        <span id="closeModalreal" class="close">&times;</span>
+                
+    </div>
+
 </div>
 
     <script src="buttons.js"></script>
@@ -357,6 +408,7 @@
     <script src="bot2.js"></script>
     <script src="bot3.js"></script>
     <script src="online.js"></script>
+    <script src="onlinediff.js"></script>
     <script src="canvas-confetti.browser.min.js"></script>
 
 </body>
