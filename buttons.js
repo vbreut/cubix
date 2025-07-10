@@ -13,6 +13,10 @@ const validButton = document.getElementById('valider');
 const confirmyesButton = document.getElementById("confirm-yes");
 const confirmnoButton = document.getElementById("confirm-no");
 const resButton = document.getElementById("res");
+const botbutton = document.getElementById("botbutton");
+const diffbutton = document.getElementById("diffbutton");
+const realbutton = document.getElementById("realbutton");
+const manbutton = document.getElementById("manbutton");
 const tour = document.getElementById('tour');
 
 let cellrect = firstcell.getBoundingClientRect();
@@ -53,7 +57,25 @@ let cubestatus = [
 
 let moves = [];
 
-okman.addEventListener('click',choice0);
+botbutton.addEventListener('click', menubot);
+
+function menubot(){
+    modalbot.style.display = "block";
+}
+
+diffbutton.addEventListener('click', menudiff);
+
+function menudiff(){
+    modaldiff.style.display = "block";
+}
+
+realbutton.addEventListener('click', menureal);
+
+function menureal(){
+    modalreal.style.display = "block";
+}
+
+manbutton.addEventListener('click',choice0);
 
 function choice0() {
     playingmode=0;
@@ -63,7 +85,7 @@ function choice0() {
 okbot.addEventListener('click',showPage);
 
 function showPage() {
-    if (blockbot==0){
+    //if (blockbot==0){
         if (pseudo !== "" && pseudo!==null){
             let joueurRef = database.ref('joueurs/' + pseudo);
             joueurRef.set({ enLigne: "en partie"});
@@ -82,8 +104,19 @@ function showPage() {
         if(playingmode==0){
             document.getElementById("adv").style.display="none";
         }
+
+        if(playingmode==5){
+            leaveButton.style.display="block";
+        } else{
+            leaveButton.style.display="none";
+        }
+
         document.getElementById("game").style.display="block";
         document.getElementById("home").style.display="none";
+        modalvic.style.display = "none";
+        modalreal.style.display = "none";
+        modaldiff.style.display = "none";
+        modalbot.style.display = "none";
 
         boardrect= gameboard.getBoundingClientRect();
         scenerect = firstscene.getBoundingClientRect();
@@ -93,7 +126,7 @@ function showPage() {
         movx = scenerect.width/4 + 5;
         movy = scenerect.width/4 + 5;
 
-    }
+    //}
 }
 
 scenes.forEach(scen => {
@@ -542,7 +575,7 @@ validButton.addEventListener('click', () => {
         return;
     }
 
-    if (numberofmoves > 0 && (playingmode==0||turn=="white") && playingmode !== 4){
+    if (numberofmoves > 0 && (playingmode==0||turn=="white") && playingmode !== 4 && playingmode !==5){
 
         let doublemove=0;
         let delay=50;
@@ -580,7 +613,7 @@ validButton.addEventListener('click', () => {
         }
     }
 
-    if (numberofmoves > 0 && playingmode==4 && turn=="white"){
+    if (numberofmoves > 0 && (playingmode==4 || playingmode==5) && turn=="white"){
 
         valider();
         
@@ -589,7 +622,7 @@ validButton.addEventListener('click', () => {
             clean();//envoie le coup, et valide mon coup chez l'adversaire
         }
 
-        if (turn=="end") {return;}
+        //if (turn=="end") {return;}
 
     }
 
@@ -617,7 +650,13 @@ function valider(){
         selectedScene = null;
     }
 
-    if (turn=="end") {return;}
+    if (turn=="end") {
+        if(playingmode ==5){
+            let gamediffRef = database.ref('gamesdiff/' + gameIddiff);
+            gamediffRef.remove();
+        }
+        return;
+    }
 
     let colortest = document.querySelector('.face'); //on regarde une face pour voir de quelle couleur on est (si les noirs sont en haut)
     let col= getComputedStyle(colortest).backgroundColor;
@@ -641,7 +680,13 @@ const openModalButton = document.getElementById("openModal");
 const closeModalButton = document.getElementById("closeModal");
 
 const modalvic = document.getElementById("modalvic");
+const modalreal = document.getElementById("modalreal");
+const modaldiff = document.getElementById("modaldiff");
+const modalbot = document.getElementById("modalbot");
 const closeModalvicButton = document.getElementById("closeModalvic");
+const closeModalrealButton = document.getElementById("closeModalreal");
+const closeModaldiffButton = document.getElementById("closeModaldiff");
+const closeModalbotButton = document.getElementById("closeModalbot");
 
 // Ouvrir la modale
 openModalButton.addEventListener("click", () => {
@@ -659,11 +704,26 @@ closeModalvicButton.addEventListener("click", () => {
     modalvic.style.display = "none";
 });
 
+closeModalbotButton.addEventListener("click", () => {
+    modalbot.style.display = "none";
+});
+
+closeModalrealButton.addEventListener("click", () => {
+    modalreal.style.display = "none";
+});
+
+closeModaldiffButton.addEventListener("click", () => {
+    modaldiff.style.display = "none";
+});
+
 // Fermer la modale en cliquant en dehors de la fenêtre
 window.addEventListener("click", (event) => {
-    if (event.target === modal || event.target === modalvic) {
+    if (event.target === modal || event.target === modalvic || event.target === modalreal || event.target === modaldiff || event.target === modalbot) {
         modal.style.display = "none";
         modalvic.style.display = "none";
+        modalbot.style.display = "none";
+        modaldiff.style.display = "none";
+        modalreal.style.display = "none";
     }
 });
 
@@ -681,7 +741,6 @@ function affichervic(message){
 const boutonsRadio = document.querySelectorAll('input[name="niveau"]');
 
 
-
 // Ajouter un écouteur d'événement pour chaque bouton radio
 boutonsRadio.forEach(bouton => {
     bouton.addEventListener("click", (event) => {
@@ -692,30 +751,59 @@ boutonsRadio.forEach(bouton => {
 });
 
 const toggle = document.getElementById('transparent-toggle');
-const facews = document.getElementsByClassName('facew');
-const faces = document.getElementsByClassName('face');
 
 toggle.addEventListener('change', () => {
-    for (const facew of facews) { // Parcourt chaque cube
-        if (toggle.checked) {
-            facew.classList.add('transparent'); // Ajoute la classe
+
+    let colorblack = "rgb(50, 50, 50)";
+    let colorblackt = "rgba(50, 50, 50, 0.6)";
+    let colorwhite = "rgb(238, 223, 195)";
+    let colorwhitet = "rgba(238, 223, 195, 0.7)";
+    let facews = document.getElementsByClassName('facew');
+    let faces = document.getElementsByClassName('face');
+    let test = null;
+
+
+    for (let facew of facews) {
+        test = getComputedStyle(facew).backgroundColor;
+
+        if( test == colorwhite || test == colorwhitet){
+            if (toggle.checked) {
+                facew.style.backgroundColor = colorwhitet;
+            } else {
+                facew.style.backgroundColor = colorwhite;
+            }
         } else {
-            facew.classList.remove('transparent'); // Supprime la classe
+            if (toggle.checked) {
+                facew.style.backgroundColor = colorblackt;
+            } else {
+                facew.style.backgroundColor = colorblack;
+            }
         }
     }
 
-    for (const face of faces) { // Parcourt chaque cube
-        if (toggle.checked) {
-            face.classList.add('transparent'); // Ajoute la classe
-        } else {
-            face.classList.remove('transparent'); // Supprime la classe
+    for (let face of faces) {
+        test = getComputedStyle(face).backgroundColor;
+        if( test == colorblack || test == colorblackt){
+            if (toggle.checked) {
+                face.style.backgroundColor = colorblackt;
+            } else {
+                face.style.backgroundColor = colorblack;
+            }
+        }else{
+            if (toggle.checked) {
+                face.style.backgroundColor = colorwhitet;
+            } else {
+                face.style.backgroundColor = colorwhite;
+            }
         }
     }
 
 });
 
 resButton.addEventListener('click', () => {
-    document.getElementById("message").textContent="Quitter la partie ?";
+    document.getElementById("message").style.display="block";
+    document.getElementById("botsubmenu2").style.display="none";
+    document.getElementById("message").textContent="Terminer la partie ?";
     document.getElementById("spacer").style.display="none";
     document.querySelector(".modal-contentvic").style.justifyContent="space-evenly";
     modalvic.style.display="flex";
@@ -727,6 +815,10 @@ resButton.addEventListener('click', () => {
 confirmyesButton.addEventListener('click', () => {
     let joueurRef = database.ref('joueurs/' + pseudo);
     joueurRef.remove();
+    if(document.getElementById("message").textContent=="Terminer la partie ?" && playingmode ==5){
+        let gamediffRef = database.ref('gamesdiff/' + gameIddiff);
+        gamediffRef.remove(); //eventuellement mettre un status si l'adversaire supprime la partie
+    }
     window.location.href = window.location.href;
 });
 
