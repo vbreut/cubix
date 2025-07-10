@@ -45,7 +45,7 @@ function displaydiff(){
 
             if (game.joueur1==pseudo || game.joueur2==pseudo){
                 gameIddiff = key;
-                monitordiff();
+                monitordiff(game.joueur1,game.joueur2);
                 document.getElementById('def').style.display = "none";
                 document.getElementById("newdiff").style.display = "none";
             } else{
@@ -124,12 +124,20 @@ function selectdiff(key){
 }
 
 
-function monitordiff(){
+function monitordiff(j1,j2){
 
     //gameIddiff = localStorage.getItem("gamediff");
 
     let refCoups = null;
-    let gamediffRef =null;
+    let gamediffRef = null;
+
+    if(j2==pseudo){
+        document.getElementById("infodiff").textContent = "Jouez votre premier coup !";
+    }
+
+    if(j1==pseudo){
+        document.getElementById("infodiff").textContent = "L'adversaire réfléchit";
+    }
 
     //getgameiddiff().then(gameIddiff => {
         if (gameIddiff!==null && gameIddiff!=="" && gameIddiff!==0) {
@@ -146,6 +154,9 @@ function monitordiff(){
                     if(childSnap.val().joueur==pseudo){
                         document.getElementById("infodiff").textContent = "L'adversaire réfléchit";
                     }
+                    if(j1=="Libre"){
+                        document.getElementById("infodiff").textContent = "Attente d'un adversaire";
+                    }
                 });
     
             });
@@ -154,11 +165,11 @@ function monitordiff(){
             document.getElementById("deftitle").style.display = "none";
         }
 
-        else{
+        /*else{
             document.getElementById("deftitle").style.display = "none";
             document.getElementById("infodiff").textContent = "Pas de partie en cours";
             document.getElementById("diffinprogress").style.display = "none";
-        }
+        }*/
 
     //});
 
