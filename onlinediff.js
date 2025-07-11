@@ -64,6 +64,8 @@ function displaydiff(){
                 }
                 container.appendChild(div);
 
+                document.getElementById("newdiff").style.display = "block";
+
             }
         }
 
@@ -349,10 +351,12 @@ function initconfig(flipped){
                 movtakenby=6*cellwidth + 5;
                 movtakenb=nbtakenb*cellwidth/2.5;
                 document.getElementById(sceneid).style.transform = `translate(${movtakenb}px, ${movtakenby}px) rotateY(18deg) rotateX(18deg) scale3d(0.4, 0.4, 0.4)`;
+                nbtakenb = nbtakenb + 1;
             } else{
                 movtakenwy=-cellwidth/2 - 5;
                 movtakenw=nbtakenw*cellwidth/2.5;
                 document.getElementById(sceneid).style.transform = `translate(${movtakenw}px, ${movtakenwy}px) rotateY(18deg) rotateX(18deg) scale3d(0.4, 0.4, 0.4)`;
+                nbtakenw = nbtakenw + 1;
             }
         }
     }
