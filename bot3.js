@@ -86,6 +86,7 @@ function pathtovictory(deepmax){
     let cubeid=0;
     let currentcell=null;
     let selectedcell=null;
+    let targetcellid=null;
     let sauvstatus=cubestatus.map(subArray => [...subArray]);
 
     for(i=31; i<37; i++){
@@ -161,8 +162,9 @@ function pathtovictory(deepmax){
 
                     currentcell= document.getElementById("cell-" + solutions[taille[i]][0]);
                     selectcurrentcell(currentcell);
-                    selectedcell = document.getElementById("cell-" + solutions[taille[i]][1]);
-                    moveCubeTo3(selectedcell, light);
+                    //selectedcell = document.getElementById("cell-" + solutions[taille[i]][1]);
+                    targetcellid = "cell-" + solutions[taille[i]][1];
+                    moveCubeTo3(targetcellid, light);
                     return 0;
                 }
             }
@@ -181,12 +183,14 @@ function pathtovictory(deepmax){
 
                     currentcell= document.getElementById("cell-" + solutions[taille[i]][0]);
                     selectcurrentcell(currentcell);
-                    selectedcell = document.getElementById("cell-" + solutions[taille[i]][1]);
-                    moveCubeTo3(selectedcell, light);
+                    //selectedcell = document.getElementById("cell-" + solutions[taille[i]][1]);
+                    targetcellid = "cell-" + solutions[taille[i]][1];
+                    moveCubeTo3(targetcellid, light);
 
                     setTimeout(() => {
-                        selectedcell = document.getElementById("cell-" + solutions[taille[i]][2]);
-                        moveCubeTo3(selectedcell, light);
+                        //selectedcell = document.getElementById("cell-" + solutions[taille[i]][2]);
+                        targetcellid = "cell-" + solutions[taille[i]][2];
+                        moveCubeTo3(targetcellid, light);
                     }, tempo + 50);
                     return 1;
                 }
@@ -211,12 +215,14 @@ function pathtovictory(deepmax){
 
                     currentcell= document.getElementById("cell-" + solutions[taille[i]][0]);
                     selectcurrentcell(currentcell);
-                    selectedcell = document.getElementById("cell-" + solutions[taille[i]][1]);
-                    moveCubeTo3(selectedcell, light);
+                    //selectedcell = document.getElementById("cell-" + solutions[taille[i]][1]);
+                    targetcellid = "cell-" + solutions[taille[i]][1];
+                    moveCubeTo3(targetcellid, light);
 
                     setTimeout(() => {
-                        selectedcell = document.getElementById("cell-" + solutions[taille[i]][2]);
-                        moveCubeTo3(selectedcell, light);
+                        //selectedcell = document.getElementById("cell-" + solutions[taille[i]][2]);
+                        targetcellid = "cell-" + solutions[taille[i]][2];
+                        moveCubeTo3(targetcellid, light);
                     }, tempo + 50);
                     return 1;
                 }
@@ -243,12 +249,14 @@ function pathtovictory(deepmax){
 
                     currentcell= document.getElementById("cell-" + solutions[taille[i]][0]);
                     selectcurrentcell(currentcell);
-                    selectedcell = document.getElementById("cell-" + solutions[taille[i]][1]);
-                    moveCubeTo3(selectedcell, light);
+                    //selectedcell = document.getElementById("cell-" + solutions[taille[i]][1]);
+                    targetcellid = "cell-" + solutions[taille[i]][1];
+                    moveCubeTo3(targetcellid, light);
 
                     setTimeout(() => {
-                        selectedcell = document.getElementById("cell-" + solutions[taille[i]][2]);
-                        moveCubeTo3(selectedcell, light);
+                        //selectedcell = document.getElementById("cell-" + solutions[taille[i]][2]);
+                        targetcellid = "cell-" + solutions[taille[i]][2];
+                        moveCubeTo3(targetcellid, light);
                     }, tempo + 50);
                     return 1;
                 }
@@ -536,6 +544,7 @@ function defense(deepmax){
     let cubeidtomove=0;
     let currentcell=null;
     let selectedcell = null;
+    let targetcellid =null;
 
     if(sol===0){return 2;}
     else{
@@ -555,13 +564,15 @@ function defense(deepmax){
             selectedScene = document.getElementById("scene-" + cubeidtomove);
             currentcell= document.getElementById("cell-" + c[0]);
             selectcurrentcell(currentcell);
-            selectedcell = document.getElementById("cell-" + c[1]);
-            moveCubeTo3(selectedcell, light);
+            //selectedcell = document.getElementById("cell-" + c[1]);
+            targetcellid = "cell-" + c[1];
+            moveCubeTo3(targetcellid, light);
 
             if(c[2]!=0){
                 setTimeout(() => {
-                    selectedcell = document.getElementById("cell-" + c[2]);
-                    moveCubeTo3(selectedcell, light);
+                    //selectedcell = document.getElementById("cell-" + c[2]);
+                    targetcellid = "cell-" + c[2];
+                    moveCubeTo3(targetcellid, light);
                 }, tempo + 50);
                 return 1;
             }
@@ -584,12 +595,14 @@ function defense(deepmax){
                         selectedScene = document.getElementById("scene-" + cubeidtomove);
                         currentcell= document.getElementById("cell-" + moves[0]);
                         selectcurrentcell(currentcell);
-                        selectedcell = document.getElementById("cell-" + moves[1]);
-                        moveCubeTo3(selectedcell, light);
+                        //selectedcell = document.getElementById("cell-" + moves[1]);
+                        targetcellid = "cell-" + moves[1];
+                        moveCubeTo3(targetcellid, light);
                         if(moves[2]!=0){
                             setTimeout(() => {
-                                selectedcell = document.getElementById("cell-" + moves[2]);
-                                moveCubeTo3(selectedcell, light);
+                                //selectedcell = document.getElementById("cell-" + moves[2]);
+                                targetcellid = "cell-" + moves[2];
+                                moveCubeTo3(targetcellid, light);
                             }, tempo + 50);
                             return 1;
                         }
@@ -901,6 +914,7 @@ function taketake() {
     let cubeidtomove=0;
     let currentcell=null;
     let selectedcell=0;
+    let targetcellid=null;
     let sauvstatus=cubestatus.map(subArray => [...subArray]);
 
     for(let i=7;i<13;i++)
@@ -924,13 +938,15 @@ function taketake() {
                     selectedScene = document.getElementById("scene-" + cubeidtomove);
                     currentcell= document.getElementById("cell-" + c[0]);
                     selectcurrentcell(currentcell);
-                    selectedcell = document.getElementById("cell-" + c[1]);
-                    moveCubeTo3(selectedcell, light);
+                    //selectedcell = document.getElementById("cell-" + c[1]);
+                    targetcellid = "cell-" + c[1];
+                    moveCubeTo3(targetcellid, light);
     
                     if(c[2]!=0){
                         setTimeout(() => {
-                            selectedcell = document.getElementById("cell-" + c[2]);
-                            moveCubeTo3(selectedcell, light);
+                            //selectedcell = document.getElementById("cell-" + c[2]);
+                            targetcellid = "cell-" + c[2];
+                            moveCubeTo3(targetcellid, light);
                         }, tempo + 50);
                         return 1;
                     }
@@ -947,6 +963,7 @@ function movecareful(){
     let cubeidtomove=0;
     let currentcell=null;
     let selectedcell = null;
+    let targetcellid = null;
 
     let randomindice = Math.floor(Math.random() * 6);//entre 0 et 5
     let indice=0;
@@ -960,12 +977,14 @@ function movecareful(){
                 selectedScene = document.getElementById("scene-" + cubeidtomove);
                 currentcell= document.getElementById("cell-" + moves[0]);
                 selectcurrentcell(currentcell);
-                selectedcell = document.getElementById("cell-" + moves[1]);
-                moveCubeTo3(selectedcell, light);
+                //selectedcell = document.getElementById("cell-" + moves[1]);
+                targetcellid = "cell-" + moves[1];
+                moveCubeTo3(targetcellid, light);
                 if(moves[2]!=0){
                     setTimeout(() => {
-                        selectedcell = document.getElementById("cell-" + moves[2]);
-                        moveCubeTo3(selectedcell, light);
+                        //selectedcell = document.getElementById("cell-" + moves[2]);
+                        targetcellid = "cell-" + moves[2];
+                        moveCubeTo3(targetcellid, light);
                     }, tempo + 50);
                     return 1;
                 }
@@ -984,12 +1003,14 @@ function movecareful(){
                 selectedScene = document.getElementById("scene-" + cubeidtomove);
                 currentcell= document.getElementById("cell-" + moves[0]);
                 selectcurrentcell(currentcell);
-                selectedcell = document.getElementById("cell-" + moves[1]);
-                moveCubeTo3(selectedcell, light);
+                //selectedcell = document.getElementById("cell-" + moves[1]);
+                targetcellid = "cell-" + moves[1];
+                moveCubeTo3(targetcellid, light);
                 if(moves[2]!=0){
                     setTimeout(() => {
-                        selectedcell = document.getElementById("cell-" + moves[2]);
-                        moveCubeTo3(selectedcell, light);
+                        //selectedcell = document.getElementById("cell-" + moves[2]);
+                        targetcellid = "cell-" + moves[2];
+                        moveCubeTo3(targetcellid, light);
                     }, tempo + 50);
                     return 1;
                 }
@@ -1008,6 +1029,7 @@ function protect(){
     let cubeid=0;
     let currentcell=null;
     let selectedcell=0;
+    let targetcellid = null;
     let sauvstatus=cubestatus.map(subArray => [...subArray]);
 
     for(let i=1;i<7;i++)
@@ -1033,12 +1055,14 @@ function protect(){
                         selectedScene = document.getElementById("scene-" + cubeidtomove);
                         currentcell= document.getElementById("cell-" + moves[0]);
                         selectcurrentcell(currentcell);
-                        selectedcell = document.getElementById("cell-" + moves[1]);
-                        moveCubeTo3(selectedcell, light);
+                        //selectedcell = document.getElementById("cell-" + moves[1]);
+                        targetcellid = "cell-" + moves[1];
+                        moveCubeTo3(targetcellid, light);
                         if(moves[2]!=0){
                             setTimeout(() => {
-                                selectedcell = document.getElementById("cell-" + moves[2]);
-                                moveCubeTo3(selectedcell, light);
+                                //selectedcell = document.getElementById("cell-" + moves[2]);
+                                targetcellid = "cell-" + moves[2];
+                                moveCubeTo3(targetcellid, light);
                             }, tempo + 50);
                             return 1;
                         }
