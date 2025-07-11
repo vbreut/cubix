@@ -48,6 +48,7 @@ function displaydiff(){
                 monitordiff(game.joueur1,game.joueur2);
                 document.getElementById('def').style.display = "none";
                 document.getElementById("newdiff").style.display = "none";
+                break;
             } else{
                 const div = document.createElement('div');
                 div.className = 'parties';
