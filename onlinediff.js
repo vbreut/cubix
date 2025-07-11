@@ -216,6 +216,7 @@ function loadgame(){
             if (game.joueur1==pseudo){
                 flip();
                 document.getElementById("adv").textContent = game.joueur2;
+                document.getElementById("adv").style.color = "white";
                 flipped=1;
             }
 
