@@ -209,6 +209,7 @@ function deco(){
     const listeRef = database.ref('joueurs');
     const joueurRef = database.ref('joueurs/' + pseudo);
     const element = document.getElementById("game");
+    const challengeRef = database.ref('challenges/' + adversaire);
 
     listeRef.on('child_removed', (snapshot) =>{
 
@@ -220,6 +221,7 @@ function deco(){
             document.getElementById("joueurs").style.display = "block";
             document.getElementById("cancelchallenge").style.display = "none";
             document.getElementById("buttonchallenge").style.display = "none";
+            challengeRef.remove();
             joueurRef.set({ enLigne: "connecté" });
             adversaire=null;
         }
@@ -310,7 +312,7 @@ function listenchallenges(){
 
             adversaire = data.from;
 
-            document.getElementById("infocom").textContent = `Vous êtes défié par ${adversaire}. Accepter ?`;
+            document.getElementById("infocom").textContent = `Vous êtes défié par ${adversaire}`;
             document.getElementById("buttonchallenge").style.display = "block";
             joueurRef.set({ enLigne: "défié"});
             document.getElementById("joueurs").style.display = "none";
