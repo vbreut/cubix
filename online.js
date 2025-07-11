@@ -22,7 +22,7 @@ database = firebase.database();
 //database.ref().remove();
   
 // Pseudo du joueur
-//localStorage.removeItem("pseudo");
+localStorage.removeItem("pseudo");
 
 
 window.addEventListener("load", loadPseudo)
@@ -101,6 +101,7 @@ function loadPseudo(){
         document.getElementById("form").style.display = "block";
         document.getElementById("welcome").style.display = "none";
         document.getElementById("infocom").textContent = "";
+        document.getElementById("newdiff").style.display = "none";
     }
 
     document.getElementById("pseudoInput").addEventListener("keydown", function(event){
