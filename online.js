@@ -102,6 +102,7 @@ function loadPseudo(){
         document.getElementById("welcome").style.display = "none";
         document.getElementById("infocom").textContent = "";
         document.getElementById("newdiff").style.display = "none";
+        document.getElementById("deftitle").style.display = "none";
     }
 
     document.getElementById("pseudoInput").addEventListener("keydown", function(event){
