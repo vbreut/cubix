@@ -154,18 +154,18 @@ body {
     width : 9px;
     height : 9px;
     background-color: rgb(255, 0, 0);
-    border-radius:50%;
+    border-radius:2px;
     position: absolute;
-    transform: translate3d(4px,-50px,0);
+    transform: translate3d(4px,-52px,0);
 }
 
 #flagreal {
-    width : 9px;
-    height : 9px;
+    width : 10px;
+    height : 10px;
     background-color: rgb(255, 0, 0);
-    border-radius:50%;
+    border-radius:3px;
     position: absolute;
-    transform: translate3d(4px,-50px,0);
+    transform: translate3d(4px,-52px,0);
 }
 
 #botsubmenu2 {
