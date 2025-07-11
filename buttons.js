@@ -168,11 +168,11 @@ board.forEach(cell => {
         if (selectedScene != null && occupied == false && (playingmode==0 || turn=="white")){
 
             if (cell.style.backgroundColor == dark) {
-                moveCubeTo3(cell, cell.style.backgroundColor);
+                moveCubeTo3(cell.id, cell.style.backgroundColor);
             }
 
             if (cell.style.backgroundColor == light && numberofmoves < 2) {
-                moveCubeTo3(cell, cell.style.backgroundColor);
+                moveCubeTo3(cell.id, cell.style.backgroundColor);
             }
         }
     });
@@ -382,7 +382,7 @@ function changefacesleft() {
     }
 }
 
-function moveCubeTo3(targetCell, cellcolor) {//étage de protection 
+function moveCubeTo3(targetCellid, cellcolor) {//étage de protection 
 
     let cube=selectedScene.firstElementChild;
 
@@ -390,18 +390,18 @@ function moveCubeTo3(targetCell, cellcolor) {//étage de protection
         waitforsecondmove =1;
         cube.addEventListener('transitionend', () => {
 
-            moveCubeTo4(targetCell, cellcolor);
+            moveCubeTo4(targetCellid, cellcolor);
 
             waitforsecondmove =0;
         },{once: true});
     }
 
     else {
-        moveCubeTo4(targetCell, cellcolor);
+        moveCubeTo4(targetCellid, cellcolor);
     }
 }
 
-function moveCubeTo4(targetCell, cellcolor) {
+function moveCubeTo4(targetCellid, cellcolor) {
 
     //let largeur2 = window.innerWidth;
     let largeur2 = document.documentElement.clientWidth;
@@ -409,6 +409,7 @@ function moveCubeTo4(targetCell, cellcolor) {
     //let rotx=0;
     //let roty=0;
     //let rotz=0;
+    let targetCell=document.getElementById(targetCellid);
 
     let coordcell = targetCell.getBoundingClientRect();
     let x = coordcell.left;//+window.scrollX;
