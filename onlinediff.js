@@ -63,7 +63,7 @@ function displaydiff(){
                     div.onclick = () => selectdiff(key);
                 }
                 container.appendChild(div);
-
+                document.getElementById("deftitle").style.display = "block";
                 document.getElementById("newdiff").style.display = "block";
 
             }
