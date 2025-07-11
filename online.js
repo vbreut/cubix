@@ -77,6 +77,7 @@ function loadPseudo(){
                         joueurRef.set({ enLigne: "en partie" });
                     }
                     document.getElementById("onlinesubmenu").style.display = "flex";
+                    document.getElementById("onlinediffsubmenu").style.display = "flex";
                     document.getElementById("infocom").style.display = "block";
                     if(document.getElementById("message").textContent=="Connexion perdue"){
                         modalvic.style.display = "none";
@@ -91,7 +92,6 @@ function loadPseudo(){
                     document.getElementById("modalvic").style.display="block";
                     document.getElementById("onlinesubmenu").style.display = "none";
                     document.getElementById("onlinediffsubmenu").style.display = "none";
-                    document.getElementById("infocom").style.display = "none";
                 }
             });
     
@@ -225,7 +225,7 @@ function deco(){
         }
         if (pseudodeleted==adversaire && getComputedStyle(element).display!=="none" && turn !== "end"){
             document.getElementById("spacer").style.display="block";
-            document.getElementById("message").textContent=`${adversaire} a quitté la partie`;
+            document.getElementById("message").textContent=`${adversaire} s'est déconnecté`;
             document.getElementById("modalvic").style.display="flex";
             document.getElementById("closeModalvic").style.display="block";
             document.querySelector(".modal-contentvic").style.justifyContent="space-between";
@@ -349,6 +349,7 @@ function listenchallenges(){
         flip();
 
         document.getElementById("adv").textContent = `${adversaire}`;
+        document.getElementById("adv").style.color = "white";
         showPage();
 
     });
@@ -406,6 +407,7 @@ function surveillerreponse(){
                 turn = "white";
                 
                 document.getElementById("adv").textContent = `${adversaire}`;
+
                 showPage();
 
                 const challengeRef = database.ref('challenges/' + adversaire);
@@ -518,14 +520,14 @@ function convert(coup){
     targetcellid = "cell-" + targetcellnumber;
 
     let currentcell=null;
-    let selectedcell=null;
+    //let selectedcell=null;
 
     selectedScene = document.getElementById(sceneid);
     currentcell= document.getElementById(currentcellid);
     selectcurrentcell(currentcell);
-    selectedcell = document.getElementById(targetcellid);
+    //selectedcell = document.getElementById(targetcellid);
     //let time=performance.now();
-    moveCubeTo3(selectedcell, light);
+    moveCubeTo3(targetcellid, light);
 
     if (coup.move.length == 4 ){
 
@@ -539,9 +541,9 @@ function convert(coup){
         setTimeout(() => {
             cube.addEventListener('transitionend', () => { //question de perfo, le mouvement peut prendre plus de temps que prévu. A faire pour tous les bots aussi
                 setTimeout(() => {
-                    selectedcell = document.getElementById(targetcellid_2);
+                    //selectedcell = document.getElementById(targetcellid_2);
                     //console.log(performance.now()-time);
-                    moveCubeTo3(selectedcell, light);
+                    moveCubeTo3(targetcellid_2, light);
                 }, 50);
             },{once: true});
         }, 50);
