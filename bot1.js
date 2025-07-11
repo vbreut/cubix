@@ -42,7 +42,6 @@ function botlevel1(){
     //1er move aléatoire
 
     randommove(availablecells);
-
     prevcell=cell;
 
     //2eme move
@@ -57,6 +56,7 @@ function botlevel1(){
             }, tempo + 50);
         }
     }
+
     return cointoss;
 }
 
@@ -71,14 +71,16 @@ function forcedmove(){
 
     selectcurrentcell(currentcell);
 
-    let selectedcell = document.getElementById("cell-" + forcedcube[1]);
+    //let selectedcell = document.getElementById("cell-" + forcedcube[1]);
+    let targetcellid = "cell-" + forcedcube[1];
 
-    moveCubeTo3(selectedcell, light);
+    moveCubeTo3(targetcellid, light);
 
     if (forcedcube[2]!=0){
         setTimeout(() => {
-            selectedcell = document.getElementById("cell-" + forcedcube[2]);
-            moveCubeTo3(selectedcell, light);
+            //selectedcell = document.getElementById("cell-" + forcedcube[2]);
+            targetcellid = "cell-" + forcedcube[2];
+            moveCubeTo3(targetcellid, light);
         }, tempo + 50);
         return 1; //2 coups
     }
@@ -155,8 +157,8 @@ function randommove(availablecells){
 
     let randomindice = Math.floor(Math.random() * availablecells.length);
 
-    let selectedcell = document.getElementById("cell-" + availablecells[randomindice]);
-    
-    moveCubeTo3(selectedcell, light);
+    //let selectedcell = document.getElementById("cell-" + availablecells[randomindice]);
+    let targetcellid = "cell-" + availablecells[randomindice];
+    moveCubeTo3(targetcellid, light);
 }
 
