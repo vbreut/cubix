@@ -53,7 +53,7 @@ function displaydiff(){
             } else{
                 const div = document.createElement('button');
                 div.className = 'parties';
-                div.textContent = game.joueur2 + " " + game.joueur1;
+                div.textContent = game.joueur2 + " vs " + game.joueur1;
                 if (game.joueur1=="Libre"){
                     div.style.backgroundColor = "rgb(129, 217, 154)"
                 } else {
