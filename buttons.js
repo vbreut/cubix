@@ -747,55 +747,66 @@ boutonsRadio.forEach(bouton => {
     });
 });
 
-const toggle = document.getElementById('transparent-toggle');
+const toggle = document.getElementById('transparence');
+toggle.addEventListener('click', transp);
 
-toggle.addEventListener('change', () => {
+function transp(){
 
     let colorblack = "rgb(50, 50, 50)";
     let colorblackt = "rgba(50, 50, 50, 0.6)";
     let colorwhite = "rgb(238, 223, 195)";
     let colorwhitet = "rgba(238, 223, 195, 0.7)";
+    let colornormal ="rgb(69, 123, 157)";
+    let coloractive ="rgb(92, 165, 210)";
     let facews = document.getElementsByClassName('facew');
     let faces = document.getElementsByClassName('face');
-    let test = null;
+    let test = null
+    let test2 = getComputedStyle(toggle).backgroundColor;
+
+    if (test2 == colornormal){
+        toggle.style.backgroundColor = coloractive;
+    } else {
+        toggle.style.backgroundColor = colornormal;
+    }
 
 
     for (let facew of facews) {
         test = getComputedStyle(facew).backgroundColor;
 
-        if( test == colorwhite || test == colorwhitet){
-            if (toggle.checked) {
-                facew.style.backgroundColor = colorwhitet;
-            } else {
-                facew.style.backgroundColor = colorwhite;
-            }
-        } else {
-            if (toggle.checked) {
-                facew.style.backgroundColor = colorblackt;
-            } else {
-                facew.style.backgroundColor = colorblack;
-            }
+        if(test == colorwhite){
+            facew.style.backgroundColor = colorwhitet;
+        }
+        if(test == colorwhitet){
+            facew.style.backgroundColor = colorwhite;
+        }
+
+        if(test == colorblack){
+            facew.style.backgroundColor = colorblackt;
+        }
+        if(test == colorblackt){
+            facew.style.backgroundColor = colorblack;
         }
     }
 
     for (let face of faces) {
         test = getComputedStyle(face).backgroundColor;
-        if( test == colorblack || test == colorblackt){
-            if (toggle.checked) {
-                face.style.backgroundColor = colorblackt;
-            } else {
-                face.style.backgroundColor = colorblack;
-            }
-        }else{
-            if (toggle.checked) {
-                face.style.backgroundColor = colorwhitet;
-            } else {
-                face.style.backgroundColor = colorwhite;
-            }
+
+        if(test == colorwhite){
+            face.style.backgroundColor = colorwhitet;
+        }
+        if(test == colorwhitet){
+            face.style.backgroundColor = colorwhite;
+        }
+
+        if(test == colorblack){
+            face.style.backgroundColor = colorblackt;
+        }
+        if(test == colorblackt){
+            face.style.backgroundColor = colorblack;
         }
     }
 
-});
+};
 
 resButton.addEventListener('click', () => {
     document.getElementById("message").style.display="block";
