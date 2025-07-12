@@ -131,7 +131,7 @@ sauvpseudo.addEventListener('click',sauvegarderPseudo);
 function sauvegarderPseudo(){
     pseudo = document.getElementById("pseudoInput").value.trim();
 
-    if(pseudo!=="" && pseudo !="Libre" && pseudo !="Abandon"){
+    if(pseudo!=="" && pseudo !=="Libre" && pseudo !=="Abandon"){
         checkIfPseudoExists(pseudo).then(exists => {
             if (exists) {
                 document.getElementById("infocom").textContent = "Ce pseudo est déjà pris !";
@@ -180,7 +180,7 @@ function display(){
                 let joueur = joueurs[key];
                 const div = document.createElement('button');
                 div.className = 'joueur';
-                div.textContent = key + " vs " + joueur.enLigne;
+                div.textContent = key + " " + joueur.enLigne;
                 if (joueur.enLigne=="connecté"){
                     div.style.backgroundColor = "rgb(129, 217, 154)"
                 } else {
