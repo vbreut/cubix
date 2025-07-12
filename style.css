@@ -316,6 +316,8 @@ body {
 
 
 .joueur{
+    border: none;
+    width: 100%;
     padding: 4px;
     border-radius: 3px;
     margin-bottom: 6px;
@@ -327,6 +329,8 @@ body {
 }
 
 .parties{
+    border: none;
+    width: 100%;
     padding: 4px;
     border-radius: 3px;
     margin-bottom: 6px;
@@ -533,7 +537,7 @@ body {
 #openModal {
     /*font-size: 16px;*/
     background-color: rgb(69, 123, 157);
-    padding: 7px;
+    padding: 6px;
     border: none;
     width: 75px;
     height: 50px;
