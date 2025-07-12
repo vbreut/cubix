@@ -178,7 +178,7 @@ function display(){
             if (key !== pseudo) {
                 n=1;
                 let joueur = joueurs[key];
-                const div = document.createElement('div');
+                const div = document.createElement('button');
                 div.className = 'joueur';
                 div.textContent = key + " " + joueur.enLigne;
                 if (joueur.enLigne=="connecté"){
