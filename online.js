@@ -31,7 +31,7 @@ window.addEventListener("load", loadPseudo)
 function loadPseudo(){
 
     pseudo = localStorage.getItem("pseudo");
-    if (pseudo!==null && pseudo!=="" && pseudo !="Libre") {
+    if (pseudo!==null && pseudo!=="") {
 
         let joueurRef = database.ref('joueurs/' + pseudo);
 
@@ -131,7 +131,7 @@ sauvpseudo.addEventListener('click',sauvegarderPseudo);
 function sauvegarderPseudo(){
     pseudo = document.getElementById("pseudoInput").value.trim();
 
-    if(pseudo!==""){
+    if(pseudo!=="" && pseudo !="Libre" && pseudo !="Abandon"){
         checkIfPseudoExists(pseudo).then(exists => {
             if (exists) {
                 document.getElementById("infocom").textContent = "Ce pseudo est déjà pris !";
@@ -180,7 +180,7 @@ function display(){
                 let joueur = joueurs[key];
                 const div = document.createElement('button');
                 div.className = 'joueur';
-                div.textContent = key + " " + joueur.enLigne;
+                div.textContent = key + " vs " + joueur.enLigne;
                 if (joueur.enLigne=="connecté"){
                     div.style.backgroundColor = "rgb(129, 217, 154)"
                 } else {
@@ -595,4 +595,3 @@ function flip()
     //il va falloir stocker la matrice à cause des cubes pris. Pas la peine de stocker sur firebase.
     //on va redessiner tout le plateau à chaque fois à partir de la matrice
     //pas d'animation car on n'a pas l'historique des double cases dans la matrice, ce serait trop lent de toute façon
-    //faire une fonction générique de déconnexion ?
