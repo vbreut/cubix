@@ -652,10 +652,6 @@ function valider(){
     }
 
     if (turn=="end") {
-        if(playingmode ==5){
-            let gamediffRef = database.ref('gamesdiff/' + gameIddiff);
-            gamediffRef.remove();
-        }
         return;
     }
 
@@ -817,8 +813,24 @@ confirmyesButton.addEventListener('click', () => {
     let joueurRef = database.ref('joueurs/' + pseudo);
     joueurRef.remove();
     if(document.getElementById("message").textContent=="Terminer la partie ?" && playingmode ==5){
-        let gamediffRef = database.ref('gamesdiff/' + gameIddiff);
-        gamediffRef.remove(); //eventuellement mettre un status si l'adversaire supprime la partie
+        const gamediffRef = database.ref('gamesdiff/' + gameIddiff);
+        gamediffRef.once("value").then(snapshot=>{
+
+            if (snapshot.val().joueur1==pseudo && snapshot.val().joueur2 !== "Abandon"){
+                gamediffRef.update({
+                    joueur1: "Abandon"
+                });
+            }
+            if (snapshot.val().joueur2==pseudo && snapshot.val().joueur1 !== "Abandon"){
+                gamediffRef.update({
+                    joueur1: "Abandon"
+                });
+            }
+            if(snapshot.val().joueur1 == "Abandon" || snapshot.val().joueur2 == "Abandon"){
+                gamediffRef.remove();
+            }
+
+        });
     }
     window.location.href = window.location.href;
 });
