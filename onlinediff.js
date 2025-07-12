@@ -1,9 +1,10 @@
 const newdiffButton = document.getElementById("newdiff");
-newdiffButton.addEventListener('click', creatediff);
 localStorage.removeItem("gamediff");
 const leaveButton = document.getElementById("leave");
 const diffButton = document.getElementById("diffinprogress");
 let firstmove=0;
+
+newdiffButton.addEventListener('click', creatediff);
 
 function creatediff(){
 
@@ -37,6 +38,7 @@ function displaydiff(){
         const container = document.getElementById('def');
         container.innerHTML = '';
         let n = 0;
+        let d=0;
 
         for (let key in defis) {
             n=1;
@@ -46,11 +48,10 @@ function displaydiff(){
             if (game.joueur1==pseudo || game.joueur2==pseudo){
                 gameIddiff = key;
                 monitordiff(game.joueur1,game.joueur2);
-                document.getElementById('def').style.display = "none";
-                document.getElementById("newdiff").style.display = "none";
+                d=1;
                 break;
             } else{
-                const div = document.createElement('div');
+                const div = document.createElement('button');
                 div.className = 'parties';
                 div.textContent = game.joueur2 + " " + game.joueur1;
                 if (game.joueur1=="Libre"){
@@ -64,9 +65,6 @@ function displaydiff(){
                     div.onclick = () => selectdiff(key);
                 }
                 container.appendChild(div);
-                document.getElementById("deftitle").style.display = "block";
-                document.getElementById("newdiff").style.display = "block";
-
             }
         }
 
@@ -75,6 +73,14 @@ function displaydiff(){
             container.appendChild(divnodiff);
             divnodiff.id = "nobodydiff"
             document.getElementById("nobodydiff").textContent = "Pas de défi en cours";
+        }
+
+        if (d==0){
+            document.getElementById("deftitle").style.display = "block";
+            document.getElementById("newdiff").style.display = "block";
+        } else{
+            document.getElementById('def').style.display = "none";
+            document.getElementById("newdiff").style.display = "none";
         }
     });
 
@@ -132,7 +138,6 @@ function monitordiff(j1,j2){
     //gameIddiff = localStorage.getItem("gamediff");
 
     let refCoups = null;
-    let gamediffRef = null;
 
     if(j2==pseudo){
         document.getElementById("infodiff").textContent = "Jouez votre premier coup !";
