@@ -559,7 +559,7 @@ function flip()
 {
     //lancer page jeu avec les noirs
     document.querySelectorAll(".face").forEach(el => {
-        el.style.backgroundColor = "rgb(238, 223, 200)";
+        el.style.backgroundColor = "rgb(238, 223, 195)";
     });
 
     document.querySelectorAll(".facew").forEach(el => {
