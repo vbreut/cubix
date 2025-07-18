@@ -158,7 +158,6 @@ function selectcurrentcell(currentcell){
 }
 
 
-
 // Écouter les clics sur chaque case du plateau
 board.forEach(cell => {
     cell.addEventListener('click', () => {
@@ -382,7 +381,7 @@ function changefacesleft() {
     }
 }
 
-function moveCubeTo3(targetCellid, cellcolor) {//étage de protection 
+function moveCubeTo3(targetCellid, cellcolor) {//étage de protection pour le déplacement manuel
 
     let cube=selectedScene.firstElementChild;
 
@@ -446,9 +445,10 @@ function moveCubeTo4(targetCellid, cellcolor) {
 
         //vers le bas
         if (Math.abs(deltax)<0.3*cellwidth && Math.abs(deltay)>0.3*cellwidth && deltay>0) {
-
-            cube.style.transform = `rotateX(-90deg)`;
+            
             rotationinprogress=1;
+            cube.style.transform = `rotateX(-90deg)`;
+            cube.addEventListener("transitionend", ontransitionend, {once:true});
 
             cube.addEventListener('transitionend', () => {
                 cube.style.transition = 'none';
@@ -474,9 +474,9 @@ function moveCubeTo4(targetCellid, cellcolor) {
 
         //vers le haut
         if (Math.abs(deltax)<0.3*cellwidth && Math.abs(deltay)>0.3*cellwidth && deltay<0) {
-
-            cube.style.transform = `rotateX(90deg)`;
+            
             rotationinprogress=1;
+            cube.style.transform = `rotateX(90deg)`;
 
             cube.addEventListener('transitionend', () => {
                 cube.style.transition = 'none';
@@ -501,8 +501,8 @@ function moveCubeTo4(targetCellid, cellcolor) {
         //vers la droite    
         if (Math.abs(deltax)>0.3*cellwidth && Math.abs(deltay)<0.3*cellwidth && deltax>0) {
 
-            cube.style.transform = `rotateY(90deg)`;
             rotationinprogress=1;
+            cube.style.transform = `rotateY(90deg)`;
 
             cube.addEventListener('transitionend', () => {
                 cube.style.transition = 'none';
@@ -527,8 +527,8 @@ function moveCubeTo4(targetCellid, cellcolor) {
         //vers la gauche
         if (Math.abs(deltax)>0.3*cellwidth && Math.abs(deltay)<0.3*cellwidth && deltax<0) {
 
-            cube.style.transform = `rotateY(-90deg)`;
             rotationinprogress=1;
+            cube.style.transform = `rotateY(-90deg)`;
 
             cube.addEventListener('transitionend', () => {
                 cube.style.transition = 'none';
@@ -572,14 +572,15 @@ function moveCubeTo4(targetCellid, cellcolor) {
 
 validButton.addEventListener('click', () => {
 
-    if (waitforsecondmove){
+    if (waitforsecondmove){ //utile pour les validations manuelles
         return;
     }
 
     if (numberofmoves > 0 && (playingmode==0||turn=="white") && playingmode !== 4 && playingmode !==5){
 
         let doublemove=0;
-        let delay=50;
+        let movelength=0;
+        //let delay=50;
 
         //changes();
         valider();
@@ -601,15 +602,14 @@ validButton.addEventListener('click', () => {
                     doublemove=botlevel3();
                 }
                 if (doublemove==1){
-                    delay=tempo + 50;
+                    movelength = 4;
                 }
 
                 if (doublemove==-1){
                     //tous les cubes sont bloqués. Les blancs continuent à jouer
                 }
-                setTimeout(() => {
-                    valider();
-                }, 700 + delay);
+                
+                waitforvalid(movelength);
             }, tempo + 50);
         }
     }
@@ -643,7 +643,7 @@ function valider(){
     numberofmoves = 0;
 
     let cube=selectedScene.firstElementChild;
-    if (rotationinprogress){
+    if (rotationinprogress){ //utile pour la validation manuelle
         cube.addEventListener('transitionend', () => {
             selectedScene = null;
         },{once: true});
@@ -680,10 +680,12 @@ const modalvic = document.getElementById("modalvic");
 const modalreal = document.getElementById("modalreal");
 const modaldiff = document.getElementById("modaldiff");
 const modalbot = document.getElementById("modalbot");
+const modalavatar = document.getElementById("modalavatar");
 const closeModalvicButton = document.getElementById("closeModalvic");
 const closeModalrealButton = document.getElementById("closeModalreal");
 const closeModaldiffButton = document.getElementById("closeModaldiff");
 const closeModalbotButton = document.getElementById("closeModalbot");
+const closeModalavatarButton = document.getElementById("closeModalavatar")
 
 // Ouvrir la modale
 openModalButton.addEventListener("click", () => {
@@ -713,14 +715,19 @@ closeModaldiffButton.addEventListener("click", () => {
     modaldiff.style.display = "none";
 });
 
+closeModalavatarButton.addEventListener("click", () => {
+    modalavatar.style.display = "none";
+});
+
 // Fermer la modale en cliquant en dehors de la fenêtre
 window.addEventListener("click", (event) => {
-    if (event.target === modal || event.target === modalvic || event.target === modalreal || event.target === modaldiff || event.target === modalbot) {
+    if (event.target === modal || event.target === modalvic || event.target === modalreal || event.target === modaldiff || event.target === modalbot || event.target === modalavatar) {
         modal.style.display = "none";
         modalvic.style.display = "none";
         modalbot.style.display = "none";
         modaldiff.style.display = "none";
         modalreal.style.display = "none";
+        modalavatar.style.display = "none";
     }
 });
 
@@ -827,17 +834,17 @@ confirmyesButton.addEventListener('click', () => {
         const gamediffRef = database.ref('gamesdiff/' + gameIddiff);
         gamediffRef.once("value").then(snapshot=>{
 
-            if (snapshot.val().joueur1==pseudo && snapshot.val().joueur2 !== "Abandon"){
+            if (snapshot.val().joueur1==pseudo && (snapshot.val().joueur2 !== "Abandon" || snapshot.val().joueur2 !== "Libre")){
                 gamediffRef.update({
                     joueur1: "Abandon"
                 });
             }
-            if (snapshot.val().joueur2==pseudo && snapshot.val().joueur1 !== "Abandon"){
+            if (snapshot.val().joueur2==pseudo && (snapshot.val().joueur1 !== "Abandon" || snapshot.val().joueur1 !== "Libre")){
                 gamediffRef.update({
-                    joueur1: "Abandon"
+                    joueur2: "Abandon"
                 });
             }
-            if(snapshot.val().joueur1 == "Abandon" || snapshot.val().joueur2 == "Abandon"){
+            if(snapshot.val().joueur1 == "Abandon" || snapshot.val().joueur2 == "Abandon" || snapshot.val().joueur1 == "Libre" || snapshot.val().joueur2 == "Libre"){
                 gamediffRef.remove();
             }
 
@@ -872,3 +879,4 @@ function lancerConfettis() {
     }, 100);
 
 }
+
