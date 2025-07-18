@@ -661,7 +661,7 @@ function afficherPseudoMasque(name, containerid, add, name2) {
             for (let i = 3; i < 6; i++) {
             const span = document.createElement('span');
             span.className = `letter-${i}`;
-            span.textContent = "x";
+            span.textContent = "-";
             container.appendChild(span);
         }
     }
@@ -689,7 +689,7 @@ function afficherPseudoMasque(name, containerid, add, name2) {
         for (let i = 3; i < 6; i++) {
         const span = document.createElement('span');
         span.className = `letter-${i}`;
-        span.textContent = "x";
+        span.textContent = "-";
         container.appendChild(span);
         }
     }
