@@ -36,15 +36,14 @@
     <div id="globalmenu">
 
         <div id="form" style="display: none;">
-
-            <label>Pseudo </label>
+            <span>Pseudo</span>
             <input type="text" id="pseudoInput">
             <button id="sauvpseudo">Enregistrer</button>
             <!--<button onclick="supprimerPseudo()">Effacer</button>-->
         </div>
 
         <div id="welcome">
-            Bienvenue <span id="pseudoAffiche"></span> !
+            <span id="pseudoAffiche"></span>
         </div>
         <div class="menubox">
             <button class="menutitle" id="botbutton">Jouer contre un bot</button>
@@ -53,14 +52,14 @@
 
         <div class="menubox">
             <button class="menutitle" id="diffbutton">Jouer en différé
-                <div id="flag" style="display: none;"></div>
+                <div id="flag" style="display: none;">🍄</div>
             </button>
             <div class="desc">Jouez en ligne à votre rythme, reprenez la partie quand vous voulez</div>
         </div>
 
         <div class="menubox">
             <button class="menutitle" id="realbutton">Jouer en temps réel
-                <div id="flagreal" style="display: none;"></div>
+                <div id="flagreal" style="display: none;">🍄</div>
             </button>
             <div class="desc">Jouez en ligne contre un adversaire actuellement connecté</div>
         </div>
@@ -274,7 +273,7 @@
 
             <div id="rightblock">
                 <button id="leave">Accueil</button>
-                <button id="transparence">Mode clair</button>
+                <button id="transparence">Transparence</button>
             </div>
 
         </div>
@@ -380,7 +379,7 @@
         <div id="spacer3"></div>
             
         <div id="onlinesubmenu">
-            <div id="infocom">Choisir un joueur libre</div>
+            <div id="infocom">Choisir un joueur connecté</div>
             <div id="cancelchallenge" style="display: none;">
                 <button id="cancel">Annuler</button>
             </div> 
@@ -396,6 +395,20 @@
     </div>
 
 </div>
+
+<div id="modalavatar" class="modal">
+    <div class="modal-contentavatar">
+
+        <div id="spacer4"></div>
+            
+        <div class="emoji-grid" id="emojiGrid"></div>
+
+        <span id="closeModalavatar" class="close">&times;</span>
+                
+    </div>
+
+</div>
+
 
     <script src="buttons.js"></script>
     <script src="prise_vic.js"></script>
