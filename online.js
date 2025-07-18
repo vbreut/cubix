@@ -16,101 +16,128 @@ const firebaseConfig = {
     appId: "1:528272643607:web:f22567ac94de1b60a6ee52"
 };
 
+
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 database = firebase.database();
+
 //database.ref().remove();
   
 // Pseudo du joueur
 //localStorage.removeItem("pseudo");
 
-
-window.addEventListener("load", loadPseudo)
-
+//window.addEventListener("load", loadPseudo)
+loadPseudo();
 
 function loadPseudo(){
 
     pseudo = localStorage.getItem("pseudo");
+
     if (pseudo!==null && pseudo!=="") {
+        firebase.database().ref(".info/connected").on("value",listener);
 
-        let joueurRef = database.ref('joueurs/' + pseudo);
-
-        checkIfPseudoExists(pseudo).then(exists => { 
-            if (exists) {//ne pas le faire si on a appuyé sur le bouton accueil. Mémoriser dans local storage ?
-                document.getElementById("form").style.display = "block";
-                document.getElementById("welcome").style.display = "none";
-                document.getElementById("pseudoInput").value = pseudo;
-                document.getElementById("infocom").textContent = "Ce pseudo est déjà pris !";
-            } else {
-                document.getElementById("pseudoAffiche").textContent = pseudo;
-
-                checkifconnected().then(connected => {
-                    if(connected){
-                        joueurRef.onDisconnect().remove();
-                        joueurRef.set({ enLigne: "connecté" });
-                    } else{
-                    waitforconnected(joueurRef);
-                    }
-                });
-                
-                // Écouter si on reçoit un défi
-                listenchallenges();
-
-
-                // Afficher la liste des joueurs
-                display();
-                displaydiff();
-
-                deco();
-
-                //monitorer la partie en différé
-                //monitordiff();   
-            }
-        });
-
-        setTimeout(() => {
-            firebase.database().ref(".info/connected").on("value",(snapshot)=>{
-                if(snapshot.val()===true){
-                    const element = document.getElementById("game");
-                    joueurRef.onDisconnect().remove();
-                    if(getComputedStyle(element).display!=="none"){//si la déco/reco a lieu en partie
-                        joueurRef.set({ enLigne: "en partie" });
-                    }
-                    document.getElementById("onlinesubmenu").style.display = "flex";
-                    document.getElementById("onlinediffsubmenu").style.display = "flex";
-                    document.getElementById("infocom").style.display = "block";
-                    if(document.getElementById("message").textContent=="Connexion perdue"){
-                        modalvic.style.display = "none";
-                    }
-                }
-                if(snapshot.val()===false && pseudo!==null && pseudo!==""){
-                    document.getElementById("spacer").style.display="block";
-                    document.getElementById("message").style.display="block";
-                    document.getElementById("message").textContent="Connexion perdue";
-                    confirmyesButton.style.display="none";
-                    confirmnoButton.style.display="none";
-                    document.getElementById("modalvic").style.display="block";
-                    document.getElementById("onlinesubmenu").style.display = "none";
-                    document.getElementById("onlinediffsubmenu").style.display = "none";
-                }
-            });
-    
-        }, 5000);
+        //firebase.database().ref(".info/connected").on("value",(snapshot)=>{
+            
+        //});
 
     } else {
         document.getElementById("form").style.display = "block";
         document.getElementById("welcome").style.display = "none";
-        document.getElementById("infocom").textContent = "";
+        document.getElementById("infocom").style.display = "none";
         document.getElementById("newdiff").style.display = "none";
         document.getElementById("deftitle").style.display = "none";
     }
+
+}
+
+function listener(snapshot){
+    //console.log(snapshot.val());
+    if(snapshot.val()===true){
+
+        checkIfPseudoExists(pseudo).then(exists => {
+            document.getElementById("welcome").style.display = "block";
+            if (exists) {
+                document.getElementById("form").style.display = "block";
+                document.getElementById("pseudoInput").value = pseudo;
+                document.getElementById("pseudoAffiche").textContent = "Ce pseudo est déjà pris !";
+            } else {
+                launch();
+            }
+        });
+        firebase.database().ref(".info/connected").off("value", listener)
+    }
+}
+
+function launch(){
+    let d=0;
+
+    document.getElementById("form").style.display = "none";
+    document.getElementById("pseudoAffiche").textContent = `Bienvenue ${pseudo} !`;
+    document.getElementById("infocom").style.display = "block";
+
+    let joueurRef = database.ref('joueurs/' + pseudo);
+    /*checkifconnected().then(connected => {
+        if(connected){
+            joueurRef.onDisconnect().remove();
+            joueurRef.set({ enLigne: "connecté" });
+        } else{
+        waitforconnected(joueurRef);
+        }
+    });*/
+
+    joueurRef.onDisconnect().remove();
+    joueurRef.set({ enLigne: "connecté" });
+    
+    // Écouter si on reçoit un défi
+    listenchallenges();
+
+    // Afficher la liste des joueurs
+    display();
+    displaydiff();
+
+    deco();
+
+    setTimeout(() => {
+        firebase.database().ref(".info/connected").on("value",(snapshot)=>{
+            if(snapshot.val()===true && d==1){
+                d=0;
+                const element = document.getElementById("game");
+                joueurRef.onDisconnect().remove();
+                if(getComputedStyle(element).display!=="none"){//si la déco/reco a lieu en partie
+                    joueurRef.set({ enLigne: "en partie" });
+                } else{
+                    joueurRef.set({ enLigne: "connecté" });
+                }
+                document.getElementById("onlinesubmenu").style.display = "flex";
+                document.getElementById("onlinediffsubmenu").style.display = "flex";
+                document.getElementById("infocom").style.display = "block";
+                if(document.getElementById("message").textContent=="Connexion perdue"){
+                    modalvic.style.display = "none";
+                }
+                console.log("co");
+            }
+            if(snapshot.val()===false && pseudo!==null && pseudo!==""){
+                d=1;
+                document.getElementById("spacer").style.display="block";
+                document.getElementById("message").style.display="block";
+                document.getElementById("message").textContent="Connexion perdue";
+                confirmyesButton.style.display="none";
+                confirmnoButton.style.display="none";
+                document.getElementById("modalvic").style.display="block";
+                document.getElementById("onlinesubmenu").style.display = "none";
+                document.getElementById("onlinediffsubmenu").style.display = "none";
+            }
+        });
+
+    }, 5000);
+
+    
 
     document.getElementById("pseudoInput").addEventListener("keydown", function(event){
         if(event.key ==="Enter"){
             sauvegarderPseudo();
         }
     });
-
 }
 
 function checkifconnected(){
@@ -132,21 +159,13 @@ function sauvegarderPseudo(){
     pseudo = document.getElementById("pseudoInput").value.trim();
 
     if(pseudo!=="" && pseudo !=="Libre" && pseudo !=="Abandon"){
-        checkIfPseudoExists(pseudo).then(exists => {
-            if (exists) {
-                document.getElementById("infocom").textContent = "Ce pseudo est déjà pris !";
-            } else {
-                // Le pseudo est disponible, on l'enregistre
-                localStorage.setItem("pseudo", pseudo);
-
-                document.getElementById("form").style.display = "none";
-                document.getElementById("welcome").style.display = "block";
-                document.getElementById("pseudoAffiche").textContent = pseudo;
-                document.getElementById("infocom").textContent = "Choisir un joueur";
-
-                loadPseudo();
-            }
-        });
+        if (pseudo.length<=4){
+            document.getElementById("welcome").style.display = "block";
+            document.getElementById("pseudoAffiche").textContent = "Pseudo trop court !";
+        }else {
+            localStorage.setItem("pseudo", pseudo);
+            loadPseudo();
+        }
     }
 }
 
@@ -180,7 +199,8 @@ function display(){
                 let joueur = joueurs[key];
                 const div = document.createElement('button');
                 div.className = 'joueur';
-                div.textContent = key + " " + joueur.enLigne;
+                div.id = key;
+                //div.textContent = key.slice(0,3) + "••• " + joueur.enLigne;
                 if (joueur.enLigne=="connecté"){
                     div.style.backgroundColor = "rgb(129, 217, 154)"
                 } else {
@@ -193,6 +213,7 @@ function display(){
                     div.onclick = () => defierJoueur(key);
                 }
                 container.appendChild(div);
+                afficherPseudoMasque(key,key, " " + joueur.enLigne, null);
             }
         }
         if (n==0){
@@ -211,11 +232,12 @@ function deco(){
     const listeRef = database.ref('joueurs');
     const joueurRef = database.ref('joueurs/' + pseudo);
     const element = document.getElementById("game");
-    const challengeRef = database.ref('challenges/' + adversaire);
+    let challengeRef = database.ref('challenges/' + adversaire);
 
     listeRef.on('child_removed', (snapshot) =>{
 
         const pseudodeleted = snapshot.key;
+        challengeRef = database.ref('challenges/' + adversaire);
 
         if (pseudodeleted==adversaire && getComputedStyle(element).display==="none"){
             blockbot=0;
@@ -227,9 +249,10 @@ function deco(){
             joueurRef.set({ enLigne: "connecté" });
             adversaire=null;
         }
-        if (pseudodeleted==adversaire && getComputedStyle(element).display!=="none" && turn !== "end"){
+        if (pseudodeleted==adversaire && getComputedStyle(element).display!=="none" && turn !== "end" && playingmode == 4){
             document.getElementById("spacer").style.display="block";
-            document.getElementById("message").textContent=`${adversaire} s'est déconnecté`;
+            afficherPseudoMasque(adversaire, "message"," s'est déconnecté", null);
+            //document.getElementById("message").textContent=`${adversaire.slice(0,3)}. s'est déconnecté`;
             document.getElementById("modalvic").style.display="flex";
             document.getElementById("closeModalvic").style.display="block";
             document.querySelector(".modal-contentvic").style.justifyContent="space-between";
@@ -246,7 +269,8 @@ function deco(){
 
         if (pseudoadded==adversaire && getComputedStyle(element).display!=="none" && turn !== "end" && joueur.enLigne == "en partie"){
             document.getElementById("spacer").style.display="block";
-            document.getElementById("message").textContent=`${adversaire} s'est reconnecté`;
+            afficherPseudoMasque(adversaire,"message"," s'est reconnecté", null);
+            //document.getElementById("message").textContent=`${adversaire.slice(0,3)}. s'est reconnecté`;
             document.getElementById("modalvic").style.display="flex";
             document.getElementById("closeModalvic").style.display="block";
             document.querySelector(".modal-contentvic").style.justifyContent="space-between";
@@ -280,7 +304,8 @@ function defierJoueur(adv) {
 
             surveillerreponse();
 
-            document.getElementById("infocom").textContent = `Défi envoyé à ${adversaire}`;
+            afficherPseudoMasque(null,"infocom","Défi envoyé à ", adversaire);
+            //document.getElementById("infocom").textContent = `Défi envoyé à ${adversaire.slice(0,3)}.`;
             document.getElementById("cancelchallenge").style.display = "block";
             document.getElementById("joueurs").style.display = "none";
 
@@ -314,7 +339,8 @@ function listenchallenges(){
 
             adversaire = data.from;
 
-            document.getElementById("infocom").textContent = `Vous êtes défié par ${adversaire}`;
+            afficherPseudoMasque(adversaire,"infocom"," vous lance un défi", null);
+            //document.getElementById("infocom").textContent = `Vous êtes défié par ${adversaire.slice(0,3)}.`;
             document.getElementById("buttonchallenge").style.display = "block";
             joueurRef.set({ enLigne: "défié"});
             document.getElementById("joueurs").style.display = "none";
@@ -352,7 +378,8 @@ function listenchallenges(){
         turn = "black"; //black veut dire "joueur du haut"
         flip();
 
-        document.getElementById("adv").textContent = `${adversaire}`;
+        afficherPseudoMasque(adversaire,"adv",null, null);
+        //document.getElementById("adv").textContent = `${adversaire.slice(0,3)}.`;
         document.getElementById("adv").style.color = "white";
         showPage();
 
@@ -409,8 +436,8 @@ function surveillerreponse(){
                 ecouterCoups();
 
                 turn = "white";
-                
-                document.getElementById("adv").textContent = `${adversaire}`;
+                afficherPseudoMasque(adversaire,"adv",null, null);
+                //document.getElementById("adv").textContent = `${adversaire.slice(0,3)}.`;
 
                 showPage();
 
@@ -442,8 +469,8 @@ function ecouterCoups() {
     if(playingmode ==5){
         refCoups = firebase.database().ref('gamesdiff/' + gameIddiff + '/coups');
     }
-    else{refCoups = firebase.database().ref('games/' + gameId + '/coups');
-
+    else{
+        refCoups = firebase.database().ref('games/' + gameId + '/coups');
     }
 
     refCoups.limitToLast(1).on('child_added', (snapshot) => {
@@ -458,15 +485,38 @@ function ecouterCoups() {
 
           //console.log(Object.values(coup)[1][0]);
         convert(coup);
-        if (coup.move.length == 4) {
+        
+        /*if (coup.move.length == 4) {
             delay = tempo + 50;
         }
         
         setTimeout(() => {
             valider();
-        }, 700 + delay);
+        }, 700 + delay);*/
+
+        waitforvalid(coup.move.length);
 
     });
+}
+
+function waitforvalid(movelength){
+
+    let cube=selectedScene.firstElementChild;
+
+    cube.addEventListener('transitionend', () => {
+        if(movelength==4){
+            cube.addEventListener('transitionend', () => {
+                setTimeout(() => {
+                    valider()
+                }, tempo);
+            },{once: true});
+        }else{
+            setTimeout(() => {
+                valider()
+            }, tempo);
+        }
+    },{once: true});
+
 }
 
 function pushcoup(m1) {
@@ -542,18 +592,19 @@ function convert(coup){
         targetcellid_2 = "cell-" + targetcellnumber_2;
 
         let cube=selectedScene.firstElementChild;
-        setTimeout(() => {
-            cube.addEventListener('transitionend', () => { //question de perfo, le mouvement peut prendre plus de temps que prévu. A faire pour tous les bots aussi
-                setTimeout(() => {
-                    //selectedcell = document.getElementById(targetcellid_2);
-                    //console.log(performance.now()-time);
-                    moveCubeTo3(targetcellid_2, light);
-                }, 50);
-            },{once: true});
-        }, 50);
 
+        cube.addEventListener('transitionend', () => { //question de perfo, le mouvement peut prendre plus de temps que prévu. A faire pour tous les bots aussi
+            setTimeout(() => {
+                //selectedcell = document.getElementById(targetcellid_2);
+                //console.log(performance.now()-time);
+                moveCubeTo3(targetcellid_2, light);
+
+            }, 50);
+        },{once: true});
     }
+
 }
+
 
 function flip()
 {
@@ -591,7 +642,57 @@ function flip()
 
 }
 
-    //pour revoir une partie juste après la fin, afficher les flèches.
-    //il va falloir stocker la matrice à cause des cubes pris. Pas la peine de stocker sur firebase.
-    //on va redessiner tout le plateau à chaque fois à partir de la matrice
-    //pas d'animation car on n'a pas l'historique des double cases dans la matrice, ce serait trop lent de toute façon
+function afficherPseudoMasque(name, containerid, add, name2) {
+    const container = document.getElementById(containerid);
+    container.innerHTML = '';
+
+    if(name!==null){
+        if (name == "Libre" || name == "Abandon"){
+            const span = document.createElement('span');
+            span.textContent = name;
+            container.appendChild(span);
+            return;
+        }
+        for (let i = 0; i < 3; i++) {
+        const span = document.createElement('span');
+        span.className = `letter-${i}`;
+        span.textContent = name[i];
+        container.appendChild(span);
+        }
+            for (let i = 3; i < 6; i++) {
+            const span = document.createElement('span');
+            span.className = `letter-${i}`;
+            span.textContent = "x";
+            container.appendChild(span);
+        }
+    }
+
+    if(add!==null){
+        const span = document.createElement('span');
+        span.textContent = add;
+        container.appendChild(span);
+    }
+
+    if(name2!==null){
+        if (name2 == "Libre" || name2 == "Abandon"){
+            const span = document.createElement('span');
+            span.textContent = name2;
+            container.appendChild(span);
+            return;
+        }
+        for (let i = 0; i < 3; i++) {
+          const span = document.createElement('span');
+          span.className = `letter-${i}`;
+          span.textContent = name2[i];
+          container.appendChild(span);
+        }
+    
+        for (let i = 3; i < 6; i++) {
+        const span = document.createElement('span');
+        span.className = `letter-${i}`;
+        span.textContent = "x";
+        container.appendChild(span);
+        }
+    }
+
+}
