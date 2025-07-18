@@ -233,7 +233,7 @@ body {
 
 #onlinesubmenu {
     display: flex;
-    width: 80%;
+    width: 90%;
     flex-direction: column;
     text-align: center;
     height:fit-content;
@@ -244,7 +244,7 @@ body {
 
 #onlinediffsubmenu {
     display: flex;
-    width: 80%;
+    width: 90%;
     flex-direction: column;
     height:fit-content;
     align-items: center;
@@ -308,7 +308,7 @@ body {
 
 #joueurs{
     height: 200px;
-    width: 80%;
+    width: 90%;
     overflow-y: auto;
     padding: 10px;
     border-radius: 6px;
@@ -319,7 +319,7 @@ body {
 
 #def{
     height: 200px;
-    width: 80%;
+    width: 90%;
     overflow-y: auto;
     padding: 10px;
     border-radius: 6px;
