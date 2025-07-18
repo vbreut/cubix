@@ -1077,15 +1077,15 @@ body {
 
   .letter-3 {
     color: rgb(0, 0, 0);
-    filter: blur(2px);
+    filter: blur(1px);
   }
   .letter-4 {
     color: rgba(0, 0, 0, 0.7);
-    filter: blur(2px);
+    filter: blur(1px);
   }
   .letter-5 {
     color: rgba(0, 0, 0, 0.4);
-    filter: blur(2px);
+    filter: blur(1px);
   }
   
 
