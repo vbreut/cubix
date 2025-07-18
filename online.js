@@ -158,9 +158,9 @@ function sauvegarderPseudo(){
     pseudo = document.getElementById("pseudoInput").value.trim();
 
     if(pseudo!=="" && pseudo !=="Libre" && pseudo !=="Abandon"){
-        if (pseudo.length<=4){
+        if (pseudo.length<=5){
             document.getElementById("welcome").style.display = "block";
-            document.getElementById("pseudoAffiche").textContent = "Pseudo trop court !";
+            document.getElementById("pseudoAffiche").textContent = "Pseudo de 6 lettres minimum !";
         }else {
             localStorage.setItem("pseudo", pseudo);
             loadPseudo();
@@ -652,17 +652,17 @@ function afficherPseudoMasque(name, containerid, add, name2) {
             container.appendChild(span);
             return;
         }
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < 4; i++) {
         const span = document.createElement('span');
         span.className = `letter-${i}`;
         span.textContent = name[i];
         container.appendChild(span);
         }
-            for (let i = 3; i < 6; i++) {
-            const span = document.createElement('span');
-            span.className = `letter-${i}`;
-            span.textContent = "-";
-            container.appendChild(span);
+        for (let i = 4; i < 7; i++) {
+        const span = document.createElement('span');
+        span.className = `letter-${i}`;
+        span.textContent = "-";
+        container.appendChild(span);
         }
     }
 
@@ -679,14 +679,14 @@ function afficherPseudoMasque(name, containerid, add, name2) {
             container.appendChild(span);
             return;
         }
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < 4; i++) {
           const span = document.createElement('span');
           span.className = `letter-${i}`;
           span.textContent = name2[i];
           container.appendChild(span);
         }
     
-        for (let i = 3; i < 6; i++) {
+        for (let i = 4; i < 7; i++) {
         const span = document.createElement('span');
         span.className = `letter-${i}`;
         span.textContent = "-";
