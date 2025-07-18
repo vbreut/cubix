@@ -129,7 +129,7 @@ function prise() {
     }
     if(j==0){
         if(pseudo!==null){
-            affichervic(`Victoire de ${pseudo} !`);
+            affichervic("Brillante victoire !");
         }
         if (pseudo==null || playingmode==0){
             affichervic("Victoire des blancs"); 
@@ -144,8 +144,8 @@ function prise() {
     }
     if(j==0){
         if(pseudo!==null){
-            let adv=document.getElementById("adv").textContent
-            affichervic(`Victoire de ${adv} !`);
+            //let adv=document.getElementById("adv").textContent
+            affichervic("Défaite honorable");
         }
         if (pseudo==null || playingmode==0){
             affichervic("Victoire des noirs"); 
@@ -166,7 +166,7 @@ function victoire(){
             c=capture(cubenumber+1);
             if (c[0]==0 && turn=="white"){
                 if(pseudo!==null){
-                    affichervic(`Victoire de ${pseudo} !`);
+                    affichervic("Brillante victoire !");
                 }
                 if (pseudo==null || playingmode==0){
                     affichervic("Victoire des blancs"); 
@@ -189,8 +189,7 @@ function victoire(){
             c=capture(cubenumber+1);
             if (c[0]==0 && turn=="black"){
                 if(pseudo!==null){
-                    let adv=document.getElementById("adv").textContent
-                    affichervic(`Victoire de ${adv} !`);
+                    affichervic("Défaite honorable");
                 }
                 if (pseudo==null || playingmode==0){
                     affichervic("Victoire des noirs"); 
