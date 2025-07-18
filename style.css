@@ -1070,20 +1070,20 @@ body {
   }
 
 
-  .letter-0, .letter-1, .letter-2{
+  .letter-0, .letter-1, .letter-2, .letter-3 {
     color: rgb(0, 0, 0);
     filter: blur(0px);
   }
 
-  .letter-3 {
-    color: rgb(0, 0, 0);
-    filter: blur(1px);
-  }
   .letter-4 {
-    color: rgba(0, 0, 0, 0.7);
+    color: rgba(0, 0, 0, 1);
     filter: blur(1px);
   }
   .letter-5 {
+    color: rgba(0, 0, 0, 0.7);
+    filter: blur(1px);
+  }
+  .letter-6 {
     color: rgba(0, 0, 0, 0.4);
     filter: blur(1px);
   }
