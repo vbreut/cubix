@@ -2,7 +2,7 @@ const newdiffButton = document.getElementById("newdiff");
 localStorage.removeItem("gamediff");
 const leaveButton = document.getElementById("leave");
 const diffButton = document.getElementById("diffinprogress");
-let firstmove=0;
+let premiercoup=0;
 
 newdiffButton.addEventListener('click', creatediff);
 
@@ -32,13 +32,14 @@ function creatediff(){
 function displaydiff(){
 
     const diffRef = database.ref('gamesdiff');
+    let d=0;
+
     diffRef.on('value', (snapshot) =>{ //le on se déclenche une fois à l'init de toute façon
     //diffRef.once("value").then(snapshot=>{
         const defis = snapshot.val();
         const container = document.getElementById('def');
         container.innerHTML = '';
         let n = 0;
-        let d=0;
 
         for (let key in defis) {
             n=1;
@@ -47,24 +48,56 @@ function displaydiff(){
 
             if (game.joueur1==pseudo || game.joueur2==pseudo){
                 gameIddiff = key;
-                monitordiff(game.joueur1,game.joueur2);
+
+                if (d==0){//seulement à l'init, pour ne pas lanser monitordiff à chaque fois que gamediff est modifié
+                    if(game.joueur2==pseudo){
+                        document.getElementById("infodiff").textContent = "Jouez votre premier coup !";
+                    }
+                    monitordiff();
+                }
+                if (game.joueur1 == "Abandon" || game.joueur2 == "Abandon"){
+                    afficherPseudoMasque("Abandon","adv", null, null);
+                    document.getElementById("infodiff").textContent = "L'adversaire a abandonné";
+                }
+
+                if (game.joueur1 !== "Libre" && game.joueur2 == pseudo){
+                    afficherPseudoMasque(game.joueur1,"adv", null, null);
+                }
+                if (game.joueur2 !== "Libre" && game.joueur1 == pseudo){
+                    afficherPseudoMasque(game.joueur2,"adv", null, null);
+                }
+
+                if (game.joueur1 == "Libre" && premiercoup==1){
+                    document.getElementById("infodiff").textContent = "Attente d'un adversaire";
+                }
+
+                if (game.joueur1 == pseudo && premiercoup==0){
+                    document.getElementById("infodiff").textContent = "L'adversaire réfléchit";
+                }
+
                 d=1;
                 break;
             } else{
-                const div = document.createElement('button');
-                div.className = 'parties';
-                div.textContent = game.joueur2 + " vs " + game.joueur1;
-                if (game.joueur1=="Libre"){
-                    div.style.backgroundColor = "rgb(129, 217, 154)"
-                } else {
-                    div.style.backgroundColor = "rgb(235, 126, 0)"
+                if (game.joueur1 !== "Abandon" && game.joueur2 !== "Abandon"){
+                    const div = document.createElement('button');
+                    div.className = 'parties';
+                    div.id = key;
+                    if (game.joueur1=="Libre"){
+                        //div.textContent = game.joueur2.slice(0,3) + ". Libre";
+                        div.style.backgroundColor = "rgb(129, 217, 154)"
+                    } else {
+                        //div.textContent = game.joueur2.slice(0,3) + ". ⚔️ " + game.joueur1.slice(0,3) + ".";
+                        div.style.backgroundColor = "rgb(235, 126, 0)"
+                    }
+                    
+                    if (game.joueur1 == "Libre" && pseudo !== null && game.joueur2 !== pseudo){
+                        div.style.cursor = 'pointer';
+                        div.onclick = () => selectdiff(key);
+                    }
+
+                        container.appendChild(div);
+                        afficherPseudoMasque(game.joueur2, key," ⚔️ ", game.joueur1);
                 }
-                
-                if (game.joueur1 == "Libre" && pseudo !== null && game.joueur2 !== pseudo){
-                    div.style.cursor = 'pointer';
-                    div.onclick = () => selectdiff(key);
-                }
-                container.appendChild(div);
             }
         }
 
@@ -100,7 +133,8 @@ function selectdiff(key){
 
     gamediffRef.once("value").then(snapshot=>{
         adversaire= snapshot.val().joueur2; //je crois qu'on s'en fout de cette variable
-        document.getElementById("adv").textContent = `${adversaire}`;
+        afficherPseudoMasque(adversaire,"adv", null, null);
+        //document.getElementById("adv").textContent = `${adversaire.slice(0,3)}`;
     }); //ça va servir la première fois pour afficher l'adversaire
     
     playingmode = 5;
@@ -133,19 +167,11 @@ function selectdiff(key){
 }
 
 
-function monitordiff(j1,j2){
+function monitordiff(){
 
     //gameIddiff = localStorage.getItem("gamediff");
 
-    let refCoups = null;
-
-    if(j2==pseudo){
-        document.getElementById("infodiff").textContent = "Jouez votre premier coup !";
-    }
-
-    if(j1==pseudo){
-        document.getElementById("infodiff").textContent = "L'adversaire réfléchit";
-    }
+    let refCoups = null;;
 
     //getgameiddiff().then(gameIddiff => {
         if (gameIddiff!==null && gameIddiff!=="" && gameIddiff!==0) {
@@ -158,13 +184,17 @@ function monitordiff(j1,j2){
                     if(childSnap.val().joueur!==pseudo){
                         document.getElementById("infodiff").textContent = "L'adversaire a joué";
                         document.getElementById("flag").style.display="block"
+                        premiercoup=1;
                     }
+
                     if(childSnap.val().joueur==pseudo){
+                        premiercoup = 1;
                         document.getElementById("infodiff").textContent = "L'adversaire réfléchit";
                     }
-                    if(j1=="Libre"){
-                        document.getElementById("infodiff").textContent = "Attente d'un adversaire";
-                    }
+
+                    /*if(j1=="Abandon" || j2=="Abandon"){
+                        document.getElementById("infodiff").textContent = "L'adversaire a abandonné";
+                    }*/
                 });
     
             });
@@ -223,13 +253,15 @@ function loadgame(){
 
             if (game.joueur1==pseudo){
                 flip();
-                document.getElementById("adv").textContent = game.joueur2;
+                afficherPseudoMasque(game.joueur2, "adv", null, null);
+                //document.getElementById("adv").textContent = game.joueur2.slice(0,3);
                 document.getElementById("adv").style.color = "white";
                 flipped=1;
             }
 
             if (game.joueur2==pseudo){
-                document.getElementById("adv").textContent = game.joueur1;
+                afficherPseudoMasque(game.joueur1, "adv", null, null);
+                //document.getElementById("adv").textContent = game.joueur1.slice(0,3);
             }
 
             if(game.joueur2==pseudo|| game.joueur1==pseudo){
