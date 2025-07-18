@@ -48,6 +48,12 @@ function loadPseudo(){
         document.getElementById("deftitle").style.display = "none";
     }
 
+    document.getElementById("pseudoInput").addEventListener("keydown", function(event){
+        if(event.key ==="Enter"){
+            sauvegarderPseudo();
+        }
+    });
+
 }
 
 function listener(snapshot){
@@ -131,13 +137,6 @@ function launch(){
 
     }, 5000);
 
-    
-
-    document.getElementById("pseudoInput").addEventListener("keydown", function(event){
-        if(event.key ==="Enter"){
-            sauvegarderPseudo();
-        }
-    });
 }
 
 function checkifconnected(){
