@@ -818,12 +818,12 @@ body {
     background-color: rgba(50, 50, 50, 0.6); /* Semi-transparent */
 }
 
-.front  { transform: translateZ(var(--translate)); }
-.back   { transform: rotateY(180deg) translateZ(var(--translate)); }
+.top  { transform: translateZ(var(--translate)); }
+.bottom   { transform: rotateY(180deg) translateZ(var(--translate)); }
 .right  { transform: rotateY(90deg) translateZ(var(--translate));  }
 .left   { transform: rotateY(-90deg) translateZ(var(--translate)); }
-.top    { transform: rotateX(90deg) translateZ(var(--translate)); }
-.bottom { transform: rotateX(-90deg) translateZ(var(--translate)); }
+.front    { transform: rotateX(90deg) translateZ(var(--translate)); }
+.back { transform: rotateX(-90deg) translateZ(var(--translate)); }
 
 .facew {
     position: absolute;
