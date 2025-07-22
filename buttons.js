@@ -164,7 +164,7 @@ board.forEach(cell => {
         let cellnumber=parseInt(cell.id.match(/\d+/)[0]);
         let occupied = cubestatus[0].includes(cellnumber);
      
-        if (selectedScene != null && occupied == false && (playingmode==0 || turn=="white")){
+        if (selectedScene != null && occupied == false && (playingmode==0 || turn=="white") && waitforsecondmove == 0){
 
             if (cell.style.backgroundColor == dark) {
                 moveCubeTo3(cell.id, cell.style.backgroundColor);
@@ -524,7 +524,7 @@ function moveCubeTo4(targetCellid, cellcolor) {
             cube.style.transform = `rotateX(-90deg)`;
 
             cube.addEventListener('transitionend', () => {
-                void cube.offsetHeight;
+                //void cube.offsetHeight;
                 cube.style.transition = 'none';
 
                 cube.style.transform="none";
@@ -554,7 +554,7 @@ function moveCubeTo4(targetCellid, cellcolor) {
             cube.style.transform = `rotateX(90deg)`;
 
             cube.addEventListener('transitionend', () => {
-                void cube.offsetHeight;
+                //void cube.offsetHeight;
                 cube.style.transition = 'none';
 
                 cube.style.transform="none";
@@ -584,7 +584,7 @@ function moveCubeTo4(targetCellid, cellcolor) {
             cube.style.transform = `rotateY(90deg)`;
 
             cube.addEventListener('transitionend', () => {
-                void cube.offsetHeight;
+                //void cube.offsetHeight;
                 cube.style.transition = 'none';
 
                 cube.style.transform="none";
@@ -612,7 +612,7 @@ function moveCubeTo4(targetCellid, cellcolor) {
             cube.style.transform = `rotateY(-90deg)`;
 
             cube.addEventListener('transitionend', () => {
-                void cube.offsetHeight;
+                //void cube.offsetHeight;
                 cube.style.transition = 'none';
 
                 cube.style.transform="none";
