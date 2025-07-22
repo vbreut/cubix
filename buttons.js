@@ -89,7 +89,7 @@ function showPage() {
         if (pseudo !== "" && pseudo!==null){
             let joueurRef = database.ref('joueurs/' + pseudo);
             joueurRef.set({ enLigne: "en partie"});
-            //joueurRef.onDisconnect().remove();
+            joueurRef.onDisconnect().remove();
         }
 
         if(playingmode==1){
@@ -235,11 +235,11 @@ function changefacesdown() {
     let faceright=cubestatus[6][cubenumber];
 
     let el1=cube.querySelector('.shape1'); //rs
-    let el6=cube.querySelector('.shape6'); //bc
+    let el6=cube.querySelector('.shape6'); //bd
     let el5=cube.querySelector('.shape5'); //bs
-    let el2=cube.querySelector('.shape2'); //rc
+    let el2=cube.querySelector('.shape2'); //rd
     let el4=cube.querySelector('.shape4'); //ws
-    let el3=cube.querySelector('.shape3'); //wc
+    let el3=cube.querySelector('.shape3'); //wd
 
     if(faceright=="wd"){
         el6.classList.replace('shape6','shape1');
@@ -381,6 +381,80 @@ function changefacesleft() {
     }
 }
 
+function changefacesmove(){
+    let cube=selectedScene.firstElementChild;
+    let cubenumber=parseInt(cube.id.match(/\d+/)[0]) - 1;
+
+    let tab = {rs : ".shape1", rd : ".shape2", wd : ".shape3", ws : ".shape4", bs : ".shape5", bd : ".shape6"};
+
+    //0 cell nb
+    //1 face up, par défaut red square
+    //2 face down, red disc
+    //3 face front, black square
+    //4 face back, black disc
+    //5 face left, white square
+    //6 face right, white disc
+
+    if(cubenumber<6){
+        let facetop=cube.querySelector(".face.top"); //rs
+        let facebottom=cube.querySelector(".face.bottom"); //rd
+        let faceright=cube.querySelector(".face.right"); //wd
+        let faceleft=cube.querySelector(".face.left"); //ws
+        let facefront=cube.querySelector(".face.front"); //bs
+        let faceback=cube.querySelector(".face.back"); //bd
+
+        let newshapetop = cube.querySelector(tab[cubestatus[1][cubenumber]]);
+        let newshapebottom = cube.querySelector(tab[cubestatus[2][cubenumber]]);
+        let newshapefront = cube.querySelector(tab[cubestatus[3][cubenumber]]);
+        let newshapeback = cube.querySelector(tab[cubestatus[4][cubenumber]]);
+        let newshapeleft = cube.querySelector(tab[cubestatus[5][cubenumber]]);
+        let newshaperight = cube.querySelector(tab[cubestatus[6][cubenumber]]);
+
+        facetop.innerHTML="";
+        facebottom.innerHTML="";
+        faceright.innerHTML="";
+        faceleft.innerHTML="";
+        facefront.innerHTML="";
+        faceback.innerHTML="";
+
+        facetop.appendChild(newshapetop);
+        facebottom.appendChild(newshapebottom);
+        faceright.appendChild(newshaperight);
+        faceleft.appendChild(newshapeleft);
+        facefront.appendChild(newshapefront);
+        faceback.appendChild(newshapeback);
+
+    } else {
+        let facewtop=cube.querySelector(".facew.top"); //rs
+        let facewbottom=cube.querySelector(".facew.bottom"); //rd
+        let facewright=cube.querySelector(".facew.right"); //wd
+        let facewleft=cube.querySelector(".facew.left"); //ws
+        let facewfront=cube.querySelector(".facew.front"); //bs
+        let facewback=cube.querySelector(".facew.back"); //bd
+
+        let newshapetop = cube.querySelector(tab[cubestatus[1][cubenumber]]);
+        let newshapebottom = cube.querySelector(tab[cubestatus[2][cubenumber]]);
+        let newshapefront = cube.querySelector(tab[cubestatus[3][cubenumber]]);
+        let newshapeback = cube.querySelector(tab[cubestatus[4][cubenumber]]);
+        let newshapeleft = cube.querySelector(tab[cubestatus[5][cubenumber]]);
+        let newshaperight = cube.querySelector(tab[cubestatus[6][cubenumber]]);
+
+        facewtop.innerHTML="";
+        facewbottom.innerHTML="";
+        facewright.innerHTML="";
+        facewleft.innerHTML="";
+        facewfront.innerHTML="";
+        facewback.innerHTML="";
+
+        facewtop.appendChild(newshapetop);
+        facewbottom.appendChild(newshapebottom);
+        facewright.appendChild(newshaperight);
+        facewleft.appendChild(newshapeleft);
+        facewfront.appendChild(newshapefront);
+        facewback.appendChild(newshapeback);
+    }
+}
+
 function moveCubeTo3(targetCellid, cellcolor) {//étage de protection pour le déplacement manuel
 
     let cube=selectedScene.firstElementChild;
@@ -448,15 +522,16 @@ function moveCubeTo4(targetCellid, cellcolor) {
             
             rotationinprogress=1;
             cube.style.transform = `rotateX(-90deg)`;
-            cube.addEventListener("transitionend", ontransitionend, {once:true});
 
             cube.addEventListener('transitionend', () => {
+                void cube.offsetHeight;
                 cube.style.transition = 'none';
 
                 cube.style.transform="none";
-                cube.offsetHeight;
+                void cube.offsetHeight;
 
-                changefacesdown();
+                //changefacesdown();
+                changefacesmove();
                 //console.log(moves);
                 
                 cube.style.transition = transf;
@@ -479,16 +554,20 @@ function moveCubeTo4(targetCellid, cellcolor) {
             cube.style.transform = `rotateX(90deg)`;
 
             cube.addEventListener('transitionend', () => {
+                void cube.offsetHeight;
                 cube.style.transition = 'none';
 
                 cube.style.transform="none";
-                cube.offsetHeight;
+                void cube.offsetHeight;
 
-                changefacesup();
-                //console.log(moves);
-
+                //changefacesup();
+                changefacesmove();
                 cube.style.transition = transf;
                 rotationinprogress=0;
+
+                //console.log(moves);
+
+
             },{once: true});
 
             cubestatus[1][cubenumber]= faceback;
@@ -505,12 +584,14 @@ function moveCubeTo4(targetCellid, cellcolor) {
             cube.style.transform = `rotateY(90deg)`;
 
             cube.addEventListener('transitionend', () => {
+                void cube.offsetHeight;
                 cube.style.transition = 'none';
 
                 cube.style.transform="none";
-                cube.offsetHeight;
+                void cube.offsetHeight;
 
-                changefacesright();
+                //changefacesright();
+                changefacesmove();
                 //console.log(moves);
                 
                 cube.style.transition = transf;
@@ -531,12 +612,14 @@ function moveCubeTo4(targetCellid, cellcolor) {
             cube.style.transform = `rotateY(-90deg)`;
 
             cube.addEventListener('transitionend', () => {
+                void cube.offsetHeight;
                 cube.style.transition = 'none';
 
                 cube.style.transform="none";
-                cube.offsetHeight;
+                void cube.offsetHeight;
 
-                changefacesleft();
+                //changefacesleft();
+                changefacesmove();
                 //console.log(moves);
 
                 cube.style.transition = transf;
@@ -846,7 +929,10 @@ confirmyesButton.addEventListener('click', () => {
             }
             if(snapshot.val().joueur1 == "Abandon" || snapshot.val().joueur2 == "Abandon" || snapshot.val().joueur1 == "Libre" || snapshot.val().joueur2 == "Libre"){
                 gamediffRef.remove();
+
             }
+
+            gameIddiff=0;
 
         });
     }
