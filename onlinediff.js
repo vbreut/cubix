@@ -57,7 +57,7 @@ function displaydiff(){
                 }
                 if (game.joueur1 == "Abandon" || game.joueur2 == "Abandon"){
                     afficherPseudoMasque("Abandon","adv", null, null);
-                    document.getElementById("infodiff").textContent = "L'adversaire a abandonné";
+                    document.getElementById("infodiff").textContent = "L'adversaire a quitté la partie";
                 }
 
                 if (game.joueur1 !== "Libre" && game.joueur2 == pseudo){
@@ -297,8 +297,7 @@ function loadgame(){
                         }
 
                         if(children[children.length - 1].val.joueur==pseudo){//j'ai joué en dernier
-                            cubestatus=children[children.length - 1].val.matrice.map(subArray => [...subArray]);
-    
+                            cubestatus=children[children.length - 1].val.matrice.map(subArray => [...subArray]);    
                         } 
                             
                         if(children[children.length - 1].val.joueur!==pseudo && children.length >=2){
@@ -311,7 +310,7 @@ function loadgame(){
                     setTimeout(() => {
                         ecouterCoups();//va juste voir le dernier coup adverse et les coups suivants en temps réel si besoin
                         //va ignorer ton dernier coup
-                    }, 100);
+                    }, 200);
 
                 });
             }
