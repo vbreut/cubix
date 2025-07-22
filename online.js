@@ -24,7 +24,7 @@ database = firebase.database();
 //database.ref().remove();
   
 // Pseudo du joueur
-//localStorage.removeItem("pseudo");
+localStorage.removeItem("pseudo");
 
 //window.addEventListener("load", loadPseudo)
 loadPseudo();
@@ -108,10 +108,11 @@ function launch(){
             if(snapshot.val()===true && d==1){
                 d=0;
                 const element = document.getElementById("game");
-                joueurRef.onDisconnect().remove();
                 if(getComputedStyle(element).display!=="none"){//si la déco/reco a lieu en partie
+                    joueurRef.onDisconnect().remove();
                     joueurRef.set({ enLigne: "en partie" });
                 } else{
+                    joueurRef.onDisconnect().remove();
                     joueurRef.set({ enLigne: "connecté" });
                 }
                 document.getElementById("onlinesubmenu").style.display = "flex";
@@ -120,7 +121,7 @@ function launch(){
                 if(document.getElementById("message").textContent=="Connexion perdue"){
                     modalvic.style.display = "none";
                 }
-                console.log("co");
+                //console.log("co");
             }
             if(snapshot.val()===false && pseudo!==null && pseudo!==""){
                 d=1;
@@ -519,9 +520,17 @@ function waitforvalid(movelength){
 }
 
 function pushcoup(m1) {
-    if(playingmode ==5){
+
+    if(playingmode ==5 && gameIddiff !== 0){
         const refCoups = firebase.database().ref('gamesdiff/' + gameIddiff + '/coups');
-        refCoups.push({ joueur: pseudo, move: m1 , matrice :cubestatus});
+        const gamediffRef = database.ref('gamesdiff/' + gameIddiff);
+        gamediffRef.once("value").then(snapshot => { //pour éviter d'envoyer un coup sur une partie déjà fermée
+            if(snapshot.exists()){
+                refCoups.push({ joueur: pseudo, move: m1 , matrice :cubestatus});
+            }
+        });
+
+
     } else{
         const refCoups = firebase.database().ref('games/' + gameId + '/coups');
         database.ref('games/'+ gameId).onDisconnect().remove();
@@ -653,16 +662,16 @@ function afficherPseudoMasque(name, containerid, add, name2) {
             return;
         }
         for (let i = 0; i < 4; i++) {
-        const span = document.createElement('span');
-        span.className = `letter-${i}`;
-        span.textContent = name[i];
-        container.appendChild(span);
+            const span = document.createElement('span');
+            span.className = `letter-${i}`;
+            span.textContent = name[i];
+            container.appendChild(span);
         }
         for (let i = 4; i < 7; i++) {
-        const span = document.createElement('span');
-        span.className = `letter-${i}`;
-        span.textContent = "-";
-        container.appendChild(span);
+            const span = document.createElement('span');
+            span.className = `letter-${i}`;
+            span.textContent = "-";
+            container.appendChild(span);
         }
     }
 
@@ -680,17 +689,17 @@ function afficherPseudoMasque(name, containerid, add, name2) {
             return;
         }
         for (let i = 0; i < 4; i++) {
-          const span = document.createElement('span');
-          span.className = `letter-${i}`;
-          span.textContent = name2[i];
-          container.appendChild(span);
+            const span = document.createElement('span');
+            span.className = `letter-${i}`;
+            span.textContent = name2[i];
+            container.appendChild(span);
         }
     
         for (let i = 4; i < 7; i++) {
-        const span = document.createElement('span');
-        span.className = `letter-${i}`;
-        span.textContent = "-";
-        container.appendChild(span);
+            const span = document.createElement('span');
+            span.className = `letter-${i}`;
+            span.textContent = "-";
+            container.appendChild(span);
         }
     }
 
