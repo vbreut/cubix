@@ -25,6 +25,7 @@
 </head>
 <body>
 
+
 <div id="home">
 
     <div class="title-container">
@@ -34,6 +35,8 @@
     </div>
 
     <div id="globalmenu">
+
+        <div id="nbgames"></div>
 
         <div id="form" style="display: none;">
             <span>Pseudo</span>
@@ -52,14 +55,14 @@
 
         <div class="menubox">
             <button class="menutitle" id="diffbutton">Jouer en différé
-                <div id="flag" style="display: none;">🍄</div>
+                <div id="flag" style="display: none;"></div>
             </button>
             <div class="desc">Jouez en ligne à votre rythme, reprenez la partie quand vous voulez</div>
         </div>
 
         <div class="menubox">
             <button class="menutitle" id="realbutton">Jouer en temps réel
-                <div id="flagreal" style="display: none;">🍄</div>
+                <div id="flagreal" style="display: none;"></div>
             </button>
             <div class="desc">Jouez en ligne contre un adversaire actuellement connecté</div>
         </div>
@@ -82,9 +85,171 @@
 
     <div id="game-container">
         <div id="frame">
+
             <h2>Cubix</h2>
+            <div id="mask0"></div>
             <div id="adv0">
                 <div id="adv"></div>
+            </div>
+            <div id="game-board-clone">
+                <!-- Plateau de 6x6 pour Cubix -->
+                <div class="grid-clone"></div>
+                <div class="grid-clone"></div>
+                <div class="grid-clone"></div>
+                <div class="grid-clone"></div>
+                <div class="grid-clone"></div>
+                <div class="grid-clone"></div>
+                <div class="grid-clone"></div>
+                <div class="grid-clone"></div>
+                <div class="grid-clone"></div>
+                <div class="grid-clone"></div>
+                <div class="grid-clone"></div>
+                <div class="grid-clone"></div>
+                <div class="grid-clone"></div>
+                <div class="grid-clone"></div>
+                <div class="grid-clone"></div>
+                <div class="grid-clone"></div>
+                <div class="grid-clone"></div>
+                <div class="grid-clone"></div>
+                <div class="grid-clone"></div>
+                <div class="grid-clone"></div>
+                <div class="grid-clone"></div>
+                <div class="grid-clone"></div>
+                <div class="grid-clone"></div>
+                <div class="grid-clone"></div>
+                <div class="grid-clone"></div>
+                <div class="grid-clone"></div>
+                <div class="grid-clone"></div>
+                <div class="grid-clone"></div>
+                <div class="grid-clone"></div>
+                <div class="grid-clone"></div>
+                <div class="grid-clone"></div>
+                <div class="grid-clone"></div>
+                <div class="grid-clone"></div>
+                <div class="grid-clone"></div>
+                <div class="grid-clone"></div>
+                <div class="grid-clone"></div>
+
+                <div class="scene-clone" id="scene-1-clone">
+                    <div class="cube" id="cube-1-clone">
+                        <div class="face top"><div class="shape1"></div></div>
+                        <div class="face bottom"><div class="shape2"></div></div>
+                        <div class="face right"><div class="shape3"></div></div>
+                        <div class="face left"><div class="shape4"></div></div>
+                        <div class="face front"><div class="shape5"></div></div>
+                        <div class="face back"><div class="shape6"></div></div>
+                    </div>
+                </div>
+                <div class="scene-clone" id="scene-2-clone">
+                    <div class="cube" id="cube-2-clone">
+                        <div class="face top"><div class="shape1"></div></div>
+                        <div class="face bottom"><div class="shape2"></div></div>
+                        <div class="face right"><div class="shape3"></div></div>
+                        <div class="face left"><div class="shape4"></div></div>
+                        <div class="face front"><div class="shape5"></div></div>
+                        <div class="face back"><div class="shape6"></div></div>
+                    </div>
+                </div>
+                <div class="scene-clone" id="scene-3-clone">
+                    <div class="cube" id="cube-3-clone">
+                        <div class="face top"><div class="shape1"></div></div>
+                        <div class="face bottom"><div class="shape2"></div></div>
+                        <div class="face right"><div class="shape3"></div></div>
+                        <div class="face left"><div class="shape4"></div></div>
+                        <div class="face front"><div class="shape5"></div></div>
+                        <div class="face back"><div class="shape6"></div></div>
+                    </div>
+                </div>
+                <div class="scene-clone" id="scene-4-clone">
+                    <div class="cube" id="cube-4-clone">
+                        <div class="face top"><div class="shape1"></div></div>
+                        <div class="face bottom"><div class="shape2"></div></div>
+                        <div class="face right"><div class="shape3"></div></div>
+                        <div class="face left"><div class="shape4"></div></div>
+                        <div class="face front"><div class="shape5"></div></div>
+                        <div class="face back"><div class="shape6"></div></div>
+                    </div>
+                </div>
+                <div class="scene-clone" id="scene-5-clone">
+                    <div class="cube" id="cube-5-clone">
+                        <div class="face top"><div class="shape1"></div></div>
+                        <div class="face bottom"><div class="shape2"></div></div>
+                        <div class="face right"><div class="shape3"></div></div>
+                        <div class="face left"><div class="shape4"></div></div>
+                        <div class="face front"><div class="shape5"></div></div>
+                        <div class="face back"><div class="shape6"></div></div>
+                    </div>
+                </div>
+                <div class="scene-clone" id="scene-6-clone">
+                    <div class="cube" id="cube-6-clone">
+                        <div class="face top"><div class="shape1"></div></div>
+                        <div class="face bottom"><div class="shape2"></div></div>
+                        <div class="face right"><div class="shape3"></div></div>
+                        <div class="face left"><div class="shape4"></div></div>
+                        <div class="face front"><div class="shape5"></div></div>
+                        <div class="face back"><div class="shape6"></div></div>
+                    </div>
+                </div>
+                <div class="scene-clone" id="scene-7-clone">
+                    <div class="cube" id="cube-7-clone">
+                        <div class="facew top"><div class="shape1"></div></div>
+                        <div class="facew bottom"><div class="shape2"></div></div>
+                        <div class="facew right"><div class="shape3"></div></div>
+                        <div class="facew left"><div class="shape4"></div></div>
+                        <div class="facew front"><div class="shape5"></div></div>
+                        <div class="facew back"><div class="shape6"></div></div>
+                    </div>
+                </div>
+                <div class="scene-clone" id="scene-8-clone">
+                    <div class="cube" id="cube-8-clone">
+                        <div class="facew top"><div class="shape1"></div></div>
+                        <div class="facew bottom"><div class="shape2"></div></div>
+                        <div class="facew right"><div class="shape3"></div></div>
+                        <div class="facew left"><div class="shape4"></div></div>
+                        <div class="facew front"><div class="shape5"></div></div>
+                        <div class="facew back"><div class="shape6"></div></div>
+                    </div>
+                </div>
+                <div class="scene-clone" id="scene-9-clone">
+                    <div class="cube" id="cube-9-clone">
+                        <div class="facew top"><div class="shape1"></div></div>
+                        <div class="facew bottom"><div class="shape2"></div></div>
+                        <div class="facew right"><div class="shape3"></div></div>
+                        <div class="facew left"><div class="shape4"></div></div>
+                        <div class="facew front"><div class="shape5"></div></div>
+                        <div class="facew back"><div class="shape6"></div></div>
+                    </div>
+                </div>
+                <div class="scene-clone" id="scene-10-clone">
+                    <div class="cube" id="cube-10-clone">
+                        <div class="facew top"><div class="shape1"></div></div>
+                        <div class="facew bottom"><div class="shape2"></div></div>
+                        <div class="facew right"><div class="shape3"></div></div>
+                        <div class="facew left"><div class="shape4"></div></div>
+                        <div class="facew front"><div class="shape5"></div></div>
+                        <div class="facew back"><div class="shape6"></div></div>
+                    </div>
+                </div>
+                <div class="scene-clone" id="scene-11-clone">
+                    <div class="cube" id="cube-11-clone">
+                        <div class="facew top"><div class="shape1"></div></div>
+                        <div class="facew bottom"><div class="shape2"></div></div>
+                        <div class="facew right"><div class="shape3"></div></div>
+                        <div class="facew left"><div class="shape4"></div></div>
+                        <div class="facew front"><div class="shape5"></div></div>
+                        <div class="facew back"><div class="shape6"></div></div>
+                    </div>
+                </div>
+                <div class="scene-clone" id="scene-12-clone">
+                    <div class="cube" id="cube-12-clone">
+                        <div class="facew top"><div class="shape1"></div></div>
+                        <div class="facew bottom"><div class="shape2"></div></div>
+                        <div class="facew right"><div class="shape3"></div></div>
+                        <div class="facew left"><div class="shape4"></div></div>
+                        <div class="facew front"><div class="shape5"></div></div>
+                        <div class="facew back"><div class="shape6"></div></div>
+                    </div>
+                </div>
             </div>
 
             <div id="game-board">
@@ -246,14 +411,20 @@
                     </div>
                 </div>
             </div>
+            <div id="me0">
+                <div id="mask"></div>
+                <div id="me"></div>
+            </div>
+
+            
         </div>
 
         <div id="bottomblock">
 
             <div id="panels">
 
-                <div id="reset">
-                    <button id="res">Quitter</button>
+                <div id="pastbut">
+                    <button id="back">&lt;</button>
                 </div>
 
                 <div id="control-panel">
@@ -264,16 +435,22 @@
 
                 </div>
 
-                <div id="control-panel2">
-                    <!-- Bouton pour ouvrir la fenêtre modale -->
-                    <button id="openModal">Règles du jeu</button>
+                <div id="futurebut">
+                    <button id="forward">&gt;</button>
                 </div>
+
 
             </div>
 
-            <div id="rightblock">
+            <div id="panels2">
+
+                <button id="res">Terminer</button>
+                
+                <button id="openModal">Règles du jeu</button>
+
+                <button id="transparence">Transpa- rence</button>
                 <button id="leave">Accueil</button>
-                <button id="transparence">Transparence</button>
+
             </div>
 
         </div>
