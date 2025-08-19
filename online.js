@@ -194,7 +194,7 @@ function launch(){
     deco();
 
     countgamesget(pseudo).then(nbg => {
-        document.getElementById("nbgames").textContent = "🎖️" + nbg;
+        document.getElementById("nbgames").textContent = "🏅" + nbg;
         joueurRef.update({
             nb: nbg
         });
@@ -264,7 +264,7 @@ function display(){
                     div.onclick = () => defierJoueur(key);
                 }
                 container.appendChild(div);
-                afficherPseudoMasque(key,key, " (🎖️" + joueur.nb + ") " + joueur.enLigne, null, null);
+                afficherPseudoMasque(key,key, " (🏅" + joueur.nb + ") " + joueur.enLigne, null, null);
             }
         }
         if (n==0){
