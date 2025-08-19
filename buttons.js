@@ -274,11 +274,14 @@ function moveCubeTo3(targetCellid, cellcolor) {//Ã©tage de protection pour le dÃ
 
     if (rotationinprogress){
         waitforsecondmove =1;
-        cube.addEventListener('transitionend', () => {
+        selectedScene.addEventListener('transitionend', () => {
+            setTimeout(() => {
 
+            
             moveCubeTo4(targetCellid, cellcolor);
 
             waitforsecondmove =0;
+}, 100);
         },{once: true});
     }
 
