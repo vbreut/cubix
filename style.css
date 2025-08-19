@@ -550,7 +550,7 @@ body {
 
 #mask0 {
     background-color:rgb(255, 248, 227);
-    width: 200px;
+    width: calc(2.5*var(--cellsize));
     height: 35px;
     z-index: 1;
     -webkit-transform: translate3d(0, 0, 100px);
@@ -561,7 +561,7 @@ body {
 
 #mask {
     background-color:rgb(255, 248, 227);
-    width: 200px;
+    width: calc(2.5*var(--cellsize));
     height: 35px;
     z-index: 1;
     -webkit-transform: translate3d(0, 0, 100px);
