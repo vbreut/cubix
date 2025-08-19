@@ -94,11 +94,11 @@ function displaydiff(){
 
                     if (game.joueur1=="Libre"){
                         div.style.backgroundColor = "rgb(129, 217, 154)"
-                        afficherPseudoMasque(game.joueur2, key,"(🎖️" + game.nbjoueur2 + ")  /  ", game.joueur1, null);
+                        afficherPseudoMasque(game.joueur2, key,"(🏅" + game.nbjoueur2 + ")  /  ", game.joueur1, null);
 
                     } else {
                         div.style.backgroundColor = "rgb(235, 126, 0)"
-                        afficherPseudoMasque(game.joueur2, key,"(🎖️" + game.nbjoueur2 + ")  /  ", game.joueur1, "🎖️" + game.nbjoueur1 + ")");
+                        afficherPseudoMasque(game.joueur2, key,"(🏅" + game.nbjoueur2 + ")  /  ", game.joueur1, "🏅" + game.nbjoueur1 + ")");
                     }
                     
                     if (game.joueur1 == "Libre" && pseudo !== null && game.joueur2 !== pseudo){
