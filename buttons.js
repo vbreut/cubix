@@ -8,7 +8,10 @@ const board = document.querySelectorAll('.grid');
 const firstcell = document.querySelector('.grid');
 const scenes = document.querySelectorAll('.scene');
 const firstscene = document.querySelector('.scene');
-const gameboard = document.getElementById('game-board')
+const gameboard = document.getElementById('game-board');
+const gameboardclone = document.getElementById('game-board-clone');
+const mask0 = document.getElementById('mask0');
+const mask = document.getElementById('mask');
 const validButton = document.getElementById('valider');
 const confirmyesButton = document.getElementById("confirm-yes");
 const confirmnoButton = document.getElementById("confirm-no");
@@ -25,17 +28,20 @@ let cellwidth = cellrect.width + 5;
 let scenerect = firstscene.getBoundingClientRect();
 let movx = scenerect.width/4 + 5;
 let movy = scenerect.width/4 + 5;
-let dark="rgb(105, 149, 183)";
-let light="rgb(140, 174, 200)";
-let blockbot=0;
+let dark="rgb(105, 153, 183)";
+let light="rgb(140, 178, 200)";
 //let changepossible=1;
 let playingmode=1;
 //let choice=null;
 let rotationinprogress=0;
 let waitforsecondmove =0;
 const tempo = 350;
-let largeur = document.documentElement.clientWidth;
-
+//let largeur = document.documentElement.clientWidth;
+let scrollXinit=0;
+let scrollYinit=0;
+let childrenhistory =[];
+let indice=[1];
+let nbgames = [0];
 
 //0 cell nb
 //1 face up, par défaut red square
@@ -85,48 +91,58 @@ function choice0() {
 okbot.addEventListener('click',showPage);
 
 function showPage() {
-    //if (blockbot==0){
-        if (pseudo !== "" && pseudo!==null){
-            let joueurRef = database.ref('joueurs/' + pseudo);
-            joueurRef.set({ enLigne: "en partie"});
-            joueurRef.onDisconnect().remove();
-        }
 
-        if(playingmode==1){
-            document.getElementById("adv").textContent = "Bot 1";
-        }
-        if(playingmode==2){
-            document.getElementById("adv").textContent = "Bot 2";
-        }
-        if(playingmode==3){
-            document.getElementById("adv").textContent = "Bot 3";
-        }
-        if(playingmode==0){
-            document.getElementById("adv").style.display="none";
-        }
+    if (pseudo !== "" && pseudo!==null){
+        let joueurRef = database.ref('joueurs/' + pseudo);
+        joueurRef.set({ enLigne: "en partie"});
+        joueurRef.onDisconnect().remove();
+    }
 
-        if(playingmode==5){
-            leaveButton.style.display="block";
-        } else{
-            leaveButton.style.display="none";
-        }
+    if(playingmode==1){
+        document.getElementById("adv").textContent = "Bot 1";
+        document.getElementById("me").style.color = "white";
+        afficherPseudoMasque(pseudo,"me",null, null, null);
+    }
+    if(playingmode==2){
+        document.getElementById("adv").textContent = "Bot 2";
+        document.getElementById("me").style.color = "white";
+        afficherPseudoMasque(pseudo,"me",null, null, null);
+    }
+    if(playingmode==3){
+        document.getElementById("adv").textContent = "Bot 3";
+        document.getElementById("me").style.color = "white";
+        afficherPseudoMasque(pseudo,"me",null, null, null);
+    }
+    if(playingmode==0){
+        document.getElementById("adv").style.display="none";
+    }
 
-        document.getElementById("game").style.display="block";
-        document.getElementById("home").style.display="none";
-        modalvic.style.display = "none";
-        modalreal.style.display = "none";
-        modaldiff.style.display = "none";
-        modalbot.style.display = "none";
+    if(playingmode==5){
+        leaveButton.style.display="block";
+    } else{
+        leaveButton.style.display="none";
+    }
 
-        boardrect= gameboard.getBoundingClientRect();
-        scenerect = firstscene.getBoundingClientRect();
-        cellrect = firstcell.getBoundingClientRect();
-        largeur = document.documentElement.clientWidth;
-        cellwidth = cellrect.width + 5;
-        movx = scenerect.width/4 + 5;
-        movy = scenerect.width/4 + 5;
 
-    //}
+    document.getElementById("game").style.display="block";
+    document.getElementById("home").style.display="none";
+    modalvic.style.display = "none";
+    modalreal.style.display = "none";
+    modaldiff.style.display = "none";
+    modalbot.style.display = "none";
+
+    //boardrect= gameboard.getBoundingClientRect();
+    scenerect = firstscene.getBoundingClientRect();
+    cellrect = firstcell.getBoundingClientRect();
+    //largeur = document.documentElement.clientWidth;
+    //scrollXinit=window.scrollX;
+    //scrollYinit=window.scrollY;
+    cellwidth = cellrect.width + 5;
+    movx = scenerect.width/4 + 5;
+    movy = scenerect.width/4 + 5;
+
+    pastButton.addEventListener('click', ()=> pastclick());
+    futureButton.addEventListener('click', ()=> futureclick());
 }
 
 scenes.forEach(scen => {
@@ -177,209 +193,6 @@ board.forEach(cell => {
     });
 });
 
-function changefacesup() {
-
-    let cube=selectedScene.firstElementChild;
-    let cubenumber=parseInt(cube.id.match(/\d+/)[0]) - 1;
-    let faceright=cubestatus[6][cubenumber];
-
-    let el1=cube.querySelector('.shape1'); //rs
-    let el6=cube.querySelector('.shape6'); //bd
-    let el5=cube.querySelector('.shape5'); //bs
-    let el2=cube.querySelector('.shape2'); //rd
-    let el4=cube.querySelector('.shape4'); //ws
-    let el3=cube.querySelector('.shape3'); //wd
-
-    if(faceright=="wd"){
-        el1.classList.replace('shape1','shape6');
-        el6.classList.replace('shape6','shape2');
-        el2.classList.replace('shape2','shape5');
-        el5.classList.replace('shape5','shape1');
-    }
-    if(faceright=="ws"){
-        el6.classList.replace('shape6','shape1');
-        el1.classList.replace('shape1','shape5');
-        el5.classList.replace('shape5','shape2');
-        el2.classList.replace('shape2','shape6');
-    }
-    if(faceright=="bd"){
-        el3.classList.replace('shape3','shape1');
-        el1.classList.replace('shape1','shape4');
-        el4.classList.replace('shape4','shape2');
-        el2.classList.replace('shape2','shape3');
-    }
-    if(faceright=="bs"){
-        el1.classList.replace('shape1','shape3');
-        el3.classList.replace('shape3','shape2');
-        el2.classList.replace('shape2','shape4');
-        el4.classList.replace('shape4','shape1');
-    }
-    if(faceright=="rs"){
-        el3.classList.replace('shape3','shape5');
-        el5.classList.replace('shape5','shape4');
-        el4.classList.replace('shape4','shape6');
-        el6.classList.replace('shape6','shape3');
-    }
-    if(faceright=="rd"){
-        el5.classList.replace('shape5','shape3');
-        el3.classList.replace('shape3','shape6');
-        el6.classList.replace('shape6','shape4');
-        el4.classList.replace('shape4','shape5');
-    }
-}
-
-function changefacesdown() {
-
-    let cube=selectedScene.firstElementChild;
-    let cubenumber=parseInt(cube.id.match(/\d+/)[0]) - 1;
-    let faceright=cubestatus[6][cubenumber];
-
-    let el1=cube.querySelector('.shape1'); //rs
-    let el6=cube.querySelector('.shape6'); //bd
-    let el5=cube.querySelector('.shape5'); //bs
-    let el2=cube.querySelector('.shape2'); //rd
-    let el4=cube.querySelector('.shape4'); //ws
-    let el3=cube.querySelector('.shape3'); //wd
-
-    if(faceright=="wd"){
-        el6.classList.replace('shape6','shape1');
-        el1.classList.replace('shape1','shape5');
-        el5.classList.replace('shape5','shape2');
-        el2.classList.replace('shape2','shape6');
-    }
-    if(faceright=="ws"){
-        el1.classList.replace('shape1','shape6');
-        el6.classList.replace('shape6','shape2');
-        el2.classList.replace('shape2','shape5');
-        el5.classList.replace('shape5','shape1');
-    }
-    if(faceright=="bd"){
-        el1.classList.replace('shape1','shape3');
-        el3.classList.replace('shape3','shape2');
-        el2.classList.replace('shape2','shape4');
-        el4.classList.replace('shape4','shape1');
-    }
-    if(faceright=="bs"){
-        el3.classList.replace('shape3','shape1');
-        el1.classList.replace('shape1','shape4');
-        el4.classList.replace('shape4','shape2');
-        el2.classList.replace('shape2','shape3');
-    }
-    if(faceright=="rs"){
-        el5.classList.replace('shape5','shape3');
-        el3.classList.replace('shape3','shape6');
-        el6.classList.replace('shape6','shape4');
-        el4.classList.replace('shape4','shape5');
-    }
-    if(faceright=="rd"){
-        el3.classList.replace('shape3','shape5');
-        el5.classList.replace('shape5','shape4');
-        el4.classList.replace('shape4','shape6');
-        el6.classList.replace('shape6','shape3');
-    }
-}
-
-function changefacesright() {
-
-    let cube=selectedScene.firstElementChild;
-    let cubenumber=parseInt(cube.id.match(/\d+/)[0]) - 1;
-    let faceback=cubestatus[4][cubenumber];
-
-    let el1=cube.querySelector('.shape1'); //rs
-    let el6=cube.querySelector('.shape6'); //bd
-    let el5=cube.querySelector('.shape5'); //bs
-    let el2=cube.querySelector('.shape2'); //rd
-    let el4=cube.querySelector('.shape4'); //ws
-    let el3=cube.querySelector('.shape3'); //wd
-
-    if(faceback=="wd"){
-        el1.classList.replace('shape1','shape6');
-        el6.classList.replace('shape6','shape2');
-        el2.classList.replace('shape2','shape5');
-        el5.classList.replace('shape5','shape1');
-    }
-    if(faceback=="ws"){
-        el6.classList.replace('shape6','shape1');
-        el1.classList.replace('shape1','shape5');
-        el5.classList.replace('shape5','shape2');
-        el2.classList.replace('shape2','shape6');
-    }
-    if(faceback=="bd"){
-        el3.classList.replace('shape3','shape1');
-        el1.classList.replace('shape1','shape4');
-        el4.classList.replace('shape4','shape2');
-        el2.classList.replace('shape2','shape3');
-    }
-    if(faceback=="bs"){
-        el1.classList.replace('shape1','shape3');
-        el3.classList.replace('shape3','shape2');
-        el2.classList.replace('shape2','shape4');
-        el4.classList.replace('shape4','shape1');
-    }
-    if(faceback=="rs"){
-        el3.classList.replace('shape3','shape5');
-        el5.classList.replace('shape5','shape4');
-        el4.classList.replace('shape4','shape6');
-        el6.classList.replace('shape6','shape3');
-    }
-    if(faceback=="rd"){
-        el5.classList.replace('shape5','shape3');
-        el3.classList.replace('shape3','shape6');
-        el6.classList.replace('shape6','shape4');
-        el4.classList.replace('shape4','shape5');
-    }
-}
-
-function changefacesleft() {
-
-    let cube=selectedScene.firstElementChild;
-    let cubenumber=parseInt(cube.id.match(/\d+/)[0]) - 1;
-    let faceback=cubestatus[4][cubenumber];
-
-    let el1=cube.querySelector('.shape1'); //rs
-    let el6=cube.querySelector('.shape6'); //bd
-    let el5=cube.querySelector('.shape5'); //bs
-    let el2=cube.querySelector('.shape2'); //rd
-    let el4=cube.querySelector('.shape4'); //ws
-    let el3=cube.querySelector('.shape3'); //wd
-
-    if(faceback=="wd"){
-        el6.classList.replace('shape6','shape1');
-        el1.classList.replace('shape1','shape5');
-        el5.classList.replace('shape5','shape2');
-        el2.classList.replace('shape2','shape6');
-    }
-    if(faceback=="ws"){
-        el1.classList.replace('shape1','shape6');
-        el6.classList.replace('shape6','shape2');
-        el2.classList.replace('shape2','shape5');
-        el5.classList.replace('shape5','shape1');
-    }
-    if(faceback=="bd"){
-        el1.classList.replace('shape1','shape3');
-        el3.classList.replace('shape3','shape2');
-        el2.classList.replace('shape2','shape4');
-        el4.classList.replace('shape4','shape1');
-    }
-    if(faceback=="bs"){
-        el3.classList.replace('shape3','shape1');
-        el1.classList.replace('shape1','shape4');
-        el4.classList.replace('shape4','shape2');
-        el2.classList.replace('shape2','shape3');
-    }
-    if(faceback=="rs"){
-        el5.classList.replace('shape5','shape3');
-        el3.classList.replace('shape3','shape6');
-        el6.classList.replace('shape6','shape4');
-        el4.classList.replace('shape4','shape5');
-    }
-    if(faceback=="rd"){
-        el3.classList.replace('shape3','shape5');
-        el5.classList.replace('shape5','shape4');
-        el4.classList.replace('shape4','shape6');
-        el6.classList.replace('shape6','shape3');
-    }
-}
 
 function changefacesmove(){
     let cube=selectedScene.firstElementChild;
@@ -485,12 +298,13 @@ function moveCubeTo4(targetCellid, cellcolor) {
     let targetCell=document.getElementById(targetCellid);
 
     let coordcell = targetCell.getBoundingClientRect();
-    let x = coordcell.left;//+window.scrollX;
-    let y = coordcell.top;//+window.scrollY;
+    let x = coordcell.left;// + window.scrollX - scrollXinit;
+    let y = coordcell.top;// + window.scrollY - scrollYinit;
 
     let coordscene= selectedScene.getBoundingClientRect();
-    let xc = coordscene.left;//+window.scrollX;
-    let yc = coordscene.top;//+window.scrollY;
+    let xc = coordscene.left;// + window.scrollX - scrollXinit;
+    let yc = coordscene.top;// + window.scrollY - scrollYinit;
+    boardrect= gameboard.getBoundingClientRect();
 
     let x3d=0;
     let y3d=0;
@@ -512,6 +326,7 @@ function moveCubeTo4(targetCellid, cellcolor) {
     let currentcell= document.getElementById(cellid);
     let te = tempo/1000;
     let transf = 'transform ' + te + 's' + ' ease-out';
+
 
 
     if (Math.abs(deltax) + Math.abs(deltay) < 1.3*cellwidth && Math.abs(deltax) + Math.abs(deltay) > 0.3*cellwidth) {
@@ -633,7 +448,7 @@ function moveCubeTo4(targetCellid, cellcolor) {
             cubestatus[0][cubenumber]= cubestatus[0][cubenumber] - 1;
         }
 
-        x3d = x + movx - boardrect.left - 5 - 0.5+ (largeur - largeur2)/2;
+        x3d = x + movx - boardrect.left - 5 - 0.5;//+ (largeur - largeur2)/2;
         y3d = y + movy - boardrect.top - 5 - 0.5;
 
         selectedScene.style.transform = `translate(${x3d}px, ${y3d}px) rotateY(18deg) rotateX(18deg)`;
@@ -654,6 +469,7 @@ function moveCubeTo4(targetCellid, cellcolor) {
 }
 
 validButton.addEventListener('click', () => {
+
 
     if (waitforsecondmove){ //utile pour les validations manuelles
         return;
@@ -700,7 +516,6 @@ validButton.addEventListener('click', () => {
     if (numberofmoves > 0 && (playingmode==4 || playingmode==5) && turn=="white"){
 
         valider();
-        
 
         if (forcedcube[3]== -1 || forcedcube[3]>5){// si on a bien pris le cube forcé de l'adversaire ou si c'est l'autre qui est forcé
             clean();//envoie le coup, et valide mon coup chez l'adversaire
@@ -711,6 +526,7 @@ validButton.addEventListener('click', () => {
     }
 
 });
+
 
 function valider(){
 
@@ -734,6 +550,10 @@ function valider(){
         selectedScene = null;
     }
 
+    if(playingmode<=4){
+        historyrealtime();
+    }
+
     if (turn=="end") {
         return;
     }
@@ -752,6 +572,19 @@ function valider(){
         } else {tour.style.backgroundColor = "rgb(0, 0, 0)";}
     }
 }
+
+function historyrealtime(){
+
+    let struct = null;
+    struct= {joueur: pseudo, matrice : cubestatus.map(subArray => [...subArray])};
+    childrenhistory.push(struct);
+    indice=[1];
+    gameboardclone.style.visibility = "hidden";
+    mask.style.visibility = "hidden";
+    mask0.style.visibility = "hidden";
+
+}
+
 
 
 // Récupérer les éléments HTML
@@ -913,21 +746,38 @@ resButton.addEventListener('click', () => {
 confirmyesButton.addEventListener('click', () => {
     let joueurRef = database.ref('joueurs/' + pseudo);
     joueurRef.remove();
+
     if(document.getElementById("message").textContent=="Terminer la partie ?" && playingmode ==5){
         const gamediffRef = database.ref('gamesdiff/' + gameIddiff);
         gamediffRef.once("value").then(snapshot=>{
 
-            if (snapshot.val().joueur1==pseudo && (snapshot.val().joueur2 !== "Abandon" || snapshot.val().joueur2 !== "Libre")){
+            if(snapshot.val().joueur1 == "Abandon" || snapshot.val().joueur2 == "Abandon"){
+                gamediffRef.remove();
+
+                nbgames[0]=nbgames[0]+1;
+                database.ref('count/' + pseudo).set({ nb: nbgames[0] });
+
+            }
+
+            if (snapshot.val().joueur1==pseudo && snapshot.val().joueur2 !== "Abandon" && snapshot.val().joueur2 !== "Libre"){
                 gamediffRef.update({
                     joueur1: "Abandon"
                 });
+
+                nbgames[0]=nbgames[0]+1;
+                database.ref('count/' + pseudo).set({ nb: nbgames[0] });
             }
-            if (snapshot.val().joueur2==pseudo && (snapshot.val().joueur1 !== "Abandon" || snapshot.val().joueur1 !== "Libre")){
+            if (snapshot.val().joueur2==pseudo && snapshot.val().joueur1 !== "Abandon" && snapshot.val().joueur1 !== "Libre"){
                 gamediffRef.update({
                     joueur2: "Abandon"
                 });
+
+                nbgames[0]=nbgames[0]+1;
+                database.ref('count/' + pseudo).set({ nb: nbgames[0] });
             }
-            if(snapshot.val().joueur1 == "Abandon" || snapshot.val().joueur2 == "Abandon" || snapshot.val().joueur1 == "Libre" || snapshot.val().joueur2 == "Libre"){
+
+
+            if(snapshot.val().joueur1 == "Libre" || snapshot.val().joueur2 == "Libre"){
                 gamediffRef.remove();
 
             }
@@ -965,4 +815,3 @@ function lancerConfettis() {
     }, 100);
 
 }
-
