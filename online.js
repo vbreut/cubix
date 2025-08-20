@@ -96,10 +96,10 @@ function listener(snapshot,firstconnection,firstdeconnection){
         const element = document.getElementById("game");
         if(getComputedStyle(element).display!=="none"){//si la déco/reco a lieu en partie
             joueurRef.onDisconnect().remove();
-            joueurRef.set({ enLigne: "en partie" });
+            joueurRef.set({ enLigne: "en partie", nb:nbgames[0] });
         } else{
             joueurRef.onDisconnect().remove();
-            joueurRef.set({ enLigne: "connecté" });
+            joueurRef.set({ enLigne: "connecté",nb:nbgames[0] });
         }
         document.getElementById("onlinesubmenu").style.display = "flex";
         document.getElementById("onlinediffsubmenu").style.display = "flex";
