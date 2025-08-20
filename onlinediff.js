@@ -385,7 +385,7 @@ function futureclick(){
 
 function initconfig(matrice,real){
 
-    let largeur2 = document.documentElement.clientWidth;
+    //let largeur2 = document.documentElement.clientWidth;
     //let i =0;
     let j=0;
     let x = 0;
