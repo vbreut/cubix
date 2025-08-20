@@ -115,6 +115,7 @@ function showPage() {
     }
     if(playingmode==0){
         document.getElementById("adv").style.display="none";
+        document.getElementById("me").style.display="none";
     }
 
     if(playingmode==5){
