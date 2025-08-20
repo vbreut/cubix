@@ -194,8 +194,8 @@ board.forEach(cell => {
 });
 
 
-function changefacesmove(){
-    let cube=selectedScene.firstElementChild;
+function changefacesmove(cube){
+    //let cube=selectedScene.firstElementChild;
     let cubenumber=parseInt(cube.id.match(/\d+/)[0]) - 1;
 
     let tab = {rs : ".shape1", rd : ".shape2", wd : ".shape3", ws : ".shape4", bs : ".shape5", bd : ".shape6"};
@@ -271,17 +271,20 @@ function changefacesmove(){
 function moveCubeTo3(targetCellid, cellcolor) {//étage de protection pour le déplacement manuel
 
     let cube=selectedScene.firstElementChild;
+    let i=0;
 
     if (rotationinprogress){
         waitforsecondmove =1;
+
         selectedScene.addEventListener('transitionend', () => {
-            setTimeout(() => {
 
-            
-            moveCubeTo4(targetCellid, cellcolor);
+            waitloop(i,targetCellid, cellcolor);
+            /*setTimeout(() => {
 
-            waitforsecondmove =0;
-}, 100);
+                moveCubeTo4(targetCellid, cellcolor);
+
+                waitforsecondmove =0;
+            }, 50);*/    
         },{once: true});
     }
 
@@ -289,6 +292,26 @@ function moveCubeTo3(targetCellid, cellcolor) {//étage de protection pour le d�
         moveCubeTo4(targetCellid, cellcolor);
     }
 }
+
+function waitloop(i,targetCellid, cellcolor){
+
+    i=i+1;
+    if(i==50){
+        console.log("échec");
+        return;
+    }
+    if(rotationinprogress)
+        setTimeout(() => {
+            waitloop(i,targetCellid, cellcolor);
+        }, 50);
+    else{
+
+        moveCubeTo4(targetCellid, cellcolor);
+        waitforsecondmove =0;
+    }
+}
+
+
 
 function moveCubeTo4(targetCellid, cellcolor) {
 
@@ -349,8 +372,7 @@ function moveCubeTo4(targetCellid, cellcolor) {
                 void cube.offsetHeight;
 
                 //changefacesdown();
-                changefacesmove();
-                //console.log(moves);
+                changefacesmove(cube);
                 
                 cube.style.transition = transf;
 
@@ -379,12 +401,9 @@ function moveCubeTo4(targetCellid, cellcolor) {
                 void cube.offsetHeight;
 
                 //changefacesup();
-                changefacesmove();
+                changefacesmove(cube);
                 cube.style.transition = transf;
                 rotationinprogress=0;
-
-                //console.log(moves);
-
 
             },{once: true});
 
@@ -409,8 +428,7 @@ function moveCubeTo4(targetCellid, cellcolor) {
                 void cube.offsetHeight;
 
                 //changefacesright();
-                changefacesmove();
-                //console.log(moves);
+                changefacesmove(cube);
                 
                 cube.style.transition = transf;
                 rotationinprogress=0;
@@ -437,8 +455,7 @@ function moveCubeTo4(targetCellid, cellcolor) {
                 void cube.offsetHeight;
 
                 //changefacesleft();
-                changefacesmove();
-                //console.log(moves);
+                changefacesmove(cube);
 
                 cube.style.transition = transf;
                 rotationinprogress=0;
@@ -510,7 +527,6 @@ validButton.addEventListener('click', () => {
                 if (doublemove==-1){
                     //tous les cubes sont bloqués. Les blancs continuent à jouer
                 }
-                
                 waitforvalid(movelength);
             }, tempo + 50);
         }
@@ -546,7 +562,7 @@ function valider(){
 
     let cube=selectedScene.firstElementChild;
     if (rotationinprogress){ //utile pour la validation manuelle
-        cube.addEventListener('transitionend', () => {
+        selectedScene.addEventListener('transitionend', () => {
             selectedScene = null;
         },{once: true});
     } else {
@@ -566,12 +582,14 @@ function valider(){
     if (turn=="white") {
         turn="black";
 
-        if (col == "rgb(50, 50, 50)" || col == "rgba(50, 50, 50, 0.6)"){tour.style.backgroundColor = "rgb(0, 0, 0)";
+        if (col == "rgb(50, 50, 50)" || col == "rgba(50, 50, 50, 0.6)"){
+            tour.style.backgroundColor = "rgb(0, 0, 0)";
         } else {tour.style.backgroundColor = "rgb(255, 255, 255)";}
 
     } else {
         turn="white";
-        if (col == "rgb(50, 50, 50)" || col == "rgba(50, 50, 50, 0.6)"){tour.style.backgroundColor = "rgb(255, 255, 255)";
+        if (col == "rgb(50, 50, 50)" || col == "rgba(50, 50, 50, 0.6)"){
+            tour.style.backgroundColor = "rgb(255, 255, 255)";
         } else {tour.style.backgroundColor = "rgb(0, 0, 0)";}
     }
 }
