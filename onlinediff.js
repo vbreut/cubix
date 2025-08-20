@@ -26,7 +26,8 @@ function creatediff(){
 
     turn = "white";
     
-    document.getElementById("adv").textContent = "Libre";
+    //document.getElementById("adv").textContent = "Libre";
+    //document.getElementById("me").style.color = "white";
     showPage();
 
 }
@@ -70,6 +71,7 @@ function displaydiff(){
                 if (game.joueur1 == pseudo){
                     afficherPseudoMasque(game.joueur2,"adv", null, null, null);
                 } else {
+                    document.getElementById("me").style.color = "white";
                     afficherPseudoMasque(game.joueur1,"adv", null, null, null);
                 }
 
