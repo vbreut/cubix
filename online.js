@@ -565,13 +565,15 @@ function waitforvalid(movelength){
 
     let cube=selectedScene.firstElementChild;
 
-    cube.addEventListener('transitionend', () => {
+    selectedScene.addEventListener('transitionend', () => {
         if(movelength==4){
-            cube.addEventListener('transitionend', () => {
-                setTimeout(() => {
-                    valider()
-                }, tempo);
-            },{once: true});
+            setTimeout(() => {//pour ne pas attacher à la même transition
+                selectedScene.addEventListener('transitionend', () => {
+                    setTimeout(() => {
+                        valider()
+                    }, tempo);
+                },{once: true});
+            }, 50);
         }else{
             setTimeout(() => {
                 valider()
@@ -659,15 +661,15 @@ function convert(coup){
         targetcellid_2 = "cell-" + targetcellnumber_2;
 
         let cube=selectedScene.firstElementChild;
-
-        cube.addEventListener('transitionend', () => { //question de perfo, le mouvement peut prendre plus de temps que prévu. A faire pour tous les bots aussi
+        //normalement l'étage de protection ve séquencer tout seul
+        //cube.addEventListener('transitionend', () => { //question de perfo, le mouvement peut prendre plus de temps que prévu. A faire pour tous les bots aussi
             setTimeout(() => {
                 //selectedcell = document.getElementById(targetcellid_2);
                 //console.log(performance.now()-time);
                 moveCubeTo3(targetcellid_2, light);
 
-            }, 50);
-        },{once: true});
+            }, tempo + 50);
+        //},{once: true});
     }
 
 }
