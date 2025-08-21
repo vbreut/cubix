@@ -26,8 +26,9 @@ function creatediff(){
 
     turn = "white";
     
-    //document.getElementById("adv").textContent = "Libre";
-    //document.getElementById("me").style.color = "white";
+    document.getElementById("adv").textContent = "Libre";
+    afficherPseudoMasque(pseudo,"me",null, null, null);
+    document.getElementById("me").style.color = "white";
     showPage();
 
 }
@@ -52,8 +53,6 @@ function displaydiff(){
             if (game.joueur1==pseudo || game.joueur2==pseudo){
                 gameIddiff = key;
 
-                afficherPseudoMasque(pseudo,"me",null, null, null);
-
                 if (d==0){//seulement à l'init, pour ne pas lancer monitordiff à chaque fois que gamediff est modifié
                     if(game.joueur2==pseudo){
                         document.getElementById("infodiff").textContent = "Jouez votre premier coup !";
@@ -61,18 +60,11 @@ function displaydiff(){
                     monitordiff();
                 }
                 if (game.joueur1 == "Abandon" || game.joueur2 == "Abandon"){
-                    //afficherPseudoMasque("Abandon","adv", null, null, null);
                     document.getElementById("infodiff").textContent = "L'adversaire a quitté la partie";
                 }
 
-                /*if (game.joueur1 !== "Libre" && game.joueur2 == pseudo){
-                    afficherPseudoMasque(game.joueur1,"adv", null, null, null);
-                }*/
-                if (game.joueur1 == pseudo){
+                if (game.joueur1 == pseudo){//pour voir le nouveau pseudo si le joueur rejoint la partie ou abandonne
                     afficherPseudoMasque(game.joueur2,"adv", null, null, null);
-                } else {
-                    document.getElementById("me").style.color = "white";
-                    afficherPseudoMasque(game.joueur1,"adv", null, null, null);
                 }
 
                 if (game.joueur1 == "Libre" && premiercoup==1){
