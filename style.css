@@ -780,7 +780,7 @@ body {
 }
 
 #disc {
-    margin-top: 5px;
+    margin-top: 0px;
 }
 
 @media (orientation: portrait) {
