@@ -168,10 +168,15 @@ function launch(){
     let joueurRef = database.ref('joueurs/' + pseudo);
     let beatRef = database.ref('heartbeat/' + pseudo);
 
-    joueurRef.onDisconnect().remove();
-    joueurRef.set({
-        enLigne: "connecté",
-        lastSeen: Date.now()
+    countgamesget(pseudo).then(nbg => {
+        document.getElementById("nbgames").textContent = "🏅" + nbg;
+        joueurRef.onDisconnect().remove();
+        joueurRef.set({
+            enLigne: "connecté",
+            lastSeen: Date.now(),
+            nb: nbg
+        });
+        nbgames[0]=nbg;
     });
 
     beatRef.onDisconnect().remove();
@@ -193,17 +198,7 @@ function launch(){
     displaydiff();
     deco();
 
-    countgamesget(pseudo).then(nbg => {
-        document.getElementById("nbgames").textContent = "🏅" + nbg;
-        joueurRef.update({
-            nb: nbg
-        });
-        nbgames[0]=nbg;
-    });
-    
-
 }
-
 
 sauvpseudo.addEventListener('click',sauvegarderPseudo);
 
