@@ -99,7 +99,7 @@ function listener(snapshot,firstconnection,firstdeconnection){
             joueurRef.set({ enLigne: "en partie", nb:nbgames[0] });
         } else{
             joueurRef.onDisconnect().remove();
-            joueurRef.set({ enLigne: "connecté",nb:nbgames[0] });
+            joueurRef.set({ enLigne: "connecté", nb:nbgames[0] });
         }
         document.getElementById("onlinesubmenu").style.display = "flex";
         document.getElementById("onlinediffsubmenu").style.display = "flex";
@@ -168,12 +168,18 @@ function launch(){
     let joueurRef = database.ref('joueurs/' + pseudo);
     let beatRef = database.ref('heartbeat/' + pseudo);
 
+    /*joueurRef.onDisconnect().remove();
+    joueurRef.set({
+        enLigne: "connecté",
+        lastSeen: Date.now()
+    });*/
+
     countgamesget(pseudo).then(nbg => {
         document.getElementById("nbgames").textContent = "🏅" + nbg;
         joueurRef.onDisconnect().remove();
         joueurRef.set({
             enLigne: "connecté",
-            lastSeen: Date.now(),
+            //lastSeen: Date.now(),
             nb: nbg
         });
         nbgames[0]=nbg;
@@ -197,8 +203,10 @@ function launch(){
     display();
     displaydiff();
     deco();
+    
 
 }
+
 
 sauvpseudo.addEventListener('click',sauvegarderPseudo);
 
@@ -293,7 +301,7 @@ function deco(){
             document.getElementById("cancelchallenge").style.display = "none";
             document.getElementById("buttonchallenge").style.display = "none";
             challengeRef.remove();
-            joueurRef.set({ enLigne: "connecté" });
+            joueurRef.update({ enLigne: "connecté" });
             adversaire=null;
         }
         if (pseudodeleted==adversaire && getComputedStyle(element).display!=="none" && turn !== "end" && playingmode == 4){
@@ -347,7 +355,7 @@ function defierJoueur(adv) {
                 //timestamp: Date.now()
             });
 
-            joueurRef.set({ enLigne: "en défi"});
+            joueurRef.update({ enLigne: "en défi"});
 
             surveillerreponse();
 
@@ -361,7 +369,7 @@ function defierJoueur(adv) {
                 document.getElementById("infocom").textContent = "Choisir un joueur";
                 document.getElementById("cancelchallenge").style.display = "none";
                 document.getElementById("joueurs").style.display = "block";
-                joueurRef.set({ enLigne: "connecté" });
+                joueurRef.update({ enLigne: "connecté" });
                 adversaire=null;
             },{once: true});
         }
@@ -386,7 +394,7 @@ function listenchallenges(){
             afficherPseudoMasque(adversaire,"infocom"," vous lance un défi", null, null);
             //document.getElementById("infocom").textContent = `Vous êtes défié par ${adversaire.slice(0,3)}.`;
             document.getElementById("buttonchallenge").style.display = "block";
-            joueurRef.set({ enLigne: "défié"});
+            joueurRef.update({ enLigne: "défié"});
             document.getElementById("joueurs").style.display = "none";
             document.getElementById("flagreal").style.display="block"
         }
@@ -477,7 +485,7 @@ function listenchallenges(){
             document.getElementById("infocom").textContent = "Choisir un joueur";
             document.getElementById("buttonchallenge").style.display = "none";
             document.getElementById("joueurs").style.display = "block";
-            joueurRef.set({ enLigne: "connecté" });
+            joueurRef.update({ enLigne: "connecté" });
             adversaire=null;
             document.getElementById("flagreal").style.display="none"
             modalreal.style.display = "none";
@@ -520,7 +528,7 @@ function surveillerreponse(){
                 document.getElementById("infocom").textContent = "Choisir un joueur";
                 document.getElementById("cancelchallenge").style.display = "none";
                 document.getElementById("joueurs").style.display = "block";
-                joueurRef.set({ enLigne: "connecté"});
+                joueurRef.update({ enLigne: "connecté"});
                 const challengeRef = database.ref('challenges/' + adversaire);
                 challengeRef.remove();
                 repRef.remove();
