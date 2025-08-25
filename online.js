@@ -248,6 +248,8 @@ function display(){
             if (key !== pseudo) {
                 n=1;
                 let joueur = joueurs[key];
+                let nbg = joueur.nb;
+                let stat = joueur.enLigne;
                 const div = document.createElement('button');
                 div.className = 'joueur';
                 div.id = key;
@@ -264,7 +266,7 @@ function display(){
                     div.onclick = () => defierJoueur(key);
                 }
                 container.appendChild(div);
-                afficherPseudoMasque(key,key, " (🏅" + joueur.nb + ") " + joueur.enLigne, null, null);
+                afficherPseudoMasque(key,key, " (🏅" + nbg + ") " + stat, null, null);
             }
         }
         if (n==0){
