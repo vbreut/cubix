@@ -190,11 +190,17 @@ function launch(){
         lastSeen: Date.now()
     });
     
+    let lastupdate = Date.now();
     setInterval(() => {
-        beatRef.update({
-            lastSeen: Date.now()
-        });
-    }, 5000);
+
+        if(Date.now() - lastupdate > 5000){
+            lastupdate = Date.now();
+    
+            beatRef.set({
+                lastSeen: Date.now()
+            });
+        }
+    }, 1000);
     
     // Écouter si on reçoit un défi
     listenchallenges();
