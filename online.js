@@ -4,6 +4,7 @@ let pseudo=null;
 let database = null;
 let connectedRef = null;
 let adversaire =null;
+let session = Date.now();
 
 // Configuration Firebase
 const firebaseConfig = {
@@ -96,10 +97,10 @@ function listener(snapshot,firstconnection,firstdeconnection){
         const element = document.getElementById("game");
         if(getComputedStyle(element).display!=="none"){//si la déco/reco a lieu en partie
             joueurRef.onDisconnect().remove();
-            joueurRef.set({ enLigne: "en partie", nb:nbgames[0] });
+            joueurRef.set({ enLigne: "en partie", nb:nbgames[0], sessionID: session });
         } else{
             joueurRef.onDisconnect().remove();
-            joueurRef.set({ enLigne: "connecté", nb:nbgames[0] });
+            joueurRef.set({ enLigne: "connecté", nb:nbgames[0], sessionID: session });
         }
         document.getElementById("onlinesubmenu").style.display = "flex";
         document.getElementById("onlinediffsubmenu").style.display = "flex";
@@ -174,13 +175,15 @@ function launch(){
         lastSeen: Date.now()
     });*/
 
+
+
     countgamesget(pseudo).then(nbg => {
         document.getElementById("nbgames").textContent = "🏅" + nbg;
         joueurRef.onDisconnect().remove();
         joueurRef.set({
             enLigne: "connecté",
-            //lastSeen: Date.now(),
-            nb: nbg
+            nb: nbg,
+            sessionID: session
         });
         nbgames[0]=nbg;
     });
@@ -189,18 +192,15 @@ function launch(){
     beatRef.set({
         lastSeen: Date.now()
     });
-    
-    let lastupdate = Date.now();
+    //let time=performance.now();
     setInterval(() => {
-
-        if(Date.now() - lastupdate > 5000){
-            lastupdate = Date.now();
+        beatRef.update({
+            lastSeen: Date.now()
+        });
+        //console.log((performance.now()-time)/1000);
+        //time=performance.now();
+    }, 5000);
     
-            beatRef.set({
-                lastSeen: Date.now()
-            });
-        }
-    }, 1000);
     
     // Écouter si on reçoit un défi
     listenchallenges();
@@ -252,6 +252,7 @@ function display(){
         const container = document.getElementById('joueurs');
         container.innerHTML = '';
         let n = 0;
+        let found =0;
 
         for (let key in joueurs) {
             if (key !== pseudo) {
@@ -262,7 +263,7 @@ function display(){
                 const div = document.createElement('button');
                 div.className = 'joueur';
                 div.id = key;
-                //div.textContent = key.slice(0,3) + "••• " + joueur.enLigne;
+
                 if (joueur.enLigne=="connecté"){
                     div.style.backgroundColor = "rgb(129, 217, 154)"
                 } else {
@@ -277,6 +278,16 @@ function display(){
                 container.appendChild(div);
                 afficherPseudoMasque(key,key, " (🏅" + nbg + ") " + stat, null, null);
             }
+
+            if (key==pseudo){
+                let joueur = joueurs[key];
+                if (joueur.sessionID !== session){ //nouvel onglet
+                    document.getElementById("modalblank").style.display="flex";
+                } else {
+                    found =1;
+                }
+            }
+
         }
         if (n==0){
             const divno = document.createElement('div');
@@ -284,8 +295,19 @@ function display(){
             divno.id = "nobody"
             document.getElementById("nobody").textContent = "Personne d'autre n'est connecté";
         }
+        if(found==0){ // on ne s'est pas trouvé soit même !
+            document.getElementById("spacer").style.display="block";
+            document.getElementById("message").style.display="block";
+            document.getElementById("message").textContent="Connexion perdue";
+            confirmyesButton.style.display="none";
+            confirmnoButton.style.display="none";
+            document.getElementById("modalvic").style.display="block";
+            document.getElementById("onlinesubmenu").style.display = "none";
+            document.getElementById("onlinediffsubmenu").style.display = "none";
+        }
     });
 }
+
 
 
 function deco(){
@@ -724,22 +746,22 @@ function flip()
     }
 }
 
-function afficherPseudoMasque(name, containerid, add, name2, add2) {
+function afficherPseudoMasque(name1, containerid, add, name2, add2) {
     const container = document.getElementById(containerid);
     container.innerHTML = '';
     container.style.whiteSpace = "pre";
 
-    if(name!==null){
-        if (name == "Libre" || name == "Abandon"){
+    if(name1!==null){
+        if (name1 == "Libre" || name1 == "Abandon"){
             const span = document.createElement('span');
-            span.textContent = name;
+            span.textContent = name1;
             container.appendChild(span);
             return;
         }
 
-        name = name.slice(0,-5);
+        name1 = name1.slice(0,-5);
         const span = document.createElement('span');
-        span.textContent = name;
+        span.textContent = name1;
         container.appendChild(span);
 
     }
@@ -787,14 +809,14 @@ function createsuffix(){
 }
 
 
-function checkIfPseudoExists(pseudo) {
-    const TIMEOUT = 11000;
+function checkIfPseudoExistsold(pseudo) {
+    let TIMEOUT = 11000;
     const listeRef = database.ref('joueurs');
     const heartlistRef = database.ref('heartbeat');
     let suf = pseudo[pseudo.length - 5];
-    
+    let prepseudo = pseudo;
     if (suf === "-") {
-        pseudo = pseudo.slice(0, -5);
+        prepseudo = pseudo.slice(0, -5);
     }
 
     // Étape 1 : supprimer les inactifs
@@ -803,10 +825,11 @@ function checkIfPseudoExists(pseudo) {
             const now = Date.now();
             snapshot.forEach(child => {
                 const data = child.val();
-                const name = child.key
+                const namep = child.key
+
                 if (!data.lastSeen || now - data.lastSeen > TIMEOUT) {
-                    listeRef.child(name).remove();
-                    heartlistRef.child(name).remove();
+                    listeRef.child(namep).remove();
+                    heartlistRef.child(namep).remove();
                 }
             });
 
@@ -821,7 +844,7 @@ function checkIfPseudoExists(pseudo) {
         .then((snapshot) => {
             const joueurs = snapshot.val();
             for (let key in joueurs) {
-                if (key.startsWith(pseudo)) {
+                if (key.startsWith(prepseudo)) {
                     return true;
                 }
             }
@@ -829,8 +852,70 @@ function checkIfPseudoExists(pseudo) {
         });
 }
 
-function countgamesget(name) {
-    let countRef = database.ref('count/' + name);
+
+function checkIfPseudoExists(pseudo) {
+    const TIMEOUT = 70000;
+    const listeRef = database.ref('joueurs');
+    const heartlistRef = database.ref('heartbeat');
+    const countRef = database.ref('count');
+    
+    let prepseudo = pseudo;
+    if (pseudo[pseudo.length - 5] === "-") {
+        prepseudo = pseudo.slice(0, -5);
+    }
+
+    // Étape 1 : supprimer les inactifs
+    return heartlistRef.once('value')
+        .then(snapshot => {
+            const now = Date.now();
+            const promises = [];
+            snapshot.forEach(child => {
+                const data = child.val();
+                const namep = child.key;
+                if (!data.lastSeen || now - data.lastSeen > TIMEOUT) {
+                    promises.push(listeRef.child(namep).remove());
+                    promises.push(heartlistRef.child(namep).remove());
+                }
+            });
+            return Promise.all(promises);
+        })
+
+        // Étape 2 : check dans les comptes
+        .then(() => countRef.once('value'))
+        .then(snapshot => {
+            const comptes = snapshot.val();
+            if (!comptes) return false;
+            for (let key in comptes) {
+                if (key.startsWith(prepseudo) && key !== pseudo) {
+                    return true; // pseudo déjà réservé
+                }
+            }
+            return false;
+        })
+
+        // Étape 3 : relire joueurs
+        .then(existsInCount => {
+            if (existsInCount) return true; // court-circuit
+            return listeRef.once('value').then(snapshot => {
+                const joueurs = snapshot.val();
+                if (!joueurs) return false;
+                for (let key in joueurs) {
+                    if (key.startsWith(prepseudo) && key !== pseudo) {
+                        return true;
+                        
+                        //si le pseudo est complètement identique c'est que c'est un nouvel onglet
+                        //ou un refresh avec ondisconnect qui n'a pas marché
+                        //ou un vol de suffixe mais là on ne peut rien faire
+                    }
+                }
+                return false;
+            });
+        });
+}
+
+
+function countgamesget(namep) {
+    let countRef = database.ref('count/' + namep);
 
     return countRef.once("value").then(snapshot => {
         if (snapshot.val() && snapshot.val().nb != null) {
