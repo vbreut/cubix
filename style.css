@@ -75,10 +75,6 @@
     }
 }
 
-h1 {
-    font-family: Arial;
-    color: rgb(69, 123, 157);
-}
 
 h2 {
     font-family: Arial;
@@ -1058,6 +1054,23 @@ body {
     font-weight: bold;
     display: flex;
     justify-content: space-between;
+    box-shadow: 4px 4px 20px rgba(0,0,0,0.7);
+}
+
+.modal-contentblank {
+    background-color: white;
+    margin: 10% auto;
+    margin-top:200px;
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    height:fit-content;
+    max-width: 500px;
+    font-size: 16px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     box-shadow: 4px 4px 20px rgba(0,0,0,0.7);
 }
 
