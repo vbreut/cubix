@@ -282,10 +282,9 @@ function display(){
             if (key==pseudo){
                 let joueur = joueurs[key];
                 if (joueur.sessionID !== session){ //nouvel onglet
-                    document.getElementById("modalblank").style.display="flex";
-                } else {
-                    found =1;
+                    document.getElementById("modalblank").style.display="block";
                 }
+                found =1;
             }
 
         }
