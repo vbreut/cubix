@@ -5,6 +5,7 @@ let database = null;
 let connectedRef = null;
 let adversaire =null;
 let session = Date.now();
+let resetpage =0;
 
 // Configuration Firebase
 const firebaseConfig = {
@@ -294,7 +295,7 @@ function display(){
             divno.id = "nobody"
             document.getElementById("nobody").textContent = "Personne d'autre n'est connecté";
         }
-        if(found==0){ // on ne s'est pas trouvé soit même !
+        if(found==0&& resetpage == 0){ // on ne s'est pas trouvé soit même ! On ne l'affiche pas si on est en train de revenir à l'accueil
             document.getElementById("spacer").style.display="block";
             document.getElementById("message").style.display="block";
             document.getElementById("message").textContent="Connexion perdue";
