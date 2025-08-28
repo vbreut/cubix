@@ -767,6 +767,7 @@ resButton.addEventListener('click', () => {
 });
 
 confirmyesButton.addEventListener('click', () => {
+    resetpage = 1;
     let joueurRef = database.ref('joueurs/' + pseudo);
     joueurRef.remove();
 
