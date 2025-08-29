@@ -56,6 +56,13 @@ function loadPseudo(){
         document.getElementById("infocom").style.display = "none";
         document.getElementById("newdiff").style.display = "none";
         document.getElementById("deftitle").style.display = "none";
+
+        let old_pseudo = localStorage.getItem("old_pseudo");
+
+        if (old_pseudo!==null && pseudo!==""){
+            document.getElementById("pseudoInput").value = old_pseudo;
+        }
+
     }
 
     document.getElementById("pseudoInput").addEventListener("keydown", function(event){
@@ -76,7 +83,7 @@ function listener(snapshot,firstconnection,firstdeconnection){
 
         checkIfPseudoExists(pseudo)
         .then(exists => {
-            document.getElementById("welcome").style.display = "block";
+            document.getElementById("welcome").style.display = "flex";
             if (exists) {
                 document.getElementById("form").style.display = "block";
                 document.getElementById("pseudoInput").value = pseudo;
@@ -166,6 +173,7 @@ function launch(){
     document.getElementById("form").style.display = "none";
     document.getElementById("pseudoAffiche").textContent = `Bienvenue ${pseudo} !`;
     document.getElementById("infocom").style.display = "block";
+    document.getElementById("erasepseudo").style.display = "block";
 
     let joueurRef = database.ref('joueurs/' + pseudo);
     let beatRef = database.ref('heartbeat/' + pseudo);
@@ -222,7 +230,7 @@ function sauvegarderPseudo(){
 
     if(pseudo!=="" && pseudo !=="Libre" && pseudo !=="Abandon"){
         if (pseudo.length>15){
-            document.getElementById("welcome").style.display = "block";
+            document.getElementById("welcome").style.display = "flex";
             document.getElementById("pseudoAffiche").textContent = "Pseudo trop long !";
             return;
         }
@@ -237,10 +245,15 @@ function sauvegarderPseudo(){
     }
 }
 
-function supprimerPseudo(){
+erasepseudo.addEventListener('click',supprimerPseudo);
 
+function supprimerPseudo(){
+    if (pseudo!==null && pseudo!==""){
+        localStorage.setItem("old_pseudo", pseudo);
+    }
     localStorage.removeItem("pseudo");
     document.getElementById("pseudoInput").value = "";
+    window.location.href = window.location.href;
 
 }
 
@@ -295,7 +308,7 @@ function display(){
             divno.id = "nobody"
             document.getElementById("nobody").textContent = "Personne d'autre n'est connecté";
         }
-        if(found==0&& resetpage == 0){ // on ne s'est pas trouvé soit même ! On ne l'affiche pas si on est en train de revenir à l'accueil
+        if(found==0 && resetpage == 0){ // on ne s'est pas trouvé soit même ! On ne l'affiche pas si on est en train de revenir à l'accueil
             document.getElementById("spacer").style.display="block";
             document.getElementById("message").style.display="block";
             document.getElementById("message").textContent="Connexion perdue";
