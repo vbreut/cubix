@@ -290,6 +290,10 @@ body {
     margin-bottom:5px;
     margin-top:10px;
     font-size: 16px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
 #nbgames{
@@ -312,6 +316,25 @@ body {
 }
 
 #sauvpseudo:active {
+    background-color: rgb(87, 156, 198);
+    box-shadow: none;
+}
+
+#erasepseudo {
+    /*font-size: 16px;*/
+    background-color: rgb(69, 123, 157);
+    border: none;
+    width: 90px;
+    height: 30px;
+    font-size: 14px;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    box-shadow: 0px 3px 4px rgba(0,0,0,0.4);
+    margin-left: 10px;
+}
+
+#erasepseudo:active {
     background-color: rgb(87, 156, 198);
     box-shadow: none;
 }
