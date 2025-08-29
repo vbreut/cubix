@@ -13,6 +13,8 @@ const gameboardclone = document.getElementById('game-board-clone');
 const mask0 = document.getElementById('mask0');
 const mask = document.getElementById('mask');
 const validButton = document.getElementById('valider');
+const sauvpseudo = document.getElementById('sauvpseudo');
+const erasepseudo = document.getElementById('erasepseudo');
 const confirmyesButton = document.getElementById("confirm-yes");
 const confirmnoButton = document.getElementById("confirm-no");
 const resButton = document.getElementById("res");
@@ -811,6 +813,7 @@ confirmyesButton.addEventListener('click', () => {
         });
     }
     window.location.href = window.location.href;
+
 });
 
 confirmnoButton.addEventListener('click', () => {
