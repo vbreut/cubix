@@ -171,7 +171,7 @@ function checkIfPseudoExists(pseudo) {
 function launch(){
 
     document.getElementById("form").style.display = "none";
-    document.getElementById("pseudoAffiche").textContent = `Bienvenue ${pseudo} !`;
+    document.getElementById("pseudoAffiche").textContent = pseudo;
     document.getElementById("infocom").style.display = "block";
     document.getElementById("erasepseudo").style.display = "block";
 
