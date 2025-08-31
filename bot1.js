@@ -46,7 +46,7 @@ function botlevel1(){
 
     //2eme move
     let cointoss = Math.floor(Math.random() * 2);
-    if (cointoss == 0){return;}
+    if (cointoss == 0){return cointoss;}
     else{
         availablecells=testcells(cubeid,prevcell); //ne pas revenir en arrière
 
@@ -54,6 +54,8 @@ function botlevel1(){
             setTimeout(() => {
                 randommove(availablecells);
             }, tempo + 50);
+        } else {
+            cointoss = 0;
         }
     }
 
