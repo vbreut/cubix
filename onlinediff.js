@@ -160,10 +160,11 @@ function monitordiff(){
 
     //gameIddiff = localStorage.getItem("gamediff");
 
-    let refCoups = null;;
+    let refCoups = null;
+    let gamediffRef = null;
 
     if (gameIddiff!==null && gameIddiff!=="" && gameIddiff!==0) {
-        refCoups = firebase.database().ref('gamesdiff/' + gameIddiff + '/coups');
+        refCoups = database.ref('gamesdiff/' + gameIddiff + '/coups');
         gamediffRef = database.ref('gamesdiff/' + gameIddiff);
 
         //refCoups.limitToLast(1).once('value').then(snapshot=>{
@@ -180,15 +181,24 @@ function monitordiff(){
                     document.getElementById("infodiff").textContent = "L'adversaire réfléchit";
                 }
 
-                /*if(j1=="Abandon" || j2=="Abandon"){
-                    document.getElementById("infodiff").textContent = "L'adversaire a abandonné";
-                }*/
             });
 
         });
 
         document.getElementById("diffinprogress").style.display = "block";
         document.getElementById("deftitle").style.display = "none";
+
+        gamediffRef.on('value',(snapshot)=>{
+            if(((snapshot.val().joueur2 == pseudo  && snapshot.val().joueur1 == "Abandon") || (snapshot.val().joueur1 == pseudo  && snapshot.val().joueur2 == "Abandon")) && playingmode==5){
+                document.getElementById("spacer").style.display="block";
+                afficherPseudoMasque(adversaire, "message"," a quitté la partie", null, null);
+                document.getElementById("modalvic").style.display="flex";
+                document.getElementById("closeModalvic").style.display="block";
+                document.querySelector(".modal-contentvic").style.justifyContent="space-between";
+                confirmyesButton.style.display="none";
+                confirmnoButton.style.display="none";              
+            }
+        });
     }
 
 }
