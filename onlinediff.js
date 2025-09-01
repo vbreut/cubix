@@ -191,7 +191,7 @@ function monitordiff(){
         gamediffRef.on('value',(snapshot)=>{
             if(((snapshot.val().joueur2 == pseudo  && snapshot.val().joueur1 == "Abandon") || (snapshot.val().joueur1 == pseudo  && snapshot.val().joueur2 == "Abandon")) && playingmode==5){
                 document.getElementById("spacer").style.display="block";
-                afficherPseudoMasque(adversaire, "message"," a quitté la partie", null, null);
+                afficherPseudoMasque(null, "message","L'adversaire a quitté la partie", null, null);
                 document.getElementById("modalvic").style.display="flex";
                 document.getElementById("closeModalvic").style.display="block";
                 document.querySelector(".modal-contentvic").style.justifyContent="space-between";
