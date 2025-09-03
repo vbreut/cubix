@@ -1,11 +1,13 @@
 function botlevel1(){
 
     let prevcell=0;
-    let memo=0;
     let availablecells=[];
     let cubeid=0;
     let cell=0;
     let nb=0;
+    let stuck=0;
+    let cubepresent = [];
+    let cubeidstuck =0;
 
     //coup forcé
     if(forcedcube[3]!=-1){
@@ -14,13 +16,20 @@ function botlevel1(){
     }
 
     for(let i=0; i<6; i++){
+        if(cubestatus[0][i]!=0){
+            cubepresent.push(i+1);
+        }
+    }
+
+    if (cubepresent.length>0){}
+
+    let randomshift = Math.floor(Math.random() * cubepresent.length); //compris entre 0 et 5
+
+    for(let i=0; i< cubepresent.length; i++){
 
         //choix du cube
-        cubeid=choosecube(memo);
+        cubeid = cubepresent[(i + randomshift)%6];
 
-        if (cubeid==0){
-            return -1; //tous les cubes sont bloqués
-        }
         //test des cellules autour
         availablecells=testcells(cubeid,prevcell);
 
@@ -31,12 +40,23 @@ function botlevel1(){
             let cellid="cell-" + cell;
             let currentcell= document.getElementById(cellid);
             selectcurrentcell(currentcell);
+            stuck=0;
             break;
         }
         else{
-            memo=cubeid
-            //choisir un cube qui peut bouger et rechoisir une cellule
+            cubeidstuck= cubeid;
+            stuck=1;
         }
+    }
+
+    if (stuck==1){
+        //on sélectionne quand même un cube pour pouvoir valider
+        selectedScene = document.getElementById("scene-" + cubeidstuck);
+        cell=cubestatus[0][cubeidstuck-1];
+        let cellid="cell-" + cell;
+        let currentcell= document.getElementById(cellid);
+        selectcurrentcell(currentcell);
+        return -1;
     }
 
     //1er move aléatoire
@@ -90,32 +110,6 @@ function forcedmove(){
     return 0;
 }
 
-function choosecube(memo){
-    let cubepresent = [];
-    let memo0=memo-1;
-
-    //choix du cube
-    for(let i=0; i<6; i++){
-        if(cubestatus[0][i]!=0 && i!=memo0){
-            cubepresent.push(i);
-        }
-    }
-    
-    if (cubepresent.length!=0){
-        let randomindice = Math.floor(Math.random() * cubepresent.length);
-        let randomcubeid=cubepresent[randomindice] + 1;
-        return randomcubeid;
-    }
-    else{
-        //on sélectionne quand même un cube pour pouvoir valider
-        selectedScene = document.getElementById("scene-" + memo);
-        cell=cubestatus[0][memo-1];
-        let cellid="cell-" + cell;
-        let currentcell= document.getElementById(cellid);
-        selectcurrentcell(currentcell);
-        return 0;
-    }
-}
 
 function testcells(randomcubeid,prevcell){
 
