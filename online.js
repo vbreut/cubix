@@ -348,13 +348,12 @@ function deco(){
         if (pseudodeleted==adversaire && getComputedStyle(element).display!=="none" && turn !== "end" && playingmode == 4){
             document.getElementById("spacer").style.display="block";
             afficherPseudoMasque(adversaire, "message"," s'est déconnecté", null, null);
-            //document.getElementById("message").textContent=`${adversaire.slice(0,3)}. s'est déconnecté`;
             document.getElementById("modalvic").style.display="flex";
             document.getElementById("closeModalvic").style.display="block";
             document.querySelector(".modal-contentvic").style.justifyContent="space-between";
             confirmyesButton.style.display="none";
             confirmnoButton.style.display="none";
-            //adversaire=null;
+            //adversaire=null; au cas où il se reconnecte
         }
     });
 
@@ -602,29 +601,36 @@ function ecouterCoups() {
         // Sinon, on l’applique
         convert(coup);
 
-        waitforvalid(coup.move.length);
+        if (coup.move.length > 2){
+            waitforvalid(coup.move.length);
+        }else{//cas où tous les cubes sont bloqués
+            setTimeout(() => {
+                valider()
+            }, tempo);
+        }
 
     });
 }
 
 function waitforvalid(movelength){
 
-    let cube=selectedScene.firstElementChild;
-
     selectedScene.addEventListener('transitionend', () => {
         if(movelength==4){
             setTimeout(() => {//pour ne pas attacher à la même transition
                 selectedScene.addEventListener('transitionend', () => {
                     setTimeout(() => {
+
                         valider()
                     }, tempo);
                 },{once: true});
             }, 50);
         }else{
             setTimeout(() => {
+
                 valider()
             }, tempo);
         }
+
     },{once: true});
 
 }
@@ -673,7 +679,6 @@ function convert(coup){
     //let sceneid = Object.values(coup)[1][0];
     let sceneid = coup.move[0]
     let currentcellid = coup.move[1];
-    let targetcellid = coup.move[2];
 
     let scenenumber=sceneid.match(/\d+/)[0];
     scenenumber = 13 - scenenumber;
@@ -681,12 +686,9 @@ function convert(coup){
     let currentcellnumber=currentcellid.match(/\d+/)[0];
     currentcellnumber = 37 - currentcellnumber;
 
-    let targetcellnumber=targetcellid.match(/\d+/)[0];
-    targetcellnumber = 37 - targetcellnumber;
-
     sceneid = "scene-" + scenenumber;
     currentcellid = "cell-" + currentcellnumber;
-    targetcellid = "cell-" + targetcellnumber;
+
 
     let currentcell=null;
     //let selectedcell=null;
@@ -696,9 +698,17 @@ function convert(coup){
     selectcurrentcell(currentcell);
     //selectedcell = document.getElementById(targetcellid);
     //let time=performance.now();
-    moveCubeTo3(targetcellid, light);
 
-    if (coup.move.length == 4 ){
+    if (coup.move.length > 2){
+        let targetcellid = coup.move[2];
+        let targetcellnumber=targetcellid.match(/\d+/)[0];
+        targetcellnumber = 37 - targetcellnumber;
+        targetcellid = "cell-" + targetcellnumber;
+
+        moveCubeTo3(targetcellid, light);
+    }
+
+    if (coup.move.length == 4){
 
         let targetcellid_2 = coup.move[3];
 
@@ -819,50 +829,6 @@ function createsuffix(){
         suffix += chars2.charAt(Math.floor(Math.random()*chars2.length));
     }
     return suffix;
-}
-
-
-function checkIfPseudoExistsold(pseudo) {
-    let TIMEOUT = 11000;
-    const listeRef = database.ref('joueurs');
-    const heartlistRef = database.ref('heartbeat');
-    let suf = pseudo[pseudo.length - 5];
-    let prepseudo = pseudo;
-    if (suf === "-") {
-        prepseudo = pseudo.slice(0, -5);
-    }
-
-    // Étape 1 : supprimer les inactifs
-    return heartlistRef.once('value')
-        .then((snapshot) => {
-            const now = Date.now();
-            snapshot.forEach(child => {
-                const data = child.val();
-                const namep = child.key
-
-                if (!data.lastSeen || now - data.lastSeen > TIMEOUT) {
-                    listeRef.child(namep).remove();
-                    heartlistRef.child(namep).remove();
-                }
-            });
-
-            // Attendre un peu que les suppressions soient effectives
-            return new Promise(resolve => setTimeout(resolve, 100));
-        })
-
-        // Étape 2 : relire les données mises à jour
-        .then(() => listeRef.once('value'))
-
-        // Étape 3 : vérifier si un pseudo similaire existe
-        .then((snapshot) => {
-            const joueurs = snapshot.val();
-            for (let key in joueurs) {
-                if (key.startsWith(prepseudo)) {
-                    return true;
-                }
-            }
-            return false;
-        });
 }
 
 
