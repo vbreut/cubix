@@ -273,7 +273,6 @@ function changefacesmove(cube){
 
 function moveCubeTo3(targetCellid, cellcolor) {//étage de protection pour le déplacement manuel
 
-    let cube=selectedScene.firstElementChild;
     let i=0;
 
     if (rotationinprogress){
@@ -494,17 +493,17 @@ function moveCubeTo4(targetCellid, cellcolor) {
 validButton.addEventListener('click', () => {
 
 
-    if (waitforsecondmove){ //utile pour les validations manuelles
+    if (waitforsecondmove || selectedScene == null){ //utile pour les validations manuelles
         return;
     }
 
-    if (numberofmoves > 0 && (playingmode==0||turn=="white") && playingmode !== 4 && playingmode !==5){
+    let stuck =allstuck();
+
+    if ((numberofmoves > 0 || stuck == 1) && (playingmode==0||turn=="white") && playingmode !== 4 && playingmode !==5){
 
         let doublemove=0;
         let movelength=0;
-        //let delay=50;
 
-        //changes();
         valider();
         
         if (turn=="end") {return;}
@@ -522,6 +521,7 @@ validButton.addEventListener('click', () => {
 
                 if (playingmode==3){
                     doublemove=botlevel3();
+
                 }
                 if (doublemove==1){
                     movelength = 4;
@@ -529,13 +529,16 @@ validButton.addEventListener('click', () => {
 
                 if (doublemove==-1){
                     //tous les cubes sont bloqués. Les blancs continuent à jouer
+                    valider();
+                } else {
+                    waitforvalid(movelength);
                 }
-                waitforvalid(movelength);
+
             }, tempo + 50);
         }
     }
 
-    if (numberofmoves > 0 && (playingmode==4 || playingmode==5) && turn=="white"){
+    if ((numberofmoves > 0 || stuck == 1) && (playingmode==4 || playingmode==5) && turn=="white"){
 
         valider();
 
@@ -563,7 +566,6 @@ function valider(){
 
     numberofmoves = 0;
 
-    let cube=selectedScene.firstElementChild;
     if (rotationinprogress){ //utile pour la validation manuelle
         selectedScene.addEventListener('transitionend', () => {
             selectedScene = null;
@@ -595,6 +597,41 @@ function valider(){
             tour.style.backgroundColor = "rgb(255, 255, 255)";
         } else {tour.style.backgroundColor = "rgb(0, 0, 0)";}
     }
+}
+
+function allstuck(){
+    let cubepresent = [];
+    let prevcell=0;
+    let stuck=0;
+    let cubeidstuck=0;
+    let cubeid=0;
+    let availablecells=[];
+
+    for(let i=6; i<12; i++){
+        if(cubestatus[0][i]!=0){
+            cubepresent.push(i+1);
+        }
+    }
+    
+    for(let i=0; i< cubepresent.length; i++){
+
+        //choix du cube
+        cubeid = cubepresent[i];
+
+        //test des cellules autour
+        availablecells=testcells(cubeid,prevcell);
+
+        if (availablecells.length!=0){
+            stuck=0;
+            break;
+        }
+        else{
+            stuck=1;
+            cubeidstuck= cubeid;
+        }
+    }
+
+    return stuck;
 }
 
 function historyrealtime(){
