@@ -865,7 +865,8 @@ function checkIfPseudoExists(pseudo) {
             const comptes = snapshot.val();
             if (!comptes) return false;
             for (let key in comptes) {
-                if (key.startsWith(prepseudo) && key !== pseudo) {
+                let prekey = key.slice(0, -5);
+                if (prekey == prepseudo && key !== pseudo) {
                     return true; // pseudo déjà réservé
                 }
             }
@@ -879,7 +880,8 @@ function checkIfPseudoExists(pseudo) {
                 const joueurs = snapshot.val();
                 if (!joueurs) return false;
                 for (let key in joueurs) {
-                    if (key.startsWith(prepseudo) && key !== pseudo) {
+                    let prekey = key.slice(0, -5);
+                    if (prekey == prepseudo && key !== pseudo) {
                         return true;
                         
                         //si le pseudo est complètement identique c'est que c'est un nouvel onglet
