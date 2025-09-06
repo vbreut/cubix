@@ -74,13 +74,33 @@ function menubot(){
 diffbutton.addEventListener('click', menudiff);
 
 function menudiff(){
-    modaldiff.style.display = "block";
+    if (pseudo == null){
+        document.getElementById("spacer").style.display="block";
+        afficherPseudoMasque(null, "message","Choisir un pseudo", null, null);
+        document.getElementById("modalvic").style.display="flex";
+        document.getElementById("closeModalvic").style.display="block";
+        document.querySelector(".modal-contentvic").style.justifyContent="space-between";
+        confirmyesButton.style.display="none";
+        confirmnoButton.style.display="none";
+    }else{
+        modaldiff.style.display = "block";
+    }
 }
 
 realbutton.addEventListener('click', menureal);
 
 function menureal(){
-    modalreal.style.display = "block";
+    if (pseudo == null){
+        document.getElementById("spacer").style.display="block";
+        afficherPseudoMasque(null, "message","Choisir un pseudo", null, null);
+        document.getElementById("modalvic").style.display="flex";
+        document.getElementById("closeModalvic").style.display="block";
+        document.querySelector(".modal-contentvic").style.justifyContent="space-between";
+        confirmyesButton.style.display="none";
+        confirmnoButton.style.display="none";
+    }else{
+        modalreal.style.display = "block";
+    }
 }
 
 manbutton.addEventListener('click',choice0);
