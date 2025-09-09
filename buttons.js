@@ -122,18 +122,32 @@ function showPage() {
 
     if(playingmode==1){
         document.getElementById("adv").textContent = "Bot 1";
-        document.getElementById("me").style.color = "white";
-        afficherPseudoMasque(pseudo,"me",null, null, null);
+        if (pseudo !== null){
+            document.getElementById("me").style.color = "white";
+            afficherPseudoMasque(pseudo,"me",null, null, null);
+        } else{
+            document.getElementById("me").style.display = "none";
+        }
+
     }
     if(playingmode==2){
-        document.getElementById("adv").textContent = "Bot 2";
-        document.getElementById("me").style.color = "white";
-        afficherPseudoMasque(pseudo,"me",null, null, null);
+        if (pseudo !== null){
+            document.getElementById("adv").textContent = "Bot 2";
+            document.getElementById("me").style.color = "white";
+            afficherPseudoMasque(pseudo,"me",null, null, null);
+        } else{
+            document.getElementById("me").style.display = "none";
+        }
     }
+    
     if(playingmode==3){
-        document.getElementById("adv").textContent = "Bot 3";
-        document.getElementById("me").style.color = "white";
-        afficherPseudoMasque(pseudo,"me",null, null, null);
+        if (pseudo !== null){
+            document.getElementById("adv").textContent = "Bot 3";
+            document.getElementById("me").style.color = "white";
+            afficherPseudoMasque(pseudo,"me",null, null, null);
+        } else{
+            document.getElementById("me").style.display = "none";
+        }
     }
     if(playingmode==0){
         document.getElementById("adv").style.display="none";
