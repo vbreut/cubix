@@ -298,8 +298,11 @@ body {
 
 #nbgames{
     position: absolute;
-    text-shadow: 0px 0px 2px rgb(0, 0, 0);
     color : white;
+}
+
+#nbgames::first-letter{
+    text-shadow: 0px 0px 2px rgb(0, 0, 0);
 }
 
 #sauvpseudo {
