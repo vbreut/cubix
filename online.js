@@ -234,6 +234,12 @@ function sauvegarderPseudo(){
             document.getElementById("pseudoAffiche").textContent = "Pseudo trop long !";
             return;
         }
+        
+        if (pseudo.includes("/")==true || pseudo.includes("]")==true || pseudo.includes("[")==true || pseudo.includes("#")==true || pseudo.includes(".")==true || pseudo.includes("$")==true){
+            document.getElementById("welcome").style.display = "flex";
+            document.getElementById("pseudoAffiche").textContent = "Caractère interdit !";
+            return;
+        }
 
         let suf = pseudo[pseudo.length - 5];
         if (suf!="-"){
