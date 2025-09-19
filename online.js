@@ -86,7 +86,8 @@ function listener(snapshot,firstconnection,firstdeconnection){
             document.getElementById("welcome").style.display = "flex";
             if (exists) {
                 document.getElementById("form").style.display = "block";
-                document.getElementById("pseudoInput").value = pseudo;
+                let prepseudo = pseudo.slice(0, -5);
+                document.getElementById("pseudoInput").value = prepseudo;
                 document.getElementById("pseudoAffiche").textContent = "Ce pseudo est déjà pris !";
             } else {
                 launch();
