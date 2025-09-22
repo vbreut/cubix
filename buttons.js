@@ -239,93 +239,103 @@ board.forEach(cell => {
 });
 
 document.addEventListener("keydown",(event)=>{
+    if(selectedScene!=null && (playingmode==0 || turn=="white") && waitforsecondmove == 0){
 
-    event.preventDefault();
-    if (selectedScene != null && (playingmode==0 || turn=="white") && waitforsecondmove == 0){
-
-
-
-        let cube=selectedScene.firstElementChild;
-        let cubenumber=parseInt(cube.id.match(/\d+/)[0]);
-        let cellnumber=cubestatus[0][cubenumber-1];
-
-        if(event.key ==="ArrowUp"){
-            if(cellnumber>6){
-                let targetcellnum = cellnumber - 6;
-                let targetCellid = "cell-" + targetcellnum;
-                let occupied = cubestatus[0].includes(targetcellnum);
-                let targetCell= document.getElementById(targetCellid);
-
-                if (occupied==false){
-                    if (targetCell.style.backgroundColor == dark) {
-                        moveCubeTo3(targetCellid, targetCell.style.backgroundColor);
-                    }
-        
-                    if (targetCell.style.backgroundColor == light && numberofmoves < 2) {
-                        moveCubeTo3(targetCellid, targetCell.style.backgroundColor);
-                    }
-                }
-
-            }
-
+        if (event.key==="Enter"){
+            validmove();
+            validButton.classList.add("force-active");
+            setTimeout(()=>{
+                validButton.classList.remove("force-active");
+            },200);
+            return;
         }
-        else if(event.key ==="ArrowDown"){
-            if(cellnumber<31){
-                let targetcellnum = cellnumber + 6;
-                let targetCellid = "cell-" + targetcellnum;
-                let occupied = cubestatus[0].includes(targetcellnum);
-                let targetCell= document.getElementById(targetCellid);
 
-                if (occupied==false){
-                    if (targetCell.style.backgroundColor == dark) {
-                        moveCubeTo3(targetCellid, targetCell.style.backgroundColor);
-                    }
-        
-                    if (targetCell.style.backgroundColor == light && numberofmoves < 2) {
-                        moveCubeTo3(targetCellid, targetCell.style.backgroundColor);
-                    }
-                }
 
-            }
+        if(event.key ==="ArrowUp" || event.key ==="ArrowDown" || event.key ==="ArrowRight" || event.key ==="ArrowLeft"){
+            event.preventDefault();
+
+            let cube=selectedScene.firstElementChild;
+            let cubenumber=parseInt(cube.id.match(/\d+/)[0]);
+            let cellnumber=cubestatus[0][cubenumber-1];
+
+            if(event.key ==="ArrowUp"){
+                if(cellnumber>6){
+                    let targetcellnum = cellnumber - 6;
+                    let targetCellid = "cell-" + targetcellnum;
+                    let occupied = cubestatus[0].includes(targetcellnum);
+                    let targetCell= document.getElementById(targetCellid);
+
+                    if (occupied==false){
+                        if (targetCell.style.backgroundColor == dark) {
+                            moveCubeTo3(targetCellid, targetCell.style.backgroundColor);
+                        }
             
-        }
-        else if(event.key ==="ArrowLeft"){
-            if(cellnumber%6 !== 1){
-                let targetcellnum = cellnumber - 1;
-                let targetCellid = "cell-" + targetcellnum;
-                let occupied = cubestatus[0].includes(targetcellnum);
-                let targetCell= document.getElementById(targetCellid);
+                        if (targetCell.style.backgroundColor == light && numberofmoves < 2) {
+                            moveCubeTo3(targetCellid, targetCell.style.backgroundColor);
+                        }
+                    }
 
-                if (occupied==false){
-                    if (targetCell.style.backgroundColor == dark) {
-                        moveCubeTo3(targetCellid, targetCell.style.backgroundColor);
-                    }
-        
-                    if (targetCell.style.backgroundColor == light && numberofmoves < 2) {
-                        moveCubeTo3(targetCellid, targetCell.style.backgroundColor);
-                    }
                 }
 
             }
+            else if(event.key ==="ArrowDown"){
+                if(cellnumber<31){
+                    let targetcellnum = cellnumber + 6;
+                    let targetCellid = "cell-" + targetcellnum;
+                    let occupied = cubestatus[0].includes(targetcellnum);
+                    let targetCell= document.getElementById(targetCellid);
+
+                    if (occupied==false){
+                        if (targetCell.style.backgroundColor == dark) {
+                            moveCubeTo3(targetCellid, targetCell.style.backgroundColor);
+                        }
             
-        }
-        else if(event.key ==="ArrowRight"){
-            if(cellnumber%6 !== 0){
-                let targetcellnum = cellnumber + 1;
-                let targetCellid = "cell-" + targetcellnum;
-                let occupied = cubestatus[0].includes(targetcellnum);
-                let targetCell= document.getElementById(targetCellid);
+                        if (targetCell.style.backgroundColor == light && numberofmoves < 2) {
+                            moveCubeTo3(targetCellid, targetCell.style.backgroundColor);
+                        }
+                    }
 
-                if (occupied==false){
-                    if (targetCell.style.backgroundColor == dark) {
-                        moveCubeTo3(targetCellid, targetCell.style.backgroundColor);
-                    }
-        
-                    if (targetCell.style.backgroundColor == light && numberofmoves < 2) {
-                        moveCubeTo3(targetCellid, targetCell.style.backgroundColor);
-                    }
                 }
+                
+            }
+            else if(event.key ==="ArrowLeft"){
+                if(cellnumber%6 !== 1){
+                    let targetcellnum = cellnumber - 1;
+                    let targetCellid = "cell-" + targetcellnum;
+                    let occupied = cubestatus[0].includes(targetcellnum);
+                    let targetCell= document.getElementById(targetCellid);
 
+                    if (occupied==false){
+                        if (targetCell.style.backgroundColor == dark) {
+                            moveCubeTo3(targetCellid, targetCell.style.backgroundColor);
+                        }
+            
+                        if (targetCell.style.backgroundColor == light && numberofmoves < 2) {
+                            moveCubeTo3(targetCellid, targetCell.style.backgroundColor);
+                        }
+                    }
+
+                }
+                
+            }
+            else if(event.key ==="ArrowRight"){
+                if(cellnumber%6 !== 0){
+                    let targetcellnum = cellnumber + 1;
+                    let targetCellid = "cell-" + targetcellnum;
+                    let occupied = cubestatus[0].includes(targetcellnum);
+                    let targetCell= document.getElementById(targetCellid);
+
+                    if (occupied==false){
+                        if (targetCell.style.backgroundColor == dark) {
+                            moveCubeTo3(targetCellid, targetCell.style.backgroundColor);
+                        }
+            
+                        if (targetCell.style.backgroundColor == light && numberofmoves < 2) {
+                            moveCubeTo3(targetCellid, targetCell.style.backgroundColor);
+                        }
+                    }
+
+                }
             }
         }
     }
@@ -624,7 +634,9 @@ function moveCubeTo4(targetCellid, cellcolor) {
     }
 }
 
-validButton.addEventListener('click', () => {
+validButton.addEventListener('click', validmove);
+
+function validmove() {
 
 
     if (waitforsecondmove || selectedScene == null){ //utile pour les validations manuelles
@@ -684,7 +696,7 @@ validButton.addEventListener('click', () => {
 
     }
 
-});
+}
 
 
 function valider(){
