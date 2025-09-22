@@ -927,7 +927,7 @@ confirmyesButton.addEventListener('click', () => {
 
         initconfig(cubestatus,1);
         board.forEach(cell => {cell.style.backgroundColor = light;})
-
+        turn=="white";
     }
 
 });
