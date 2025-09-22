@@ -61,7 +61,7 @@ let cubestatus = [
     ["bd", "bd", "bd", "bd", "bd", "bd", "bd", "bd", "bd", "bd", "bd", "bd"],
     ["ws", "ws", "ws", "ws", "ws", "ws", "ws", "ws", "ws", "ws", "ws", "ws"],
     ["wd", "wd", "wd", "wd", "wd", "wd", "wd", "wd", "wd", "wd", "wd", "wd"],
-]
+];
 
 let moves = [];
 
@@ -122,6 +122,7 @@ function showPage() {
 
     if(playingmode==1){
         document.getElementById("adv").textContent = "Bot 1";
+        newgameButton.style.display="block";
         if (pseudo !== null){
             document.getElementById("me").style.color = "white";
             afficherPseudoMasque(pseudo,"me",null, null, null);
@@ -131,18 +132,19 @@ function showPage() {
 
     }
     if(playingmode==2){
+        document.getElementById("adv").textContent = "Bot 2";
+        newgameButton.style.display="block";
         if (pseudo !== null){
-            document.getElementById("adv").textContent = "Bot 2";
             document.getElementById("me").style.color = "white";
             afficherPseudoMasque(pseudo,"me",null, null, null);
         } else{
             document.getElementById("me").style.display = "none";
         }
     }
-    
     if(playingmode==3){
+        document.getElementById("adv").textContent = "Bot 3";
+        newgameButton.style.display="block";
         if (pseudo !== null){
-            document.getElementById("adv").textContent = "Bot 3";
             document.getElementById("me").style.color = "white";
             afficherPseudoMasque(pseudo,"me",null, null, null);
         } else{
@@ -150,14 +152,20 @@ function showPage() {
         }
     }
     if(playingmode==0){
+        newgameButton.style.display="block";
         document.getElementById("adv").style.display="none";
         document.getElementById("me").style.display="none";
     }
 
     if(playingmode==5){
         leaveButton.style.display="block";
+        newgameButton.style.display="none";
     } else{
         leaveButton.style.display="none";
+    }
+
+    if(playingmode==4){
+        newgameButton.style.display="none";
     }
 
 
@@ -686,6 +694,7 @@ function historyrealtime(){
 const modal = document.getElementById("modal");
 const openModalButton = document.getElementById("openModal");
 const closeModalButton = document.getElementById("closeModal");
+const newgameButton = document.getElementById("newgame");
 
 const modalvic = document.getElementById("modalvic");
 const modalreal = document.getElementById("modalreal");
@@ -704,6 +713,20 @@ openModalButton.addEventListener("click", () => {
 
     modal.style.display = "block";
 });
+
+newgameButton.addEventListener("click", () => {
+
+    document.getElementById("message").style.display="block";
+    document.getElementById("botsubmenu2").style.display="none";
+    document.getElementById("message").textContent="Nouvelle partie ?";
+    document.getElementById("spacer").style.display="none";
+    document.querySelector(".modal-contentvic").style.justifyContent="space-evenly";
+    modalvic.style.display="flex";
+    confirmyesButton.style.display="block";
+    confirmnoButton.style.display="block";
+    document.getElementById("closeModalvic").style.display="none";
+});
+
 
 // Fermer la modale
 closeModalButton.addEventListener("click", () => {
@@ -742,6 +765,7 @@ window.addEventListener("click", (event) => {
         modalavatar.style.display = "none";
     }
 });
+
 
 function affichervic(message){
     document.getElementById("message").textContent=message;
@@ -883,7 +907,28 @@ confirmyesButton.addEventListener('click', () => {
 
         });
     }
-    window.location.href = window.location.href;
+
+    if(document.getElementById("message").textContent!=="Nouvelle partie ?"){
+        window.location.href = window.location.href;
+    } else {
+        modalvic.style.display = "none";
+        confirmyesButton.style.display="none";
+        confirmnoButton.style.display="none";
+
+        cubestatus = [
+            [1, 2, 3, 4, 5, 6, 31, 32, 33, 34, 35, 36],
+            ["rs", "rs", "rs", "rs", "rs", "rs", "rs", "rs", "rs", "rs", "rs", "rs"],
+            ["rd", "rd", "rd", "rd", "rd", "rd", "rd", "rd", "rd", "rd", "rd", "rd"],
+            ["bs", "bs", "bs", "bs", "bs", "bs", "bs", "bs", "bs", "bs", "bs", "bs"],
+            ["bd", "bd", "bd", "bd", "bd", "bd", "bd", "bd", "bd", "bd", "bd", "bd"],
+            ["ws", "ws", "ws", "ws", "ws", "ws", "ws", "ws", "ws", "ws", "ws", "ws"],
+            ["wd", "wd", "wd", "wd", "wd", "wd", "wd", "wd", "wd", "wd", "wd", "wd"],
+        ];
+
+        initconfig(cubestatus,1);
+        board.forEach(cell => {cell.style.backgroundColor = light;})
+
+    }
 
 });
 
