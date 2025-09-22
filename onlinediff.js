@@ -189,14 +189,17 @@ function monitordiff(){
         document.getElementById("deftitle").style.display = "none";
 
         gamediffRef.on('value',(snapshot)=>{
-            if(((snapshot.val().joueur2 == pseudo  && snapshot.val().joueur1 == "Abandon") || (snapshot.val().joueur1 == pseudo  && snapshot.val().joueur2 == "Abandon")) && playingmode==5){
-                document.getElementById("spacer").style.display="block";
-                afficherPseudoMasque(null, "message","L'adversaire a quitté la partie", null, null);
-                document.getElementById("modalvic").style.display="flex";
-                document.getElementById("closeModalvic").style.display="block";
-                document.querySelector(".modal-contentvic").style.justifyContent="space-between";
-                confirmyesButton.style.display="none";
-                confirmnoButton.style.display="none";              
+            if(snapshot.val()){//si la référence n'est pas supprimée
+
+                if(((snapshot.val().joueur2 == pseudo  && snapshot.val().joueur1 == "Abandon") || (snapshot.val().joueur1 == pseudo  && snapshot.val().joueur2 == "Abandon")) && playingmode==5){
+                    document.getElementById("spacer").style.display="block";
+                    afficherPseudoMasque(null, "message","L'adversaire a quitté la partie", null, null);
+                    document.getElementById("modalvic").style.display="flex";
+                    document.getElementById("closeModalvic").style.display="block";
+                    document.querySelector(".modal-contentvic").style.justifyContent="space-between";
+                    confirmyesButton.style.display="none";
+                    confirmnoButton.style.display="none";              
+                }
             }
         });
     }
