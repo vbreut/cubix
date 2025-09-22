@@ -352,9 +352,10 @@ function futureclick(){
         gameboardclone.style.visibility = "hidden";
         mask.style.visibility = "hidden";
         mask0.style.visibility = "hidden";
+        indice[0]=indice[0]-1;
     }
 
-    if (indice[0] >1 ){
+    if (indice[0] >2 ){
 
         indice[0]=indice[0]-1;
 
